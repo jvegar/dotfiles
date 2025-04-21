@@ -7,7 +7,7 @@ SCRIPT_DIR="$(dirname "S0")/backup-scripts"
 bash "$SCRIPT_DIR/install_nvim.sh"
 
 # Run the backup and copy process for Config
-# bash "$SCRIPT_DIR/install_config.sh"
+bash "$SCRIPT_DIR/install_config.sh"
 
 # Run the backup and copy process for Scripts 
 # bash "$SCRIPT_DIR/install_scripts.sh"
