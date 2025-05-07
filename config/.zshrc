@@ -154,14 +154,12 @@ yt() {
   fabric -y "$video_link" --transcript
 }
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
+# bun configuration
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# bum
+# bun version manager configuration
 export BUM_INSTALL="$HOME/.bum"
 export PATH="$BUM_INSTALL/bin:$PATH"
 
@@ -179,6 +177,16 @@ if [[ -f "$HOME/repos/projects/sh-scripts/yai.sh" ]]; then
   alias yai="$HOME/repos/projects/sh-scripts/yai.sh"
 fi
 
+# Zsh history setup
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
