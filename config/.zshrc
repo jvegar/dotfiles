@@ -75,9 +75,9 @@ case "$OSTYPE" in
 
     # Maven configuration
     if [ -d '/opt/apache-maven-3.9.9' ]; then
-        M2_HOME='/opt/apache-maven-3.9.9'
-        PATH="$M2_HOME/bin:$PATH"
-        export PATH
+      M2_HOME='/opt/apache-maven-3.9.9'
+      PATH="$M2_HOME/bin:$PATH"
+      export PATH
     fi
     
     # Tool configurations and PATH exports
@@ -93,61 +93,61 @@ export NVM_DIR="$HOME/.nvm"
 
 # Lazy load pyenv
 pyenv() {
-    unset -f pyenv
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(command pyenv init --path)"
-    eval "$(command pyenv init -)"
-    pyenv "$@"
+  unset -f pyenv
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(command pyenv init --path)"
+  eval "$(command pyenv init -)"
+  pyenv "$@"
 }
 
 # Lazy load gvm
 gvm() {
-    unset -f gvm
-    [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-    gvm "$@"
+  unset -f gvm
+  [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+  gvm "$@"
 }
 
 # Lazy load sdkman
 sdk() {
-    unset -f sdk
-    export SDKMAN_DIR="$HOME/.sdkman"
-    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-    sdk "$@"
+  unset -f sdk
+  export SDKMAN_DIR="$HOME/.sdkman"
+  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+  sdk "$@"
 }
 
 
 # Fabric aliases configuration
 if [ -d "$HOME/.config/fabric/patterns" ]; then
-    for pattern_file in $HOME/.config/fabric/patterns/*; do
-        if [ -d "$pattern_file" ]; then
-            pattern_name=$(basename "$pattern_file")
-            unalias "$pattern_name" 2>/dev/null
-            
-            eval "
-            $pattern_name() {
-              local title=\$1
-              local date_stamp=\$(date +'%Y-%m-%d')
-              local output_path=\"\$obsidian_base/AI\ Queries/\${date_stamp}-\${title}.md\"
+  for pattern_file in $HOME/.config/fabric/patterns/*; do
+    if [ -d "$pattern_file" ]; then
+      pattern_name=$(basename "$pattern_file")
+      unalias "$pattern_name" 2>/dev/null
 
-              if [ -n \"\$title\" ]; then
-                fabric --pattern \"$pattern_name\" -o \"\$output_path\"
-              else
-                fabric --pattern \"$pattern_name\" --stream
-              fi
-            }
-            "
+      eval "
+      $pattern_name() {
+        local title=\$1
+        local date_stamp=\$(date +'%Y-%m-%d')
+        local output_path=\"\$obsidian_base/AI\ Queries/\${date_stamp}-\${title}.md\"
+
+        if [ -n \"\$title\" ]; then
+          fabric --pattern \"$pattern_name\" -o \"\$output_path\"
+        else
+          fabric --pattern \"$pattern_name\" --stream
         fi
-    done
+      }
+    "
+    fi
+  done
 fi
 
 yt() {
 	if [ -z "$1" ]; then
-        echo "Usage: yt <video_link>"
-        return 1
-    fi
-    local video_link="$1"
-    fabric -y "$video_link" --transcript
+    echo "Usage: yt <video_link>"
+    return 1
+  fi
+  local video_link="$1"
+  fabric -y "$video_link" --transcript
 }
 
 # bun completions
