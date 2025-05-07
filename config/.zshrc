@@ -12,7 +12,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Load plugins conditionally
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
-
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
@@ -85,6 +84,11 @@ case "$OSTYPE" in
     export PATH=$PATH:/usr/share/dotnet:$HOME/.dotnet/tools
    ;;
 esac
+
+# Golang configuration
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 
 # nvm configuration
 export NVM_DIR="$HOME/.nvm"
@@ -169,6 +173,12 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
+
+# Custom Fabric alias "yai"
+if [[ -f "$HOME/repos/projects/sh-scripts/yai.sh" ]]; then
+  alias yai="$HOME/repos/projects/sh-scripts/yai.sh"
+fi
+
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

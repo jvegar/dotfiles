@@ -3,6 +3,10 @@
 # Get current timestamp
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
+#########################
+## ZSHRC CONFIGURATION ##
+#########################
+
 # Backup existing .zshrc if it exists
 if [ -f "$HOME/.zshrc" ]; then
     echo "Creating backup of existing .zshrc..."
@@ -14,3 +18,23 @@ echo "Installing new .zshrc configuration..."
 cp "./config/.zshrc" "$HOME/.zshrc"
 
 echo "Backup and copy for .zshrc completed successfully."
+
+###########################
+## WEZTERM CONFIGURATION ##
+###########################
+
+# Backup existing .wezterm.lua if it exists 
+if [ -f "$HOME/.config/wezterm/wezterm.lua" ]; then
+    echo "Creating backup of existing .wezterm.lua..."
+    cp "$HOME/.config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua.backup_$timestamp"
+fi
+
+# Copy new .wezterm.lua configuration
+echo "Installing new .wezterm.lua configuration..."
+# Create the directory if it doesn't exist
+if [ ! -d "$HOME/.config/wezterm" ]; then
+    mkdir -p "$HOME/.config/wezterm"
+fi
+cp "./config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
+
+echo "Backup and copy for .wezterm.lua completed successfully."
