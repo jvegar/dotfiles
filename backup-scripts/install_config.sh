@@ -50,3 +50,17 @@ fi
 cp "./config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
 
 echo "Backup and copy for wezterm.lua completed successfully."
+
+##########################
+## TMUX CONFIGURATION ##
+##########################
+# Backup existing .tmux.conf if it exists
+if [ -f "$HOME/.tmux.conf" ]; then
+    echo "Creating backup of existing .tmux.conf..."
+    cp "$HOME/.tmux.conf" "$HOME/.tmux.conf.backup_$timestamp"
+fi
+# Copy new .tmux.conf configuration
+echo "Installing new .tmux.conf configuration..."
+cp "./config/tmux/.tmux.conf" "$HOME/.tmux.conf"
+
+echo "Backup and copy for .tmux.conf completed successfully."
