@@ -15,33 +15,17 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# To customize prompt, run `p10k configure` or edit ~/.p1k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# OS-specific configurations
+# Alias OS-specific configurations
 case "$OSTYPE" in
   darwin*)
     ###################################
     ## macOS specific configurations ##
     ###################################
-
-    # Homebrew and custom installs
-    export PATH="/usr/local/bin:$PATH"
-
     # VS Code for macOS
     alias code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
-    
-    # Obsidian path for macOS
-    obsidian_base="$HOME/Documents/Obsidian"
-
-    # Texlive configuration
-    export PATH=/usr/local/texlive/2024/bin/universal-darwin:$PATH
-
-    # Maven vonfiguration
-    if [ -d '/usr/local/opt/maven' ]; then
-        export M2_HOME='/usr/local/opt/maven'
-        export PATH="$M2_HOME/bin:$PATH"
-    fi
     ;;
   linux-gnu*)
     #######################################
@@ -49,74 +33,17 @@ case "$OSTYPE" in
     #######################################
 
     # Podman configuration
-    export CONTAINERS_LOGDRIVER=k8s-file
     alias docker=podman
     alias docker-compose=podman-compose
 
     # VS Code for Linux WSL
     alias code="'/mnt/c/Users/jvega/AppData/Local/Programs/Microsoft VS Code/bin/code'"
 
-    # Obsidian path for Linux
-    obsidian_base="/mnt/d/repos/learning/obsidian/obsidian-vault-jevr/AI Queries"
-
     # Linux-specific copy/paste
     alias pbcopy='xclip -selection clipboard'
     alias pbpaste='xclip -selection clipboard -o'
-
-    # Texlive configuration
-    export PATH=/usr/local/texlive/2023/bin/x86_64-linux:$PATH
-
-    # Trae IDE configuration
-    export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/Trae/bin:$PATH"
-
-    # Maven configuration
-    if [ -d '/opt/apache-maven-3.9.9' ]; then
-      M2_HOME='/opt/apache-maven-3.9.9'
-      PATH="$M2_HOME/bin:$PATH"
-      export PATH
-    fi
-    
-    # Tool configurations and PATH exports
-    export DOTNET_ROOT=/usr/share/dotnet
-    export PATH=$PATH:/usr/share/dotnet:$HOME/.dotnet/tools
    ;;
 esac
-
-# Golang configuration
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
-
-# nvm configuration
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# Lazy load pyenv
-pyenv() {
-  unset -f pyenv
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(command pyenv init --path)"
-  eval "$(command pyenv init -)"
-  pyenv "$@"
-}
-
-# Lazy load gvm
-gvm() {
-  unset -f gvm
-  [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-  gvm "$@"
-}
-
-# Lazy load sdkman
-sdk() {
-  unset -f sdk
-  export SDKMAN_DIR="$HOME/.sdkman"
-  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-  sdk "$@"
-}
-
 
 # Fabric aliases configuration
 if [ -d "$HOME/.config/fabric/patterns" ]; then
@@ -129,7 +56,7 @@ if [ -d "$HOME/.config/fabric/patterns" ]; then
       $pattern_name() {
         local title=\$1
         local date_stamp=\$(date +'%Y-%m-%d')
-        local output_path=\"\$obsidian_base/AI\ Queries/\${date_stamp}-\${title}.md\"
+        local output_path=\"\${obsidian_base}/AI\ Queries/\${date_stamp}-\${title}.md\"
 
         if [ -n \"\$title\" ]; then
           fabric --pattern \"$pattern_name\" -o \"\$output_path\"
@@ -150,24 +77,6 @@ yt() {
   local video_link="$1"
   fabric -y "$video_link" --transcript
 }
-
-# bun configuration
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun version manager configuration
-export BUM_INSTALL="$HOME/.bum"
-export PATH="$BUM_INSTALL/bin:$PATH"
-
-# neovim configuration
-export PATH="$PATH:/opt/nvim/"
-
-# pyenv configuration
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
 
 # Custom Fabric alias "yai"
 if [[ -f "$HOME/repos/projects/sh-scripts/yai.sh" ]]; then
@@ -202,8 +111,3 @@ if command -v fzf >/dev/null 2>&1; then
     fd --type=d --hidden --exclude .git . "$1"
   }
 fi
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-

@@ -10,8 +10,8 @@ return {
 		require("neo-tree").setup({
 			filesystem = {
 				filtered_items = {
-					hide_dotfiles = true,
-					hide_gitignored = true,
+					hide_dotfiles = false,
+					hide_gitignored = false,
 					hide_by_name = { "node_modules", ".DS_Store" },
 					always_show = { ".gitignore" },
 				},

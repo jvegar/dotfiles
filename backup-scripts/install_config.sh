@@ -4,7 +4,7 @@
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
 #########################
-## ZSHRC CONFIGURATION ##
+## ZSH CONFIGURATION ##
 #########################
 
 # Backup existing .zshrc if it exists
@@ -18,6 +18,18 @@ echo "Installing new .zshrc configuration..."
 cp "./config/.zshrc" "$HOME/.zshrc"
 
 echo "Backup and copy for .zshrc completed successfully."
+
+# Backup existing .zsenv if it exists
+if [ -f "$HOME/.zshenv" ]; then
+    echo "Creating backup of existing .zshenv..."
+    cp "$HOME/.zshenv" "$HOME/.zshenv.backup_$timestamp"
+fi
+
+# Copy new .zshenv configuration
+echo "Installing new .zshenv configuration..."
+cp "./config/.zshenv" "$HOME/.zshenv"
+
+echo "Backup and copy for .zshenv completed successfully."
 
 ###########################
 ## WEZTERM CONFIGURATION ##
