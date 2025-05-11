@@ -34,22 +34,43 @@ echo "Backup and copy for .zshenv completed successfully."
 ###########################
 ## WEZTERM CONFIGURATION ##
 ###########################
+case "$OSTYPE" in
+  darwin*)
+    # Backup existing wezterm.lua if it exists 
+    if [ -f "$HOME/.config/wezterm/wezterm.lua" ]; then
+        echo "Creating backup of existing wezterm.lua..."
+        cp "$HOME/.config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua.backup_$timestamp"
+    fi
 
-# Backup existing wezterm.lua if it exists 
-if [ -f "$HOME/.config/wezterm/wezterm.lua" ]; then
-    echo "Creating backup of existing wezterm.lua..."
-    cp "$HOME/.config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua.backup_$timestamp"
-fi
+    # Copy new .wezterm.lua configuration
+    echo "Installing new wezterm.lua configuration..."
+    # Create the directory if it doesn't exist
+    if [ ! -d "$HOME/.config/wezterm" ]; then
+        mkdir -p "$HOME/.config/wezterm"
+    fi
+    cp "./config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
 
-# Copy new .wezterm.lua configuration
-echo "Installing new wezterm.lua configuration..."
-# Create the directory if it doesn't exist
-if [ ! -d "$HOME/.config/wezterm" ]; then
-    mkdir -p "$HOME/.config/wezterm"
-fi
-cp "./config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
+    echo "Backup and copy for wezterm.lua completed successfully."
+    ;;
+  linux-gnu*)
+    HOME_DIR="/mnt/c/Users/jvega"
+    # Backup existing wezterm.lua if it exists 
+    if [ -f "$HOME_DIR/.config/wezterm/wezterm.lua" ]; then
+        echo "Creating backup of existing wezterm.lua..."
+        cp "$HOME_DIR/.config/wezterm/wezterm.lua" "$HOME_DIR/.config/wezterm/wezterm.lua.backup_$timestamp"
+    fi
 
-echo "Backup and copy for wezterm.lua completed successfully."
+    # Copy new .wezterm.lua configuration
+    echo "Installing new wezterm.lua configuration..."
+    # Create the directory if it doesn't exist
+    if [ ! -d "$HOME_DIR/.config/wezterm" ]; then
+        mkdir -p "$HOME_DIR/.config/wezterm"
+    fi
+    cp "./config/wezterm/wezterm-win32.lua" "$HOME_DIR/.config/wezterm/wezterm.lua"
+
+    echo "Backup and copy for wezterm.lua completed successfully."
+  ;;  
+esac
 
 ##########################
 ## TMUX CONFIGURATION ##
