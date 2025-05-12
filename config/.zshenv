@@ -1,4 +1,10 @@
-case "$OS_TYPE" in
+###############################
+## ZSHENV CONFIGURATION FILE ##
+###############################
+# This file is sourced for all zsh sessions, including login and non-login shells.
+# It is a good place to set environment variables and PATH modifications.
+
+case "$OSTYPE" in
   darwin*)
     # Homebrew custom installs
     export PATH="/usr/local/bin:$PATH"
@@ -6,6 +12,8 @@ case "$OS_TYPE" in
     export OBSIDIAN_BASE="$HOME/repos/learning/obsidian/obsidian-vault-jevr"
     # Texlive configuration
     export PATH="/usr/local/texlive/2024/bin/universal-darwin:$PATH"
+    # Golang configuration
+    export GOROOT=/usr/local/go
     # Maven configuration
     if [ -d '/usr/local/opt/maven' ]; then
         export M2_HOME='/usr/local/opt/maven'
@@ -21,6 +29,8 @@ case "$OS_TYPE" in
     export PATH="/usr/local/texlive/2023/bin/x86_64-linux:$PATH"
     # Trae IDE configuration
     export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/Trae/bin:$PATH"
+    # Golang configuration
+    export GOROOT=$HOME/.gvm/gos/go1.22/bin/go
     # Maven configuration
     if [ -d '/opt/apache-maven-3.9.9' ]; then
       M2_HOME='/opt/apache-maven-3.9.9'
@@ -34,7 +44,6 @@ case "$OS_TYPE" in
 esac
 
 # Golang configuration
-export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 
@@ -53,12 +62,8 @@ pyenv() {
   pyenv "$@"
 }
 
-# Lazy load gvm
-gvm() {
-  unset -f gvm
-  [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-  gvm "$@"
-}
+# gvm configuration
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 # Lazy load sdkman
 sdk() {
