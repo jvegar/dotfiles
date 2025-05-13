@@ -10,7 +10,7 @@ bash "$SCRIPT_DIR/install_nvim.sh"
 bash "$SCRIPT_DIR/install_config.sh"
 
 # Run the backup and copy process for Scripts 
-# bash "$SCRIPT_DIR/install_scripts.sh"
+bash "$SCRIPT_DIR/install_scripts.sh"
 
 # Import GPG keys
 # bash "$SCRIPT_DIR/import_gpg_keys/sh"
