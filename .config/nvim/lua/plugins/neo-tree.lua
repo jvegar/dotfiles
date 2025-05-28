@@ -20,7 +20,7 @@ return {
 			},
 			window = {
 				position = "left",
-				width = 35,
+				width = 25,
 				mappings = {
 					["<space>"] = "toggle_node",
 					["<CR>"] = "open",
