@@ -34,7 +34,7 @@ if os.getenv("OS") == "Darwin" then
   config.window_background_opacity = 0.9
   config.macos_window_background_blur = 10
 else
-  config.window_background_opacity = 0.875
+  config.window_background_opacity = 0.85
   config.win32_system_backdrop = "Acrylic"
   config.default_domain = "WSL:Ubuntu-22.04"
   config.keys = {

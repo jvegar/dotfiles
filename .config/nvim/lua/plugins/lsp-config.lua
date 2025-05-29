@@ -1,14 +1,5 @@
 local fn = vim.fn
 
-local function buildTags()
-  local cwd = fn.getcwd()
-  if string.find(cwd, "repositories") then
-    return { "-tags=build integration && !unit" }
-  end
-
-  return { "-tags=" }
-end
-
 return {
   {
     "williamboman/mason.nvim",
@@ -31,23 +22,6 @@ return {
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
 
-      -- Setup fo Clangd language server 
-      lspconfig.clangd.setup({
-        capabilities = capabilities,
-        cmd = { "clangd", "--background-index" },
-        filetypes = { "c", "cpp", "objc", "objcpp" },
-        root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-      })
-      -- Setup for Go language server
-      lspconfig.gopls.setup({
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            buildFlags = buildTags(),
-          },
-        },
-        staticcheck = true,
-      })
       -- Setup for TOML language server
       lspconfig.taplo.setup({
         capabilities = capabilities,
@@ -90,14 +64,17 @@ return {
 
       -- Setup for Typescript language server
       lspconfig.ts_ls.setup({
-        capabilities = capabilities,
         cmd = { "typescript-language-server", "--stdio" },
-        settings = {
-          tsserver = {
-            filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
-            root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json"),
-          },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx",
         },
+        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+        single_file_support = true,
       })
 
       -- Keymaps for LSP functionality

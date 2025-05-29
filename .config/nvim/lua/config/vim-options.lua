@@ -48,4 +48,6 @@ api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
         end,
         desc = "Check for file changes on focus or buffer enter",
 })
+-- Set background to none
+api.nvim_set_hl(0, "Normal", { ctermbg = "none", bg = "none" })
 
