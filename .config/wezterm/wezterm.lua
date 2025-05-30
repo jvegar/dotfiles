@@ -5,8 +5,7 @@ local mux = wezterm.mux
 
 -- Font settings
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
---config.line_height = 1.2
-config.font_size = 16
+config.font_size = 14
 
 -- Appearance
 config.window_decorations = "RESIZE"
@@ -34,7 +33,7 @@ if os.getenv("OS") == "Darwin" then
   config.window_background_opacity = 0.9
   config.macos_window_background_blur = 10
 else
-  config.window_background_opacity = 0.85
+  config.window_background_opacity = 0.8
   config.win32_system_backdrop = "Acrylic"
   config.default_domain = "WSL:Ubuntu-22.04"
   config.keys = {
@@ -70,6 +69,57 @@ end
 wezterm.on('gui-startup', function(cmd)
   local tab, pane, window = mux.spawn_window(cmd or {})
   window:gui_window():maximize()
+end)
+
+-- Zero bottom padding when resizing window
+function readjust_font_size(window, pane)
+  local window_dims = window:get_dimensions()
+  local pane_dims = pane:get_dimensions()
+
+  local config_overrides = {}
+  local initial_font_size = 12
+  config_overrides.font_size = initial_font_size
+
+  local max_iterations = 5
+  local iteration_count = 0
+  local tolerance = 3
+
+  -- Calculate the initial difference between window and pane heights
+  local current_diff = window_dims.pixel_height - pane_dims.pixel_height
+  local min_diff = math.abs(current_diff)
+  local best_font_size = initial_font_size
+
+  -- Loop to adjust font size until the difference is within tolerance or max iterations reached
+  while current_diff > tolerance and iteration_count < max_iterations do
+
+    -- Increment the font size slightly
+    config_overrides.font_size = config_overrides.font_size + 0.5
+    window:set_config_overrides(config_overrides)
+
+    -- Update dimensions after changing font size
+    window_dims = window:get_dimensions()
+    pane_dims = pane:get_dimensions()
+    current_diff = window_dims.pixel_height - pane_dims.pixel_height
+
+    -- Check if the current difference is the smallest seen so far
+    local abs_diff = math.abs(current_diff)
+    if abs_diff < min_diff then
+      min_diff = abs_diff
+      best_font_size = config_overrides.font_size
+    end
+
+    iteration_count = iteration_count + 1
+  end
+
+  -- If no acceptable difference was found, set the font size to the best one encountered
+  if current_diff > tolerance then
+    config_overrides.font_size = best_font_size
+    window:set_config_overrides(config_overrides)
+  end
+end
+
+wezterm.on("window-resized", function(window, pane)
+  readjust_font_size(window, pane)
 end)
 
 return config
