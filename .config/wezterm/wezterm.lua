@@ -5,7 +5,7 @@ local mux = wezterm.mux
 
 -- Font settings
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
-config.font_size = 14
+--config.font_size = 16
 
 -- Appearance
 config.window_decorations = "RESIZE"
@@ -29,7 +29,7 @@ config.colors = {
 }
 
 -- OS specific configuration
-if os.getenv("OS") == "Darwin" then
+if wezterm.target_triple == "x86_64-apple-darwin" then
   config.window_background_opacity = 0.9
   config.macos_window_background_blur = 10
 else
@@ -77,7 +77,13 @@ function readjust_font_size(window, pane)
   local pane_dims = pane:get_dimensions()
 
   local config_overrides = {}
+  -- Set initial font size
   local initial_font_size = 12
+  if wezterm.target_triple == "x86_64-apple-darwin" then
+    initial_font_size = 19
+  else
+    initial_font_size = 14
+  end
   config_overrides.font_size = initial_font_size
 
   local max_iterations = 5
