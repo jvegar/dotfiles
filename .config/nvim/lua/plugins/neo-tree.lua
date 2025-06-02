@@ -12,7 +12,11 @@ return {
 				filtered_items = {
 					hide_dotfiles = false,
 					hide_gitignored = false,
-					hide_by_name = { "node_modules", ".DS_Store" },
+					hide_by_name = {
+            "node_modules",
+            ".DS_Store",
+            ".git",
+          },
 					always_show = { ".gitignore" },
 				},
 				follow_current_file = { enabled = true }, -- Updated line

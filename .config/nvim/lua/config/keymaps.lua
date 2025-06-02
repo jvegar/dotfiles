@@ -6,4 +6,4 @@ function OpenTmuxPoup()
 end
 
 vim.keymap.set('n', '<leader>s', ':w<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>p', ':lua OpenTmuxPoup()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>p', ':lua OpenTmuxPopup()<CR>', { noremap = true, silent = true })

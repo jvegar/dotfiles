@@ -34,7 +34,7 @@ opt.undofile = true -- Enable persistent undo
 opt.autoread = true -- Reload files changed outside of Neovim
 
 -- Colorscheme
-vim.cmd([[colorscheme leaf]])
+vim.cmd([[colorscheme newpaper]])
 
 -- dont' auto comment new line
 api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
@@ -49,5 +49,5 @@ api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
         desc = "Check for file changes on focus or buffer enter",
 })
 -- Set background to none
-api.nvim_set_hl(0, "Normal", { ctermbg = "none", bg = "none" })
+--api.nvim_set_hl(0, "Normal", { ctermbg = "none", bg = "none" })
 

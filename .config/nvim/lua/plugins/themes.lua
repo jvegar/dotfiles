@@ -4,7 +4,7 @@ return {
 		config = function()
 			require("leaf").setup({
 				theme = "dark",
-				transparent = false,
+				transparent = true,
 				italics = {
 					comments = false,
 					keywords = false,
@@ -25,8 +25,20 @@ return {
 		priority = 1000,
 		config = function()
 			require("newpaper").setup({
-				style = "light",
+				style = "dark",
+        lightness = -0.1,
+        saturation = -0.1,
 			})
 		end,
 	},
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = true,
+    priority = 1000,
+    opts = function()
+      return {
+        transparent = true
+      }
+    end
+  }
 }
