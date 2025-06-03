@@ -4,40 +4,93 @@ This repository contains my personal dotfiles and configuration files for variou
 
 ## Contents
 
-- `nvim/` - Neovim configuration files
-- `backup-scripts/` - Scripts for backing up configurations
-- `install.sh` - Installation script for setting up the dotfiles
+- `.config/` - Configuration files for various applications
+  - `nvim/` - Neovim configuration files
+  - `tmux/` - Tmux configuration
+  - `wezterm/` - WezTerm terminal emulator configuration
+- `scripts/` - Utility scripts for various tasks
+- `.zshrc` - Zsh shell configuration
+- `.zshenv` - Zsh environment variables
 
 ## Installation
 
-To install these dotfiles, simply run:
+This repository uses [GNU Stow](https://www.gnu.org/software/stow/) to manage dotfiles. Stow creates symlinks from the repository files to their appropriate locations in your home directory.
+
+1. First, install GNU Stow:
+
+   ```bash
+   # On macOS using Homebrew
+   brew install stow
+   ```
+
+2. Clone this repository to your home directory:
+
+   ```bash
+   git clone https://github.com/jvegar/dotfiles.git ~/dotfiles
+   cd ~/dotfiles
+   ```
+
+3. Use Stow to create the symlinks:
+
+   ```bash
+   # Stow all configurations
+   stow .
+
+   # Or stow specific configurations
+   stow nvim
+   stow tmux
+   stow wezterm
+   ```
+
+To unlink configurations, use:
 
 ```bash
-./install.sh
+stow -D .
 ```
-
-This will create symbolic links for all the configuration files in their appropriate locations.
 
 ## Structure
 
-### Neovim Configuration
+### Shell Configuration
 
-The `nvim/` directory contains my Neovim configuration, including:
+The root directory contains shell configuration files:
+
+- `.zshrc` - Main Zsh configuration file
+- `.zshenv` - Environment variables and path settings
+
+### Application Configurations
+
+The `.config/` directory contains configurations for various applications:
+
+#### Neovim Configuration
 
 - Custom keybindings
 - Plugin configurations
 - Color schemes
 - LSP settings
 
-### Backup Scripts
+#### Tmux Configuration
 
-The `backup-scripts/` directory contains utilities for backing up and managing configuration files.
+- Session management
+- Key bindings
+- Status bar customization
+
+#### WezTerm Configuration
+
+- Terminal emulator settings
+- Color schemes
+- Key bindings
+
+### Utility Scripts
+
+The `scripts/` directory contains various utility scripts for system management and automation.
 
 ## Requirements
 
-- macOS (tested on macOS 24.3.0)
+- macOS (tested on macOS 24.5.0)
 - zsh shell
-- Neovim (for editor configurations)
+- Neovim
+- Tmux
+- WezTerm
 
 ## Contributing
 
