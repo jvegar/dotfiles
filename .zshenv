@@ -54,13 +54,11 @@ export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 
 # pyenv cofiguration
-#export PYENV_ROOT="$HOME/.pyenv"
-#[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-#eval "$(pyenv init - zsh)"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
 # gvm configuration
 export GVM_DIR="$HOME/.gvm"
-#[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 # bun configuration
 export BUN_INSTALL="$HOME/.bun"

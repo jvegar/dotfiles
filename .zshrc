@@ -18,12 +18,12 @@ else
 fi
 
 zinit module zinit-zsh
+
 # Load Powerlevel10k theme
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
 # Core zsh functionality (history, completion, etc.)
-#zinit snippet OMZL::history.zsh
 zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::key-bindings.zsh
 
@@ -35,14 +35,22 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions \
   zdharma-continuum/history-search-multi-word
 
-# Git plugin fomr Oh-My-Zsh - loaded when entering a git repository
-zinit ice wait lucid
-zinit snippet OMZP::git
+# Git plugin from Oh-My-Zsh - loaded when entering a git repository
+zinit wait lucid for \
+  OMZL::git.zsh \
+  OMZP::git
+
 
 # Load Fast node version manager (fnm) for Node.js management
 zinit wait lucid for \
   atinit="eval \"$(fnm env --use-on-cd)\"" \
   zdharma-continuum/null
+
+# Load pyenv for Python version management
+zinit lucid as'command' pick'bin/pyenv' \
+    atclone'./libexec/pyenv init - > zpyenv.zsh' \
+    atpull"%atclone" src"zpyenv.zsh" nocompile'!' for \
+        pyenv/pyenv
 
 # fzf configuration
 zinit ice from"gh-r" as"program"
