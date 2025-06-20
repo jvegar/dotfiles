@@ -40,7 +40,6 @@ zinit wait lucid for \
   OMZL::git.zsh \
   OMZP::git
 
-
 # Load Fast node version manager (fnm) for Node.js management
 zinit wait lucid for \
   atinit="eval \"$(fnm env --use-on-cd)\"" \
@@ -88,33 +87,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time background_jobs)
 
 # To customize prompt, run `p10k configure` or edit ~/.p1k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Alias OS-specific configurations
-case "$OSTYPE" in
-  darwin*)
-    ###################################
-    ## macOS specific configurations ##
-    ###################################
-    # VS Code for macOS
-    alias code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
-    ;;
-  linux-gnu*)
-    #######################################
-    ## Linux/WSL specific configurations ##
-    #######################################
-
-    # Podman configuration
-    alias docker=podman
-    alias docker-compose=podman-compose
-
-    # VS Code for Linux WSL
-    alias code="'/mnt/c/Users/jvega/AppData/Local/Programs/Microsoft VS Code/bin/code'"
-
-    # Linux-specific copy/paste
-    alias pbcopy='xclip -selection clipboard'
-    alias pbpaste='xclip -selection clipboard -o'
-   ;;
-esac
 
 # Fabric aliases configuration
 if [ -d "$HOME/.config/fabric/patterns" ]; then
