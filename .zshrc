@@ -75,8 +75,37 @@ zinit wait lucid for \
   atload='. "$HOME/.cargo/env"' \
   zdharma-continuum/null
 
-# Source aliases from a separate file for better organization
-[[ -f "$HOME/.zsh_aliases" ]] && source "$HOME/.zsh_aliases"
+# Aliases 
+alias ll="ls -lh"
+alias md="mkdir"
+alias yai="$HOME/repos/projects/sh-scripts/yai.sh"
+
+# OS-specific aliases 
+case "$OSTYPE" in
+  darwin*)
+    ###################################
+    ## macOS specific configurations ##
+    ###################################
+    # VS Code for macOS
+    alias code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+    ;;
+  linux-gnu*)
+    #######################################
+    ## Linux/WSL specific configurations ##
+    #######################################
+
+    # Podman configuration
+    alias docker=podman
+    alias docker-compose=podman-compose
+
+    # VS Code for Linux WSL
+    alias code="'/mnt/c/Users/jvega/AppData/Local/Programs/Microsoft VS Code/bin/code'"
+
+    # Linux-specific copy/paste
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+   ;;
+esac
 
 # Configure Powerlevel10k
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -85,46 +114,15 @@ POWERLEVEL9K_BATTERY_SHOW=false
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time background_jobs)
 
-# To customize prompt, run `p10k configure` or edit ~/.p1k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+zinit ice lucid nocd \
+  if"[[ -f ~/.p10k.zsh ]]" \
+  atload"source ~/.p10k.zsh"
+zinit light romkatv/powerlevel10k
 
-# Fabric aliases configuration
-if [ -d "$HOME/.config/fabric/patterns" ]; then
-  for pattern_file in $HOME/.config/fabric/patterns/*; do
-    if [ -d "$pattern_file" ]; then
-      pattern_name=$(basename "$pattern_file")
-      unalias "$pattern_name" 2>/dev/null
-
-      eval "
-      $pattern_name() {
-        local title=\$1
-        local date_stamp=\$(date +'%Y-%m-%d')
-        local output_path=\"\${obsidian_base}/AI\ Queries/\${date_stamp}-\${title}.md\"
-
-        if [ -n \"\$title\" ]; then
-          fabric --pattern \"$pattern_name\" -o \"\$output_path\"
-        else
-          fabric --pattern \"$pattern_name\" --stream
-        fi
-      }
-    "
-    fi
-  done
-fi
-
-yt() {
-	if [ -z "$1" ]; then
-    echo "Usage: yt <video_link>"
-    return 1
-  fi
-  local video_link="$1"
-  fabric -y "$video_link" --transcript
-}
-
-# Custom Fabric alias "yai"
-if [[ -f "$HOME/repos/projects/sh-scripts/yai.sh" ]]; then
-  alias yai="$HOME/repos/projects/sh-scripts/yai.sh"
-fi
+# load fabric patterns
+zinit ice wait"1" trigger-load="fabric"
+zinit snippet ~/scripts/load_fabric_patterns.sh
 
 # Zsh history setup
 HISTFILE=$HOME/.zhistory
