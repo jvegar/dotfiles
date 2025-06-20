@@ -25,7 +25,7 @@ return {
 		priority = 1000,
 		config = function()
 			require("newpaper").setup({
-				style = "dark",
+				style = "light",
         lightness = -0.1,
         saturation = -0.1,
 			})
