@@ -73,5 +73,12 @@ export PATH="$PATH:/opt/nvim/"
 # cargo configuration
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# pnpm configuration
+export PNPM_HOME="/home/jvegar/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
