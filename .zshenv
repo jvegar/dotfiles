@@ -12,8 +12,6 @@ case "$OSTYPE" in
     export OBSIDIAN_BASE="$HOME/repos/learning/obsidian/obsidian-vault-jevr"
     # Texlive configuration
     export PATH="/usr/local/texlive/2024/bin/universal-darwin:$PATH"
-    # Golang configuration
-    export GOROOT=/usr/local/go
     # Maven configuration
     if [ -d '/usr/local/opt/maven' ]; then
         export M2_HOME='/usr/local/opt/maven'
@@ -29,8 +27,6 @@ case "$OSTYPE" in
     export PATH="/usr/local/texlive/2023/bin/x86_64-linux:$PATH"
     # Trae IDE configuration
     export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/Trae/bin:$PATH"
-    # Golang configuration
-    export GOROOT=$HOME/.gvm/gos/go1.22/bin/go
     # Maven configuration
     if [ -d '/opt/apache-maven-3.9.9' ]; then
       M2_HOME='/opt/apache-maven-3.9.9'
@@ -42,6 +38,9 @@ case "$OSTYPE" in
     export PATH=$PATH:/usr/share/dotnet:$HOME/.dotnet/tools
     ;;
 esac
+
+# tmux configuration
+export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 
 # fnm configuration
 FNM_PATH="$HOME/.local/share/fnm"

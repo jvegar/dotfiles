@@ -5,7 +5,6 @@ local mux = wezterm.mux
 
 -- Font settings
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
---config.font_size = 16
 
 -- Appearance
 config.window_decorations = "RESIZE"
@@ -30,9 +29,11 @@ config.colors = {
 
 -- OS specific configuration
 if wezterm.target_triple == "x86_64-apple-darwin" then
+  config.font_size = 19
   config.window_background_opacity = 0.9
   config.macos_window_background_blur = 10
 else
+  config.font_size = 16
   config.window_background_opacity = 0.8
   config.win32_system_backdrop = "Acrylic"
   config.default_domain = "WSL:Ubuntu-22.04"
@@ -124,8 +125,8 @@ function readjust_font_size(window, pane)
   end
 end
 
-wezterm.on("window-resized", function(window, pane)
-  readjust_font_size(window, pane)
-end)
+--wezterm.on("window-resized", function(window, pane)
+--  readjust_font_size(window, pane)
+--end)
 
 return config

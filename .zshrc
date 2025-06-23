@@ -20,8 +20,8 @@ fi
 zinit module zinit-zsh
 
 # Load Powerlevel10k theme
-zinit ice depth=1
-zinit light romkatv/powerlevel10k
+#zinit ice depth=1
+#zinit light romkatv/powerlevel10k
 
 # Core zsh functionality (history, completion, etc.)
 zinit snippet OMZL::completion.zsh
@@ -42,7 +42,7 @@ zinit wait lucid for \
 
 # Load Fast node version manager (fnm) for Node.js management
 zinit wait lucid for \
-  atinit="eval \"$(fnm env --use-on-cd)\"" \
+  atload="eval \"$(fnm env --use-on-cd)\"" \
   zdharma-continuum/null
 
 # Load pyenv for Python version management
@@ -54,11 +54,6 @@ zinit lucid as'command' pick'bin/pyenv' \
 # fzf configuration
 zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf
-
-# gvm configuration
-zinit wait lucid for \
-  atload='[[ -s "$GVM_DIR/scripts/gvm" ]] && source "$GVM_DIR/scripts/gvm"' \
-  zdharma-continuum/null
 
 # bun configuration
 zinit wait lucid for \
@@ -72,7 +67,7 @@ zinit wait lucid for \
 
 # cargo configuration
 zinit wait lucid for \
-  atload='. "$HOME/.cargo/env"' \
+  atload='[[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"' \
   zdharma-continuum/null
 
 # Aliases 
