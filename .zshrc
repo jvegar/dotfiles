@@ -41,9 +41,9 @@ zinit wait lucid for \
   OMZP::git
 
 # Load Fast node version manager (fnm) for Node.js management
-#zinit wait lucid for \
-#  atload="eval \"$(fnm env --use-on-cd)\"" \
-#  zdharma-continuum/null
+zinit wait lucid for \
+  atload="eval \"$(fnm env --use-on-cd)\"" \
+  zdharma-continuum/null
 
 # Load pyenv for Python version management
 zinit lucid as'command' pick'bin/pyenv' \

@@ -45,10 +45,10 @@ esac
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 
 # fnm configuration
-#FNM_PATH="$HOME/.local/share/fnm"
-#if [ -d "$FNM_PATH" ]; then
-#  export PATH="$HOME/.local/share/fnm:$PATH"
-#fi
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$HOME/.local/share/fnm:$PATH"
+fi
 
 # Golang configuration
 export GOPATH=$HOME/go
