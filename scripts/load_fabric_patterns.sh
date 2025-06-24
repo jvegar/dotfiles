@@ -9,7 +9,7 @@ if [ -d "$HOME/.config/fabric/patterns" ]; then
       $pattern_name() {
         local title=\$1
         local date_stamp=\$(date +'%Y-%m-%d')
-        local output_path=\"\${obsidian_base}/AI\ Queries/\${date_stamp}-\${title}.md\"
+        local output_path=\"\${OBSIDIAN_BASE}/AI\ Queries/\${date_stamp}-\${title}.md\"
 
         if [ -n \"\$title\" ]; then
           fabric --pattern \"$pattern_name\" -o \"\$output_path\"

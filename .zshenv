@@ -4,12 +4,14 @@
 # This file is sourced for all zsh sessions, including login and non-login shells.
 # It is a good place to set environment variables and PATH modifications.
 
-case "$OSTYPE" in
-  darwin*)
+case "{$OSTYPE:-$(uname -s)" in
+  [Dd]arwin*)
     # Homebrew custom installs
     export PATH="/usr/local/bin:$PATH"
     # Obsidian path for macOS
     export OBSIDIAN_BASE="$HOME/repos/learning/obsidian/obsidian-vault-jevr"
+    # Go configuration
+    export GOROOT="$(brew --prefix go)/libexec"
     # Texlive configuration
     export PATH="/usr/local/texlive/2024/bin/universal-darwin:$PATH"
     # Maven configuration
@@ -18,7 +20,7 @@ case "$OSTYPE" in
         export PATH="$M2_HOME/bin:$PATH"
     fi
     ;; 
-  linux-gnu*)
+  [Ll]inux-gnu*)
     # Podman configuration
     export CONTAINERS_LOGDRIVER=k8s-file
     # Obsidian path for Linux/WSL
@@ -43,10 +45,10 @@ esac
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 
 # fnm configuration
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$HOME/.local/share/fnm:$PATH"
-fi
+#FNM_PATH="$HOME/.local/share/fnm"
+#if [ -d "$FNM_PATH" ]; then
+#  export PATH="$HOME/.local/share/fnm:$PATH"
+#fi
 
 # Golang configuration
 export GOPATH=$HOME/go
@@ -74,7 +76,7 @@ export PATH="$PATH:/opt/nvim/"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # pnpm configuration
-export PNPM_HOME="/home/jvegar/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

@@ -41,9 +41,9 @@ zinit wait lucid for \
   OMZP::git
 
 # Load Fast node version manager (fnm) for Node.js management
-zinit wait lucid for \
-  atload="eval \"$(fnm env --use-on-cd)\"" \
-  zdharma-continuum/null
+#zinit wait lucid for \
+#  atload="eval \"$(fnm env --use-on-cd)\"" \
+#  zdharma-continuum/null
 
 # Load pyenv for Python version management
 zinit lucid as'command' pick'bin/pyenv' \
@@ -82,7 +82,7 @@ case "$OSTYPE" in
     ## macOS specific configurations ##
     ###################################
     # VS Code for macOS
-    alias code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+    alias code="'/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'"
     ;;
   linux-gnu*)
     #######################################
@@ -116,7 +116,7 @@ zinit ice lucid nocd \
 zinit light romkatv/powerlevel10k
 
 # load fabric patterns
-zinit ice wait"1" trigger-load="fabric"
+zinit ice wait"1" silent
 zinit snippet ~/scripts/load_fabric_patterns.sh
 
 # Zsh history setup
