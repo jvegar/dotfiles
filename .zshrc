@@ -69,7 +69,7 @@ zinit wait lucid for \
 # Aliases 
 alias ll="ls -lh"
 alias md="mkdir"
-alias yai="$HOME/repos/projects/sh-scripts/yai.sh"
+alias yai="$HOME/repos/projects/dotfiles/scripts/yai.sh"
 
 # OS-specific aliases 
 case "$OSTYPE" in
