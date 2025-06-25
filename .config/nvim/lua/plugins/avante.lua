@@ -13,14 +13,30 @@ return {
   --@module 'avante'
   --@type avante.Config
   opts = {
+    --provider = "openai",
+    --providers = {
+    --  openai = {
+    --    endpoint = "https://api.openai.com/v1",
+    --    model = "gpt-4o",
+    --    timeout = 20000, -- Timeout in miliseconds
+    --    extra_request_body = {
+    --      temperature = 0.75,
+    --      max_tokens = 20480,
+    --    },
+    --  },
+    --},
     provider = "openrouter",
     providers = {
       openrouter = {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
-        api_key_name = "cmd:bw get notes open-router-fabric-key",
-        --model = "deepseek/deepseek-chat-v3-0324:free",
-        model = "mistralai/devstral-small-2505:free",
+        model = "deepseek/deepseek-r1",
+        api_key_name= "OPENROUTER_API_KEY",
+        timeout = 20000, -- Timeout in miliseconds
+        extra_request_body = {
+          temperature = 0.75,
+          max_tokens = 4363,
+        },
       },
     },
   },

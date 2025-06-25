@@ -19,10 +19,6 @@ fi
 
 zinit module zinit-zsh
 
-# Load Powerlevel10k theme
-#zinit ice depth=1
-#zinit light romkatv/powerlevel10k
-
 # Core zsh functionality (history, completion, etc.)
 zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::key-bindings.zsh

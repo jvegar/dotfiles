@@ -4,7 +4,12 @@
 # This file is sourced for all zsh sessions, including login and non-login shells.
 # It is a good place to set environment variables and PATH modifications.
 
-case "{$OSTYPE:-$(uname -s)" in
+# Load secrets from .secrets file if it exists
+if [ -f "$HOME/.secrets" ]; then
+  source "$HOME/.secrets"
+fi
+
+case "${OSTYPE:-$(uname -s)}" in
   [Dd]arwin*)
     # Homebrew custom installs
     export PATH="/usr/local/bin:$PATH"
@@ -25,6 +30,9 @@ case "{$OSTYPE:-$(uname -s)" in
     export CONTAINERS_LOGDRIVER=k8s-file
     # Obsidian path for Linux/WSL
     export OBSIDIAN_BASE="/mnt/d/repos/learning/obsidian/obsidian-vault-jevr/AI Queries"
+    # Golang configuration
+    export GOROOT="/usr/local/go"
+    export PATH=$PATH:/usr/local/go/bin
     # Texlive configuration
     export PATH="/usr/local/texlive/2023/bin/x86_64-linux:$PATH"
     # Trae IDE configuration
@@ -38,6 +46,8 @@ case "{$OSTYPE:-$(uname -s)" in
     # Dotnet tools configuration
     export DOTNET_ROOT=/usr/share/dotnet
     export PATH=$PATH:/usr/share/dotnet:$HOME/.dotnet/tools
+    # Cursor configuration
+    export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/cursor/resources/app/bin:$PATH"
     ;;
 esac
 
@@ -50,7 +60,7 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="$HOME/.local/share/fnm:$PATH"
 fi
 
-# Golang configuration
+# golang configuration
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 
