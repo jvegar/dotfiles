@@ -1,64 +1,50 @@
 #!/bin/bash
 
-# Determine home directory using multiple fallback methods
-get_home_dir() {
-    # Try $HOME first
-    if [ -n "$HOME" ]; then
-        echo "$HOME"
-        return
-    fi
-    
-    # Try getent if available
-    if command -v getent >/dev/null 2>&1; then
-        HOME=$(getent passwd "$(whoami)" | cut -d: -f6)
-        if [ -n "$HOME" ]; then
-            echo "$HOME"
-            return
-        fi
-    fi
-    
-    # Fallback to ~ expansion
-    echo ~
-}
-
-HOME_DIR=$(get_home_dir)
-SCRIPT_DIR="$HOME_DIR/repos/projects/dotfiles/scripts"
+# Determine the directory where the script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 LOADER_PATH="$SCRIPT_DIR/shloader.sh"
-OBSIDIAN_DIR="/mnt/d/repos/learning/obsidian/obsidian-vault-jevr/AI Queries"
+
+# Use OBSIDIAN_BASE environment variable, or exit if not set.
+# Example: export OBSIDIAN_BASE="/path/to/your/vault"
+if [ -z "$OBSIDIAN_BASE" ]; then
+    echo "Error: OBSIDIAN_BASE environment variable is not set." >&2
+    echo "Please set it to your Obsidian AI Queries directory." >&2
+    exit 1
+fi
+OBSIDIAN_DIR="$OBSIDIAN_BASE"
 
 # Verify and source the loader
 if [ -f "$LOADER_PATH" ]; then
     source "$LOADER_PATH"
 else
-    echo "Error: Could not find shloader.sh"
-    echo "Searched in: $LOADER_PATH"
-    echo "Please ensure the file exists at the expected location"
+    echo "Error: Could not find shloader.sh" >&2
+    echo "Searched in: $LOADER_PATH" >&2
+    echo "Please ensure the file exists at the expected location" >&2
     exit 1
 fi
 
-# Function to concatenate strings and evaluate the result
+# Function to process the query and pipe it to fabric
 main() {
   # Input strings
   local query_string="$1"
   local title_string="${2:-}"
-  
-  # Concatenate raw query 
+
+  # Process the query
   if [ -n "$title_string" ]; then
-    local time_stamp=$(date +'%Y-%m-%d')
-    local output_path="$OBSIDIAN_DIR/${time_stamp}-${title_string}.md" 
-    raw_query="echo '$query_string' | fabric -p raw_query -o '$output_path'"  
-  else 
-    raw_query="echo '$query_string' | fabric -p raw_query --stream"
+    local time_stamp
+    time_stamp=$(date +'%Y-%m-%d')
+    local output_path="$OBSIDIAN_DIR/${time_stamp}-${title_string}.md"
+    # Directly execute the command, avoiding eval
+    echo "$query_string" | fabric -p raw_query -o "$output_path" | glow -
+  else
+    # Directly execute the command, avoiding eval
+    echo "$query_string" | fabric -p raw_query --stream | glow -
   fi
-
-  eval "$raw_query" | glow -
 }
-
-
 
 # Check if an argument is provided
 if [ -z "$1" ]; then
-  echo "Usage: $0 <input_string>"
+  echo "Usage: $0 <query_string> [optional_title]" >&2
   exit 1
 fi
 

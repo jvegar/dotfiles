@@ -5,16 +5,16 @@ end_shloader() {
   if [ ! -z "${shloader_pid+x}" ]; then
     kill "${shloader_pid}" &>/dev/null || true
   fi
-  tput cnorm || true
+  tput cnorm >&2 || true
   if [ ! -z "${ending+x}" ]; then
-    printf "\r%s\n" "${ending}"
+    printf "\r\033[K%s\n" "${ending}" >&2
   fi
 }
 
 # Set options and trap after function definition
 set -Eeuo pipefail
 trap end_shloader SIGINT SIGTERM ERR EXIT RETURN
-tput civis
+tput civis >&2
 
 # Loaders
 # EMOJIS
@@ -74,17 +74,11 @@ EOF
 play_shloader() {
   while true ; do
     for frame in "${loader[@]}" ; do
-      printf "\r%s" "${frame} ${message}"
+      printf "\r%s" "${frame} ${message}" >&2
       sleep "${speed}"
     done
   done
 }
-
-# Then set the trap
-set -Eeuo pipefail
-trap end_shloader SIGINT SIGTERM ERR EXIT RETURN
-tput civis
-
 
 shloader() {
   loader=''
@@ -122,7 +116,7 @@ shloader() {
   speed="${loader[0]}"
   unset "loader[0]"
 
-  tput civis
+  tput civis >&2
   play_shloader &
   shloader_pid="${!}"
 }
