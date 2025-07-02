@@ -1,6 +1,6 @@
 return {
   "yetone/avante.nvim",
-  --enabled = false,
+  enabled = false,
   build = function()
     -- conditionally use the correct build system for the current OS
     if vim.fn.has("win32") == 1 then

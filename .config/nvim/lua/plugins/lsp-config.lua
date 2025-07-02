@@ -38,6 +38,11 @@ return {
             end,
           })
         end
+
+        if client.supports_method "textDocument/foldingRange" then
+          vim.o.foldmethod = "expr"
+          vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+        end
       end
 
       -- Setup for TOML language server
