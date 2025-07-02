@@ -22,13 +22,33 @@ return {
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
 
+      local on_attach = function(client, bufnr)
+        -- Keymaps for LSP functionality
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
+        vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+        vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { buffer = bufnr, desc = "Find references" })
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
+
+        if client.supports_method "textDocument/formatting" then
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            group = vim.api.nvim_create_augroup("Format", { clear = true }),
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format { async = false }
+            end,
+          })
+        end
+      end
+
       -- Setup for TOML language server
       lspconfig.taplo.setup({
         capabilities = capabilities,
+        on_attach = on_attach,
       })
       -- Setup for Lua language server
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           Lua = {
             runtime = {
@@ -52,6 +72,7 @@ return {
       -- Setup for Bash language server
       lspconfig.bashls.setup({
         capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           bash = {
             enable = true,
@@ -65,6 +86,8 @@ return {
       -- Setup for Typescript language server
       lspconfig.ts_ls.setup({
         cmd = { "typescript-language-server", "--stdio" },
+        capabilities = capabilities,
+        on_attach = on_attach,
         filetypes = {
           "javascript",
           "javascriptreact",
@@ -80,6 +103,7 @@ return {
       -- Setup for Python language server
       lspconfig.pyright.setup({
         capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           python = {
             analysis = {
@@ -90,12 +114,6 @@ return {
           },
         },
       })
-
-      -- Keymaps for LSP functionality
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "Find references" })
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
     end,
   },
 }

@@ -1,5 +1,6 @@
 return {
   "yetone/avante.nvim",
+  --enabled = false,
   build = function()
     -- conditionally use the correct build system for the current OS
     if vim.fn.has("win32") == 1 then
@@ -35,7 +36,7 @@ return {
         timeout = 20000, -- Timeout in miliseconds
         extra_request_body = {
           temperature = 0.75,
-          max_tokens = 4363,
+          max_tokens = 1453,
         },
       },
     },
