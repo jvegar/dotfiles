@@ -1,5 +1,3 @@
-require("config.keymaps.go-definition")
-
 function OpenTmuxPopup()
   local cmd = 'bash $HOME/.config/scripts/toggle_tmux_popup.sh'
   vim.fn.system(cmd)
