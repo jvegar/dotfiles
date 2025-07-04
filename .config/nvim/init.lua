@@ -7,5 +7,4 @@ g.maplocalleader = " "
 require("config.ui")
 require("config.lazy")
 require("config.vim-options")
-require("config.keymaps")
 require("config.telescope.makefile_targets")
