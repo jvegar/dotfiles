@@ -36,9 +36,9 @@ else
   config.font_size = 13.5
   config.window_background_opacity = 0.8
   config.win32_system_backdrop = "Acrylic"
-  config.default_domain = "WSL:Ubuntu-22.04"
+  config.default_domain = "WSL:archlinux"
   config.keys = {
-    { key = "v", mods = "CTRL", action = wezterm.action{ PasteFrom = "Clipboard" }, },
+    { key = "v", mods = "CTRL",       action = wezterm.action { PasteFrom = "Clipboard" }, },
     { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration, },
     { key = "n", mods = "CTRL|SHIFT", action = wezterm.action.ToggleFullScreen, },
   }

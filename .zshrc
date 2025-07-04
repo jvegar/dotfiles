@@ -38,7 +38,7 @@ zinit wait lucid for \
 
 # Load Fast node version manager (fnm) for Node.js management
 zinit wait lucid for \
-  atload="eval \"$(fnm env --use-on-cd)\"" \
+  atload='noglob eval "$(fnm env --use-on-cd)"' \
   zdharma-continuum/null
 
 # Load pyenv for Python version management
@@ -106,9 +106,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time background_jobs)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-zinit ice lucid nocd \
-  if"[[ -f ~/.p10k.zsh ]]" \
-  atload"source ~/.p10k.zsh"
+zinit ice depth"1" atinit'[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
 zinit light romkatv/powerlevel10k
 
 # load fabric patterns

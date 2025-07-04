@@ -1,2 +1,7 @@
 tmux-client-*.log
 .config/tmux/plugins
+.config/github-copilot/
+.config/go/
+.config/nvim/lazy-lock.json
+.config/Bitwarden CLI/
+.config/configstore/
