@@ -13,11 +13,22 @@ return {
     lazy = false,
     opts = {
       auto_install = true,
+      ensure_installed = {
+        "taplo",
+        "lua_ls",
+        "bashls",
+        "ts_ls",
+        "pyright",
+        "jsonls",
+      },
     },
   },
   {
     "neovim/nvim-lspconfig",
     lazy = false,
+    dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+    },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
@@ -28,16 +39,6 @@ return {
         vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
         vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { buffer = bufnr, desc = "Find references" })
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-
-        if client.supports_method "textDocument/formatting" then
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            group = vim.api.nvim_create_augroup("Format", { clear = true }),
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.buf.format { async = false }
-            end,
-          })
-        end
 
         if client.supports_method "textDocument/foldingRange" then
           vim.o.foldmethod = "expr"
@@ -90,7 +91,6 @@ return {
 
       -- Setup for Typescript language server
       lspconfig.ts_ls.setup({
-        cmd = { "typescript-language-server", "--stdio" },
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = {
@@ -119,7 +119,18 @@ return {
           },
         },
       })
+
+      -- Setup for JSON language server
+      lspconfig.jsonls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      })
     end,
   },
 }
-
