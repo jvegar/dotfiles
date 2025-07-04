@@ -31,8 +31,8 @@ case "${OSTYPE:-$(uname -s)}" in
     # Obsidian path for Linux/WSL
     export OBSIDIAN_BASE="/mnt/d/repos/learning/obsidian/obsidian-vault-jevr/AI Queries"
     # Golang configuration
-    export GOROOT="/usr/local/go"
-    export PATH=$PATH:/usr/local/go/bin
+    export GOROOT="/usr/lib/go"
+    export PATH=$PATH:/usr/lib/go/bin
     # Texlive configuration
     export PATH="/usr/local/texlive/2023/bin/x86_64-linux:$PATH"
     # Trae IDE configuration
