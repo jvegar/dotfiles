@@ -4,6 +4,7 @@ local g = vim.g
 g.mapleader = " "
 g.maplocalleader = " "
 
+require("config.ui")
 require("config.lazy")
 require("config.vim-options")
 require("config.keymaps")
