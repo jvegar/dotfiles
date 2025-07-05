@@ -34,7 +34,7 @@ return {
         val = {
             startify.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
             startify.button("f", "  Find file", ":Telescope find_files <CR>"),
-            startify.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
+            startify.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
             startify.button("g", "  Find text", ":Telescope live_grep <CR>"),
             startify.button("c", "  Config", ":e $MYVIMRC <CR>"),
             startify.button("q", "  Quit", ":qa<CR>"),

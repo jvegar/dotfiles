@@ -5,6 +5,7 @@ local mux = wezterm.mux
 
 -- Font settings
 config.font = wezterm.font_with_fallback({
+  "CaskaydiaCove Nerd Font",
   "MesloLGS Nerd Font Mono",
   "Symbols Nerd Font",
 })
