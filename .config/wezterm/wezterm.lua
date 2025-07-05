@@ -4,7 +4,10 @@ local config = wezterm.config_builder()
 local mux = wezterm.mux
 
 -- Font settings
-config.font = wezterm.font("MesloLGS Nerd Font Mono")
+config.font = wezterm.font_with_fallback({
+  "MesloLGS Nerd Font Mono",
+  "Symbols Nerd Font",
+})
 
 -- Appearance
 config.window_decorations = "RESIZE"
