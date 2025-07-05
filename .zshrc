@@ -1,4 +1,4 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.zsh
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -70,6 +70,13 @@ zinit wait lucid for \
 alias ll="ls -lh"
 alias md="mkdir"
 alias yai="$HOME/repos/projects/dotfiles/scripts/yai.sh"
+alias tm="tmux"
+alias tma="tmux attach-session"
+alias tmat="tmux attach-session -t"
+alias tml="tmux list-sessions"
+alias tmn="tmux new-session"
+alias tmns="tmux new -s"
+alias tms="tmux new-session -s"
 
 # OS-specific aliases 
 case "$OSTYPE" in

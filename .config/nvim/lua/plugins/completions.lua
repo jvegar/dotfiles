@@ -15,6 +15,8 @@ return {
       local cmp = require("cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
 
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -33,10 +35,9 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp" }, -- LSP-based autocompletion
-          { name = "luasnip" }, -- For snippets, including Go
-        }, {
-          { name = "buffer" }, -- Buffer-based suggestions
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "buffer" },
         }),
       })
     end,
