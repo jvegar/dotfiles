@@ -38,7 +38,7 @@ if wezterm.target_triple == "x86_64-apple-darwin" then
   config.macos_window_background_blur = 10
 else
   config.font_size = 13.5
-  config.window_background_opacity = 0.8
+  config.window_background_opacity = 0.9
   config.win32_system_backdrop = "Acrylic"
   config.default_domain = "WSL:archlinux"
   config.keys = {
