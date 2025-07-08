@@ -34,10 +34,10 @@ local function run_make_command(target)
     -- Set wrap options
     vim.api.nvim_set_option_value("wrap", true, { win = current_make_win })
     vim.api.nvim_set_option_value("linebreak", true, { win = current_make_win })
-    
+
     -- Add keymap to close buffer on Enter
     local buf_to_close = current_make_buf
-    local win_to_close = current_make_win 
+    local win_to_close = current_make_win
     vim.keymap.set("n", "<CR>", function()
       if vim.api.nvim_buf_is_valid(buf_to_close) then
         local ok, job = pcall(vim.api.nvim_buf_get_var, buf_to_close, "make_job_id")
@@ -86,28 +86,28 @@ local function run_make_command(target)
       if data then
         vim.schedule(function()
           if vim.api.nvim_buf_is_valid(current_make_buf) then
-          vim.api.nvim_set_option_value("modifiable", true, { buf = current_make_buf })
-          local line_count = vim.api.nvim_buf_line_count(current_make_buf)
-          vim.api.nvim_buf_set_lines(current_make_buf, line_count, line_count, false, data)
-          vim.api.nvim_set_option_value("modifiable", false, { buf = current_make_buf })
-          -- Scroll to the bottom of the buffer
-          if current_make_win and vim.api.nvim_win_is_valid(current_make_win) then
-            vim.api.nvim_win_set_cursor(current_make_win, { line_count + #data, 0 })
+            vim.api.nvim_set_option_value("modifiable", true, { buf = current_make_buf })
+            local line_count = vim.api.nvim_buf_line_count(current_make_buf)
+            vim.api.nvim_buf_set_lines(current_make_buf, line_count, line_count, false, data)
+            vim.api.nvim_set_option_value("modifiable", false, { buf = current_make_buf })
+            -- Scroll to the bottom of the buffer
+            if current_make_win and vim.api.nvim_win_is_valid(current_make_win) then
+              vim.api.nvim_win_set_cursor(current_make_win, { line_count + #data, 0 })
+            end
           end
-        end
-      end)
-    end
-  end,
-    on_exit = function(_, code)
+        end)
+      end
+    end,
+    on_exit = function(_, exit_code)
       vim.schedule(function()
         if vim.api.nvim_buf_is_valid(current_make_buf) then
           vim.api.nvim_set_option_value("modifiable", true, { buf = current_make_buf })
           local line_count = vim.api.nvim_buf_line_count(current_make_buf)
-          local status_code = code == 0 and "successed" or "failed"
+          local status = exit_code == 0 and "successed" or "failed"
           vim.api.nvim_buf_set_lines(current_make_buf, line_count, line_count, false, {
             "",
             string.format("Command 'make %s' %s (exit code: %d)", target, status, exit_code),
-            "Press ENTER to close this buffer", 
+            "Press ENTER to close this buffer",
           })
           vim.api.nvim_set_option_value("modifiable", false, { buf = current_make_buf })
           if current_make_win and vim.api.nvim_win_is_valid(current_make_win) then
@@ -135,7 +135,7 @@ end
 
 local makefile_targets = function(opts)
   opts = opts or {}
-  local makefile = vim.fn.findfile("Makefile", ".;")
+  local makefile_path = vim.fn.findfile("Makefile", ".;")
   if makefile_path == "" then
     print("No Makefile found in the current directory.")
     return
@@ -165,4 +165,3 @@ return require("telescope").register_extension({
     makefile_targets = makefile_targets,
   },
 })
-  
