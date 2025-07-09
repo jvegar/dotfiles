@@ -17,13 +17,6 @@ return {
     "jsconfig.json"
   },
   workspace_required = true,
-  --settings = {
-  --  Lua = {
-  --    diagnostics = {
-  --      globals = { "vim" }
-  --    }
-  --  }
-  --},
   single_file_support = true,
   log_level = vim.lsp.protocol.MessageType.Warning,
 }

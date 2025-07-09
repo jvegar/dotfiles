@@ -2,6 +2,7 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 local mux = wezterm.mux
+local act = wezterm.action
 
 -- Font settings
 config.font = wezterm.font_with_fallback({

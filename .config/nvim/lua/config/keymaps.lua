@@ -5,6 +5,7 @@ end
 
 vim.keymap.set('n', '<leader>s', ':w<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>p', ':lua OpenTmuxPopup()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
 
 -- Folding
 vim.keymap.set('n', 'za', 'za', { noremap = true, silent = true })
