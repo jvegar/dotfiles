@@ -93,6 +93,7 @@ case "$OSTYPE" in
     #######################################
 
     # Podman configuration
+    alias podman=podman-remote-static-linux_amd64
     alias docker=podman
     alias docker-compose=podman-compose
 

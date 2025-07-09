@@ -32,12 +32,12 @@ return {
             },
           },
           ghost_text = { enabled = true },
-          --keymap = {
-          --  ["<CR>"] = { "select_and_accept", "fallback" },
-          --  ["<C-n>"] = { "select_next", "fallback" },
-          --  ["<C-p>"] = { "select_prev", "fallback" },
-          --  ["<C-Space>"] = { "show", "fallback" },
-          --},
+          keymap = {
+            ["<CR>"] = { "select_and_accept", "fallback" },
+            ["<C-n>"] = { "select_next", "fallback" },
+            ["<C-p>"] = { "select_prev", "fallback" },
+            ["<C-Space>"] = { "show", "fallback" },
+          },
           accept = {
             auto_brackets = { enabled = true },
           },
