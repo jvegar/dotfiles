@@ -5,3 +5,6 @@ tmux-client-*.log
 .config/nvim/lazy-lock.json
 .config/Bitwarden CLI/
 .config/configstore/
+.config/containers/
+.config/fabric/
+.config/glow/
