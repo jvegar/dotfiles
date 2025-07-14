@@ -1,7 +1,7 @@
 return {
   "goolord/alpha-nvim",
   enabled = true,
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { "nvim-tree/nvim-web-devicons", "nvim-telescope/telescope.nvim" },
   config = function()
     local alpha = require("alpha")
     local startify = require("alpha.themes.startify")
