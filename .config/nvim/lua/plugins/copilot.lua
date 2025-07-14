@@ -1,14 +1,5 @@
 return {
 	{
-		"ibhagwan/fzf-lua",
-		-- optional for icon support
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			-- calling `setup` is optional for customization
-			require("fzf-lua").setup({})
-		end,
-	},
-	{
 		"github/copilot.vim",
 		enabled = false,
 		config = function()
@@ -31,16 +22,14 @@ return {
 			},
 		},
 	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		opts = { ensure_installed = { "diff", "markdown" } },
-	},
+	
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
 		branch = "main",
 		-- Do not use branch and version together, either use branch or version
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
+            "ibhagwan/fzf-lua",
 		},
 		opts = {
 			question_header = "## User ",
