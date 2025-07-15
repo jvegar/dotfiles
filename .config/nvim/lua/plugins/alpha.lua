@@ -4,59 +4,38 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons", "nvim-telescope/telescope.nvim" },
 	config = function()
 		local alpha = require("alpha")
-		local startify = require("alpha.themes.startify")
+		local dashboard = require("alpha.themes.dashboard")
 
-		-- Set icon provider
-		startify.file_icons.provider = "devicons"
-
-		-- ASCII art header
-		local header_val = {
+		-- Set header
+		dashboard.section.header.val = {
+			"                                                  ",
 			"     ██╗██╗   ██╗███████╗ ██████╗  █████╗ ██████╗ ",
 			"     ██║██║   ██║██╔════╝██╔════╝ ██╔══██╗██╔══██╗",
 			"     ██║██║   ██║█████╗  ██║  ███╗███████║██████╔╝",
 			"██   ██║╚██╗ ██╔╝██╔══╝  ██║   ██║██╔══██║██╔══██╗",
 			"╚█████╔╝ ╚████╔╝ ███████╗╚██████╔╝██║  ██║██║  ██║",
 			" ╚════╝   ╚═══╝  ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝",
+			"                                                  ",
 		}
 
-		local header = {
-			type = "text",
-			val = header_val,
-			opts = {
-				position = "center",
-				hl = "Type",
-			},
+		-- Set menu
+		dashboard.section.buttons.val = {
+			dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
+			dashboard.button("f", "󰈞  > Find file", ":Telescope find_files<CR>"),
+			dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
+			dashboard.button("s", "  > Settings", ":e $MYVIMRC <CR>"),
+			dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
 		}
 
-		-- Define the buttons
-		local buttons = {
-			type = "group",
-			val = {
-				startify.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-				startify.button("f", "  Find file", ":Telescope find_files <CR>"),
-				startify.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
-				startify.button("g", "  Find text", ":Telescope live_grep <CR>"),
-				startify.button("c", "  Config", ":e $MYVIMRC <CR>"),
-				startify.button("q", "  Quit", ":qa<CR>"),
-			},
-			position = "center",
-			opts = {
-				spacing = 1,
-			},
-		}
+		-- Set footer
+		dashboard.section.footer.val = require("alpha.fortune")()
 
-		-- Define the new layout, replacing the default one
-		startify.config.layout = {
-			{ type = "padding", val = 2 },
-			header,
-			{ type = "padding", val = 2 },
-			buttons,
-			{ type = "padding", val = 2 },
-			startify.mru(10, nil, { hl = "Number", hl_shortcut = "Number" }),
-			{ type = "padding", val = 1 },
-			startify.footer,
-		}
+		-- Send config to alpha
+		alpha.setup(dashboard.opts)
 
-		alpha.setup(startify.config)
+		-- Disable folding on alpha buffer
+		vim.cmd([[
+    autocmd FileType alpha setlocal nofoldenable
+]])
 	end,
 }
