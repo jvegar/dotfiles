@@ -8,3 +8,5 @@ tmux-client-*.log
 .config/containers/
 .config/fabric/
 .config/glow/
+.config/NuGet/
+.config/gh/
