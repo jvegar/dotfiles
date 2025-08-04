@@ -1,7 +1,7 @@
 return {
 	{
 		"github/copilot.vim",
-		enabled = false,
+		enabled = true,
 		config = function()
 			vim.g.copilot_enabled = false
 		end,
@@ -22,14 +22,14 @@ return {
 			},
 		},
 	},
-	
+
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
 		branch = "main",
 		-- Do not use branch and version together, either use branch or version
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
-            "ibhagwan/fzf-lua",
+			"ibhagwan/fzf-lua",
 		},
 		opts = {
 			question_header = "## User ",

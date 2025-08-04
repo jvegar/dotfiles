@@ -10,3 +10,5 @@ tmux-client-*.log
 .config/glow/
 .config/NuGet/
 .config/gh/
+.config/create-next-app-nodejs
+.config/nextjs-nodejs
