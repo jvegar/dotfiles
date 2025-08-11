@@ -33,9 +33,6 @@ opt.writebackup = false -- Disable write backups
 opt.undofile = true -- Enable persistent undo
 opt.autoread = true -- Reload files changed outside of Neovim
 
--- Colorscheme
-vim.cmd([[colorscheme onedark]])
-
 -- dont' auto comment new line
 api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
 

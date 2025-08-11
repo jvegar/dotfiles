@@ -6,6 +6,9 @@ return {
 				"prettierd",
 				"stylua",
 			},
+			ui = {
+				border = "rounded",
+			},
 		},
 	},
 	{
