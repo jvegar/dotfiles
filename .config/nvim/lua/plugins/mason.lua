@@ -5,6 +5,7 @@ return {
 			ensure_installed = {
 				"prettierd",
 				"stylua",
+				"csharp-language-server",
 			},
 			ui = {
 				border = "rounded",

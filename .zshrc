@@ -77,6 +77,7 @@ alias tml="tmux list-sessions"
 alias tmn="tmux new-session"
 alias tmns="tmux new -s"
 alias tms="tmux new-session -s"
+alias tmr="tmux start-server \; run-shell ~/.config/tmux/plugins/tmux-resurrect/scripts/restore.sh"
 
 # OS-specific aliases 
 case "$OSTYPE" in
