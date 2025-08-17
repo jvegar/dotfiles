@@ -6,6 +6,8 @@ return {
 				"prettierd",
 				"stylua",
 				"csharp-language-server",
+				"shfmt",
+				"shellcheck",
 			},
 			ui = {
 				border = "rounded",

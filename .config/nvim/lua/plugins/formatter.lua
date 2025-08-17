@@ -1,19 +1,22 @@
 return {
-  {
-    "stevearc/conform.nvim",
-    event = { "BufWritePre" },
-    cmd = { "ConformInfo" },
-    opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        json = { "prettierd" },
-        javascript = { "prettierd" },
-        typescript = { "prettierd" },
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
-    },
-  },
+	{
+		"stevearc/conform.nvim",
+		event = { "BufWritePre" },
+		cmd = { "ConformInfo" },
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				json = { "prettierd" },
+				javascript = { "prettierd" },
+				typescript = { "prettierd" },
+				sh = { "shfmt" },
+				bash = { "shfmt" },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			},
+		},
+	},
 }
+
