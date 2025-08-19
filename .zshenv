@@ -21,10 +21,10 @@ case "${OSTYPE:-$(uname -s)}" in
     export PATH="/usr/local/texlive/2024/bin/universal-darwin:$PATH"
     # Maven configuration
     if [ -d '/usr/local/opt/maven' ]; then
-        export M2_HOME='/usr/local/opt/maven'
-        export PATH="$M2_HOME/bin:$PATH"
+      export M2_HOME='/usr/local/opt/maven'
+      export PATH="$M2_HOME/bin:$PATH"
     fi
-    ;; 
+    ;;
   [Ll]inux-gnu*)
     # Podman configuration
     export CONTAINERS_LOGDRIVER=k8s-file
@@ -43,7 +43,7 @@ case "${OSTYPE:-$(uname -s)}" in
       M2_HOME='/opt/apache-maven-3.9.9'
       PATH="$M2_HOME/bin:$PATH"
       export PATH
-    fi 
+    fi
     # Dotnet tools configuration
     export DOTNET_ROOT=/usr/share/dotnet
     export PATH=$PATH:/usr/share/dotnet:$HOME/.dotnet/tools
@@ -54,6 +54,9 @@ esac
 
 # tmux configuration
 export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
+
+# tmuxifier configuration
+export PATH="$HOME/.config/tmux/plugins/tmuxifier/bin:$PATH"
 
 # fnm configuration
 FNM_PATH="$HOME/.local/share/fnm"

@@ -75,6 +75,11 @@ zinit wait lucid for \
   atload='eval "$(zoxide init zsh)"' \
   zdharma-continuum/null
 
+# tmuxifier configuration
+zinit wait lucid for \
+  atload='eval "$(tmuxifier init -)"' \
+  zdharma-continuum/null
+
 # Aliases
 alias ll="ls -lh"
 alias md="mkdir"
