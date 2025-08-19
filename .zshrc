@@ -5,6 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# RVM configuration
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 # Load Zinit for plugin management
 if [[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
   source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
@@ -29,9 +32,10 @@ zinit wait lucid for \
     zdharma-continuum/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
-  zdharma-continuum/history-search-multi-word
+  zharma-continuum/history-search-multi-word
 
-# Git plugin from Oh-My-Zsh - loaded when entering a git repository
+# Git plugin from Oh-My-Zsh
+zinit snippet OMZL::async_prompt.zsh
 zinit wait lucid for \
   OMZL::git.zsh \
   OMZP::git
@@ -64,6 +68,11 @@ zinit wait lucid for \
 # cargo configuration
 zinit wait lucid for \
   atload='[[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"' \
+  zdharma-continuum/null
+
+# zoxide configuration for smart cd
+zinit wait lucid for \
+  atload='eval "$(zoxide init zsh)"' \
   zdharma-continuum/null
 
 # Aliases 
@@ -131,4 +140,5 @@ setopt hist_ignore_dups
 setopt hist_verify
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
+
 

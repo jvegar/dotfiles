@@ -12,3 +12,5 @@ tmux-client-*.log
 .config/gh/
 .config/create-next-app-nodejs
 .config/nextjs-nodejs
+.crush/
+archive-*/
