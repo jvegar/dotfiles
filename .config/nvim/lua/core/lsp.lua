@@ -64,6 +64,17 @@ lspconfig["ts_ls"].setup({
 
 lspconfig["csharp_ls"].setup({})
 
+lspconfig["bashls"].setup({
+	cmd = { "bash-language-server", "start" },
+	filetypes = { "sh", "bash", "zsh" },
+	single_file_support = true,
+	settings = {
+		bashIde = {
+			globPattern = "**/*@(.sh|.inc|.bash|.command)",
+		},
+	},
+})
+
 vim.diagnostic.config({
 	virtual_lines = true,
 	-- virtual_text = true,

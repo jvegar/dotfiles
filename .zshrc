@@ -29,10 +29,10 @@ zinit snippet OMZL::key-bindings.zsh
 # Essential plugins with async loading (turbo mode)
 zinit wait lucid for \
   atinit"zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
+  zdharma-continuum/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions \
-  zharma-continuum/history-search-multi-word
+  zsh-users/zsh-autosuggestions \
+  zdharma-continuum/history-search-multi-word
 
 # Git plugin from Oh-My-Zsh
 zinit snippet OMZL::async_prompt.zsh
@@ -47,9 +47,9 @@ zinit wait lucid for \
 
 # Load pyenv for Python version management
 zinit lucid as'command' pick'bin/pyenv' \
-    atclone'./libexec/pyenv init - > zpyenv.zsh' \
-    atpull"%atclone" src"zpyenv.zsh" nocompile'!' for \
-        pyenv/pyenv
+  atclone'./libexec/pyenv init - > zpyenv.zsh' \
+  atpull"%atclone" src"zpyenv.zsh" nocompile'!' for \
+  pyenv/pyenv
 
 # fzf configuration
 zinit ice from"gh-r" as"program"
@@ -75,7 +75,7 @@ zinit wait lucid for \
   atload='eval "$(zoxide init zsh)"' \
   zdharma-continuum/null
 
-# Aliases 
+# Aliases
 alias ll="ls -lh"
 alias md="mkdir"
 alias yai="$HOME/repos/projects/dotfiles/scripts/yai.sh"
@@ -87,7 +87,7 @@ alias tmn="tmux new-session"
 alias tmns="tmux new -s"
 alias tms="tmux new-session -s"
 
-# OS-specific aliases 
+# OS-specific aliases
 case "$OSTYPE" in
   darwin*)
     ###################################
@@ -112,7 +112,7 @@ case "$OSTYPE" in
     # Linux-specific copy/paste
     alias pbcopy='xclip -selection clipboard'
     alias pbpaste='xclip -selection clipboard -o'
-   ;;
+    ;;
 esac
 
 # Configure Powerlevel10k

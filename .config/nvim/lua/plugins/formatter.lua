@@ -11,6 +11,12 @@ return {
 				typescript = { "prettierd" },
 				sh = { "shfmt" },
 				bash = { "shfmt" },
+				zsh = { "beautysh" },
+			},
+			formatters = {
+				beautysh = {
+					prepend_args = { "-i", "2" },
+				},
 			},
 			format_on_save = {
 				timeout_ms = 500,
@@ -19,4 +25,3 @@ return {
 		},
 	},
 }
-
