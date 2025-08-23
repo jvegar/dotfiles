@@ -86,6 +86,9 @@ export PATH="$BUM_INSTALL/bin:$PATH"
 # neovim configuration
 export PATH="$PATH:/opt/nvim/"
 
+# set editor
+export EDITOR="nvim"
+
 # cargo configuration
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -95,9 +98,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-
-# RVM configuration
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

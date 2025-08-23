@@ -5,9 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# RVM configuration
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # Load Zinit for plugin management
 if [[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
   source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
@@ -112,7 +109,7 @@ case "$OSTYPE" in
     alias docker-compose=podman-compose
 
     # VS Code for Linux WSL
-    alias code="'/mnt/c/Users/jvega/AppData/Local/Programs/Microsoft VS Code/bin/code'"
+    alias code="'/mnt/c/Program Files/Microsoft VS Code/bin/code'"
 
     # Linux-specific copy/paste
     alias pbcopy='xclip -selection clipboard'
