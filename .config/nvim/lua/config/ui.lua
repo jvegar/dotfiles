@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "*",
 	callback = function()
 		local highlights = {
-			FloatBorder = { fg = "#51a8b3" },
+			FloatBorder = { fg = "#428891" },
 			NormalFloat = { bg = "none" },
 			LazyNormal = { bg = "none" },
 		}
