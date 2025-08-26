@@ -1,6 +1,8 @@
 tmux-client-*.log
 Session.vim
 .config/tmux/plugins
+!.config/tmux/plugins/tmuxifier/layouts/
+!.config/tmux/plugins/tmuxifier/layouts/**
 .config/github-copilot/
 .config/go/
 .config/nvim/lazy-lock.json
