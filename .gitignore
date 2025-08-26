@@ -1,4 +1,5 @@
 tmux-client-*.log
+Session.vim
 .config/tmux/plugins
 .config/github-copilot/
 .config/go/
