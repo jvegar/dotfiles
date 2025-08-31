@@ -8,6 +8,7 @@ return {
 				"csharp-language-server",
 				"shfmt",
 				"shellcheck",
+				"lua-language-server",
 			},
 			ui = {
 				border = "rounded",
