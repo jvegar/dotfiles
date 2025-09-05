@@ -129,8 +129,14 @@ zinit ice depth"1" atinit'[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
 zinit light romkatv/powerlevel10k
 
 # load fabric patterns
-zinit ice wait"1" silent
-zinit snippet ~/scripts/load_fabric_patterns.sh
+#zinit ice wait"1" silent
+#zinit snippet ~/scripts/load_fabric_patterns.sh
+# Load all custom scripts from ~/.config/zsh/scripts
+for script in ~/scripts/zsh/*.sh; do
+  # Lazy-load each script with zinit
+  zinit ice wait"1" silent
+  zinit snippet "$script"
+done
 
 # Zsh history setup
 HISTFILE=$HOME/.zhistory
