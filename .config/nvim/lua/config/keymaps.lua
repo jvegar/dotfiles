@@ -11,7 +11,7 @@ vim.keymap.set("n", "<leader>p", ":lua OpenTmuxPopup()<CR>", { noremap = true, s
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
 
 -- Obsidian
-vim.keymap.set("n", "<leader>on", ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>")
+vim.keymap.set("n", "<leader>on", ":ObsidianTemplate note<cr> :lua vim.cmd([[2,/^\\S/s/^\\n\\{1,}//]])<cr>")
 
 -- Folding
 vim.keymap.set("n", "za", "za", { noremap = true, silent = true })

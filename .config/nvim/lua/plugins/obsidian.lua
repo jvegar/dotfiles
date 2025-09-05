@@ -24,7 +24,7 @@ return {
 		},
 
 		-- see below for full list of options 👇
-		notes_subdir = "inbox",
+		notes_subdir = "notes",
 		new_notes_location = "notes_subdir",
 
 		disable_frontmatter = true,
@@ -36,6 +36,7 @@ return {
 		-- key mappings are now configured separately, see: https://github.com/obsidian-nvim/obsidian.nvim/wiki/Keymaps
 		completion = {
 			nvim_cmp = false,
+			blink = true,
 			min_chars = 2,
 		},
 		ui = {
@@ -43,8 +44,8 @@ return {
 			enable = false,
 		},
 		legacy_commands = false,
-		notes = {
-			has_footer = false,
-		},
+		--notes = {
+		--	has_footer = false,
+		--},
 	},
 }
