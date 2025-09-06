@@ -30,7 +30,7 @@ case "${OSTYPE:-$(uname -s)}" in
     export CONTAINERS_LOGDRIVER=k8s-file
     export DOCKER_HOST="unix:///mnt/wsl/podman-sockets/podman-machine-default/podman-user.sock"
     # Obsidian path for Linux/WSL
-    export OBSIDIAN_BASE="/mnt/d/repos/learning/obsidian/obsidian-vault-jevr"
+    export OBSIDIAN_BASE="/mnt/c/vaults/obsidian-vault-jevr"
     # Golang configuration
     export GOROOT="/usr/local/go"
     export PATH=$PATH:/usr/local/go/bin

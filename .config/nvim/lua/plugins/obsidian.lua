@@ -7,11 +7,8 @@ return {
 	--ft = "markdown",
 	-- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
 	event = {
-		--   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-		--   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-		--   -- refer to `:h file-pattern` for more examples
-		"BufReadPre /mnt/d/repos/learning/obsidian/obsidian-vault-jevr/*.md",
-		"BufNewFile /mnt/d/repos/learning/obsidian/obsidian-vault-jevr/*.md",
+		"BufReadPre " .. vim.env.OBSIDIAN_BASE .. "/*.md",
+		"BufNewFile " .. vim.env.OBSIDIAN_BASE .. "/*.md",
 	},
 	---@module 'obsidian'
 	---@type obsidian.config
@@ -19,7 +16,7 @@ return {
 		workspaces = {
 			{
 				name = "personal",
-				path = "/mnt/d/repos/learning/obsidian/obsidian-vault-jevr/",
+				path = vim.env.OBSIDIAN_BASE .. "/",
 			},
 		},
 
@@ -36,7 +33,7 @@ return {
 		-- key mappings are now configured separately, see: https://github.com/obsidian-nvim/obsidian.nvim/wiki/Keymaps
 		completion = {
 			nvim_cmp = false,
-			blink = true,
+			blink = false,
 			min_chars = 2,
 		},
 		ui = {
@@ -44,8 +41,25 @@ return {
 			enable = false,
 		},
 		legacy_commands = false,
-		--notes = {
-		--	has_footer = false,
-		--},
+		-- Performance optimizations
+		picker = {
+			name = "telescope.nvim",
+			note_mappings = {
+				new = "<C-x>",
+				insert_link = "<C-l>",
+			},
+			tag_mappings = {
+				tag_note = "<C-x>",
+				insert_tag = "<C-l>",
+			},
+		},
+		follow_url_func = function(url)
+			vim.fn.jobstart({ "xdg-open", url })
+		end,
+		-- Reduce background processing
+		disable_update = true,
+		notes = {
+			has_footer = false,
+		},
 	},
 }
