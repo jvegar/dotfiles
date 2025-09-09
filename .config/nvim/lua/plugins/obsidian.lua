@@ -1,11 +1,11 @@
 return {
 	"obsidian-nvim/obsidian.nvim",
+	--enabled = false,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 	},
-	version = "*", -- recommended, use latest release instead of latest commit
-	--ft = "markdown",
-	-- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+	version = "*",
+	lazy = true,
 	event = {
 		"BufReadPre " .. vim.env.OBSIDIAN_BASE .. "/*.md",
 		"BufNewFile " .. vim.env.OBSIDIAN_BASE .. "/*.md",
@@ -20,7 +20,6 @@ return {
 			},
 		},
 
-		-- see below for full list of options 👇
 		notes_subdir = "notes",
 		new_notes_location = "notes_subdir",
 
@@ -30,17 +29,21 @@ return {
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M:%S",
 		},
-		-- key mappings are now configured separately, see: https://github.com/obsidian-nvim/obsidian.nvim/wiki/Keymaps
+
+		-- Optimized completion settings
 		completion = {
 			nvim_cmp = false,
-			blink = false,
+			blink = false, -- Enable blink.cmp for faster autocomplete
 			min_chars = 2,
 		},
+
+		-- Enable UI with optimized settings
 		ui = {
-			-- Disable some things below here because I set these manually for all Markdown files using treesitter
-			enable = false,
+			enable = true,
+			conceallevel = 2,
+			max_file_length = 10000,
 		},
-		legacy_commands = false,
+
 		-- Performance optimizations
 		picker = {
 			name = "telescope.nvim",
@@ -52,14 +55,56 @@ return {
 				tag_note = "<C-x>",
 				insert_tag = "<C-l>",
 			},
+			sort_by = "modified",
+			sort_reversed = true,
 		},
+
+		-- Daily notes configuration
+		daily_notes = {
+			folder = "daily",
+			template = "templates/daily.md",
+		},
+
+		-- Note ID generation
+		note_id_func = function(title)
+			local suffix = ""
+			if title ~= nil then
+				suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+			else
+				suffix = os.time()
+			end
+			return tostring(os.time()) .. "-" .. suffix
+		end,
+
+		-- Attachments configuration
+		attachments = {
+			img_folder = "assets/images",
+			confirm_img_paste = true,
+		},
+
+		search = {
+			rg_args = { "--glob", "!.git/*", "--glob", "!assets/*" },
+		},
+
+		-- Search optimization
+		search_max_lines = 500,
+
+		-- URL handling
 		follow_url_func = function(url)
 			vim.fn.jobstart({ "xdg-open", url })
 		end,
-		-- Reduce background processing
-		disable_update = true,
+
+		-- Performance settings
+		disable_update = false,
 		notes = {
 			has_footer = false,
 		},
+
+		-- Disable legacy commands
+		legacy_commands = false,
 	},
+	config = function(_, opts)
+		require("obsidian").setup(opts)
+		vim.keymap.set("n", "<leader>oc", "<cmd>ObsidianCheck<cr>", { desc = "Check Obsidian Health" })
+	end,
 }

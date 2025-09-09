@@ -5,19 +5,19 @@ local mux = wezterm.mux
 local act = wezterm.action
 
 -- WSL-specific performance optimizations
-config.front_end = "WebGpu"  -- Use WebGPU for better performance on Windows
-config.prefer_egl = false  -- Disable EGL for WSL compatibility
-config.webgpu_power_preference = "HighPerformance"  -- Use high performance GPU
+config.front_end = "WebGpu" -- Use WebGPU for better performance on Windows
+config.prefer_egl = false -- Disable EGL for WSL compatibility
+config.webgpu_power_preference = "HighPerformance" -- Use high performance GPU
 
 -- Reduce resource usage
-config.animation_fps = 30  -- Lower animation FPS
+config.animation_fps = 30 -- Lower animation FPS
 config.cursor_blink_ease_in = "Linear"
 config.cursor_blink_ease_out = "Linear"
-config.cursor_blink_rate = 800  -- Slower cursor blink
+config.cursor_blink_rate = 800 -- Slower cursor blink
 
 -- Scrollback buffer optimization
-config.scrollback_lines = 10000  -- Reduce scrollback from default 3500
-config.enable_scroll_bar = false  -- Disable scroll bar for performance
+config.scrollback_lines = 10000 -- Reduce scrollback from default 3500
+config.enable_scroll_bar = false -- Disable scroll bar for performance
 
 -- Font settings with performance optimizations
 config.font = wezterm.font_with_fallback({
@@ -26,9 +26,9 @@ config.font = wezterm.font_with_fallback({
 	"Symbols Nerd Font",
 })
 config.font_rules = {}
-config.font_shaper = "Harfbuzz"  -- Use Harfbuzz for better performance
-config.harfbuzz_features = { "kern", "liga", "clig" }  -- Enable only essential features
-config.freetype_load_flags = "NO_HINTING"  -- Faster font rendering
+config.font_shaper = "Harfbuzz" -- Use Harfbuzz for better performance
+config.harfbuzz_features = { "kern", "liga", "clig" } -- Enable only essential features
+config.freetype_load_flags = "NO_HINTING" -- Faster font rendering
 
 -- Appearance
 config.window_decorations = "RESIZE"
@@ -50,12 +50,12 @@ else
 	config.window_background_opacity = 0.9
 	-- config.win32_system_backdrop = "Acrylic"
 	config.default_domain = "WSL:archlinux"
-	
+
 	-- WSL-specific optimizations
-	config.enable_kitty_keyboard = false  -- Disable for compatibility
-	config.use_dead_keys = false  -- Disable dead keys for performance
-	config.unicode_version = 14  -- Use newer Unicode version for better compatibility
-	config.allow_win32_input_mode = true  -- Enable Windows input mode
+	config.enable_kitty_keyboard = false -- Disable for compatibility
+	config.use_dead_keys = false -- Disable dead keys for performance
+	config.unicode_version = 14 -- Use newer Unicode version for better compatibility
+	config.allow_win32_input_mode = true -- Enable Windows input mode
 	config.keys = {
 		{ key = "v", mods = "CTRL", action = wezterm.action({ PasteFrom = "Clipboard" }) },
 		{ key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
