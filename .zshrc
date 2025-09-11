@@ -78,6 +78,7 @@ zinit wait lucid for \
   zdharma-continuum/null
 
 # Aliases
+alias ls="eza --icons=always --color-scale"
 alias ll="ls -lh"
 alias md="mkdir"
 alias yai="$HOME/repos/projects/dotfiles/scripts/yai.sh"
