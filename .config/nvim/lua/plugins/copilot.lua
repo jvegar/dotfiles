@@ -116,8 +116,14 @@ return {
 			-- Use unnamed register for the selection
 			opts.selection = select.unnamed
 
-			local hostname = io.popen("hostname"):read("*a"):gsub("%s+", "")
-			local user = vim.env.USER or hostname or "User"
+			-- Try to get hostname, fallback to empty string if hostname command not available
+			local hostname = ""
+			local hostname_handle = io.popen("hostname 2>/dev/null")
+			if hostname_handle then
+				hostname = hostname_handle:read("*a"):gsub("%s+", "")
+				hostname_handle:close()
+			end
+			local user = vim.env.USER or (hostname ~= "" and hostname) or "User"
 			opts.question_header = "  " .. user .. " "
 			opts.answer_header = "  Copilot "
 
