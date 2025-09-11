@@ -25,7 +25,7 @@ return {
 
 		disable_frontmatter = true,
 		templates = {
-			subdir = "templates",
+			subdir = "Templates",
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M:%S",
 		},
@@ -33,7 +33,7 @@ return {
 		-- Optimized completion settings
 		completion = {
 			nvim_cmp = false,
-			blink = false, -- Enable blink.cmp for faster autocomplete
+			blink = true, -- Enable blink.cmp for faster autocomplete
 			min_chars = 2,
 		},
 
@@ -96,9 +96,13 @@ return {
 
 		-- Performance settings
 		disable_update = false,
-		notes = {
-			has_footer = false,
+		footer = {
+			enabled = true,
+			--format = "({{words}} words)",
 		},
+		--notes = {
+		--	has_footer = false,
+		--},
 
 		-- Disable legacy commands
 		legacy_commands = false,
