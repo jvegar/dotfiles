@@ -25,7 +25,7 @@ return {
 
 		disable_frontmatter = true,
 		templates = {
-			subdir = "Templates",
+			subdir = "templates",
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M:%S",
 		},
@@ -107,8 +107,4 @@ return {
 		-- Disable legacy commands
 		legacy_commands = false,
 	},
-	config = function(_, opts)
-		require("obsidian").setup(opts)
-		vim.keymap.set("n", "<leader>oc", "<cmd>ObsidianCheck<cr>", { desc = "Check Obsidian Health" })
-	end,
 }
