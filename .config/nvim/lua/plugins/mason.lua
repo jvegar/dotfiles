@@ -9,10 +9,12 @@ return {
 				"shfmt",
 				"shellcheck",
 				"lua-language-server",
+				"roslyn",
 			},
 			ui = {
 				border = "rounded",
 			},
+			-- Custom registries for roslyn
 			registries = {
 				"github:mason-org/mason-registry",
 				"github:Crashdummyy/mason-registry",

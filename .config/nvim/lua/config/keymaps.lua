@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader>p", ":lua OpenTmuxPopup()<CR>", { noremap = true, s
 -- Keymap for go-to-definition
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
 
--- Obsidian insert template
+-- Obsidian keymaps
 vim.keymap.set(
 	"n",
 	"<leader>on",

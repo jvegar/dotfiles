@@ -69,8 +69,6 @@ lspconfig["ts_ls"].setup({
 	log_level = vim.lsp.protocol.MessageType.Warning,
 })
 
---lspconfig["csharp_ls"].setup({})
-
 lspconfig["bashls"].setup({
 	cmd = { "bash-language-server", "start" },
 	filetypes = { "sh", "bash", "zsh" },
