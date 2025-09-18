@@ -20,6 +20,37 @@ vim.keymap.set(
 	{ noremap = true, silent = true, desc = "Insert template" }
 )
 
+-- Debug command for obsidian gf mapping
+vim.keymap.set("n", "<leader>od", function()
+  print("=== Obsidian Debug Info ===")
+  print("OBSIDIAN_BASE env: " .. (vim.env.OBSIDIAN_BASE or "NOT SET"))
+  print("Current file: " .. vim.fn.expand("%:p"))
+  print("File type: " .. (vim.bo.filetype or "unknown"))
+
+  local obsidian_base = vim.env.OBSIDIAN_BASE
+  if obsidian_base then
+    local current_file = vim.fn.expand("%:p")
+    local is_in_vault = current_file:match("^" .. vim.fn.escape(obsidian_base, "/."))
+    print("Is in vault: " .. (is_in_vault and "YES" or "NO"))
+  end
+
+  -- Check current line for wiki links
+  local line = vim.api.nvim_get_current_line()
+  local col = vim.api.nvim_win_get_cursor(0)[2]
+  print("Current line: " .. line)
+  print("Cursor column: " .. col)
+
+  -- Find wiki links
+  for link, start_pos, end_pos in line:gmatch("()%[%[([^%]]+)%]%]()") do
+    print(string.format("Found wiki link '%s' at positions %d-%d", link, start_pos, end_pos))
+    if col >= start_pos - 2 and col <= end_pos + 2 then
+      print("*** CURSOR IS ON THIS LINK ***")
+    end
+  end
+
+  print("==========================")
+end, { desc = "Debug obsidian gf mapping" })
+
 -- Buffer navigation
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
