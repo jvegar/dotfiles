@@ -13,6 +13,7 @@ return {
         -- Specify which parsers to ensure are installed
         ensure_installed = {
           "bash",
+          "c_sharp",
           "css",
           "diff",
           "dockerfile",

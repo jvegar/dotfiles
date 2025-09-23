@@ -14,6 +14,10 @@ return {
 
     require("ufo").setup({
       provider_selector = function(bufnr, filetype, buftype)
+        -- Use LSP provider for C# files if available, otherwise fall back to treesitter
+        if filetype == "cs" then
+          return { "lsp", "treesitter" }
+        end
         return { "treesitter", "indent" }
       end,
     })

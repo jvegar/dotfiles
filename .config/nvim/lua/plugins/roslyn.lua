@@ -3,6 +3,16 @@ return {
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
 	opts = {
-		-- your configuration comes here; leave empty for default settings
+		-- Configure Roslyn to provide better folding support
+		settings = {
+			csharp = {
+				-- Enable semantic highlighting and folding ranges
+				semantic_highlighting = true,
+				-- Ensure folding ranges are provided
+				folding = {
+					enabled = true,
+				},
+			},
+		},
 	},
 }
