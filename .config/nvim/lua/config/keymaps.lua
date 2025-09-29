@@ -6,13 +6,25 @@ end
 -- Keymap for saving file in NeoVim
 vim.keymap.set("n", "<leader>s", ":w<CR>", { noremap = true, silent = true })
 -- Keymap for getting current full path
-vim.keymap.set("n", "<leader>fp", ':let @+=expand("%:p")<CR>', { desc = "Copy full file path" })
+vim.keymap.set("n", "<leader>fp", function()
+	local fullpath = vim.fn.expand("%:p")
+	vim.fn.setreg("+", fullpath)
+	print(fullpath .. " full path copied to clipboard.")
+end, { desc = "Copy full file path" })
+-- Keymap for getting relative path
+vim.keymap.set("n", "<leader>rp", function()
+	local relpath = vim.fn.expand("%:.")
+	vim.fn.setreg("+", relpath)
+	print(relpath .. " relative path copied to clipboard.")
+end, { desc = "Copy relative path" })
 -- Keymap for yanking to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 -- Keymap for managing Tmux popups
 vim.keymap.set("n", "<leader>p", ":lua OpenTmuxPopup()<CR>", { noremap = true, silent = true })
 -- Keymap for go-to-definition
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
+-- Keymap for go-to-implementation
+vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, { noremap = true, silent = true, desc = "Go to implementation" })
 
 -- Obsidian keymaps
 vim.keymap.set(
