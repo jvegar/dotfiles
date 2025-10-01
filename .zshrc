@@ -31,6 +31,11 @@ zinit wait lucid for \
   zsh-users/zsh-autosuggestions \
   zdharma-continuum/history-search-multi-word
 
+# Additional syntax highlighting and completions
+zinit wait lucid for \
+  zsh-users/zsh-syntax-highlighting \
+  zsh-users/zsh-completions
+
 # Git plugin from Oh-My-Zsh
 zinit snippet OMZL::async_prompt.zsh
 zinit wait lucid for \
@@ -137,13 +142,16 @@ for script in ~/scripts/zsh/*.sh; do
 done
 
 # Zsh history setup
-HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+HISTSIZE=100000
+HISTFILE=$HOME/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt append_history
 setopt share_history
-setopt hist_expire_dups_first
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
 setopt hist_ignore_dups
-setopt hist_verify
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
