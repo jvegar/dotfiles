@@ -3,7 +3,7 @@ return {
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
 	opts = {
-		-- Configure Roslyn to provide better folding support
+		-- Configure Roslyn to provide better folding support and formatting
 		settings = {
 			csharp = {
 				-- Enable semantic highlighting and folding ranges
@@ -12,6 +12,10 @@ return {
 				folding = {
 					enabled = true,
 				},
+			},
+			-- Enable formatting and organize imports
+			["csharp|formatting"] = {
+				dotnet_organize_imports_on_format = true,
 			},
 		},
 	},
