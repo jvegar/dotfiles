@@ -1,6 +1,5 @@
-local lspconfig = require("lspconfig")
-
-lspconfig.jsonls.setup({
+-- Configure LSP servers using the new vim.lsp.config API
+vim.lsp.config("jsonls", {
 	filetypes = { "json", "jsonc" },
 	settings = {
 		json = {
@@ -10,7 +9,7 @@ lspconfig.jsonls.setup({
 	},
 })
 
-lspconfig["lua_ls"].setup({
+vim.lsp.config("lua_ls", {
 	cmd = {
 		"lua-language-server",
 	},
@@ -45,7 +44,7 @@ lspconfig["lua_ls"].setup({
 	log_level = vim.lsp.protocol.MessageType.Warning,
 })
 
-lspconfig["ts_ls"].setup({
+vim.lsp.config("ts_ls", {
 	cmd = {
 		"typescript-language-server",
 		"--stdio",
@@ -69,7 +68,7 @@ lspconfig["ts_ls"].setup({
 	log_level = vim.lsp.protocol.MessageType.Warning,
 })
 
-lspconfig["bashls"].setup({
+vim.lsp.config("bashls", {
 	cmd = { "bash-language-server", "start" },
 	filetypes = { "sh", "bash", "zsh" },
 	single_file_support = true,
@@ -79,6 +78,9 @@ lspconfig["bashls"].setup({
 		},
 	},
 })
+
+-- Enable the LSP servers
+vim.lsp.enable({"jsonls", "lua_ls", "ts_ls", "bashls"})
 
 vim.diagnostic.config({
 	virtual_lines = true,

@@ -1,4 +1,5 @@
 tmux-client-*.log
+.zsh_history
 Session.vim
 .config/tmux/plugins
 !.config/tmux/plugins/tmuxifier/layouts/
