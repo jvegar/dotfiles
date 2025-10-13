@@ -45,6 +45,11 @@ if wezterm.target_triple == "x86_64-apple-darwin" then
 	config.font_size = 19
 	config.window_background_opacity = 0.9
 	config.macos_window_background_blur = 10
+	-- Explicit fullscreen toggle for macOS
+	config.keys = {
+		{ key = "f", mods = "CMD|CTRL", action = wezterm.action.ToggleFullScreen },
+		{ key = "r", mods = "CMD|SHIFT", action = wezterm.action.ReloadConfiguration },
+	}
 else
 	config.font_size = 12
 	config.window_background_opacity = 0.9
@@ -86,9 +91,9 @@ else
 end
 
 -- Custom setting on startup
-wezterm.on("gui-startup", function(cmd)
-	local _, _, window = mux.spawn_window(cmd or {})
-	window:gui_window():toggle_fullscreen()
-end)
-
+-- wezterm.on("gui-startup", function(cmd)
+-- 	local _, _, window = mux.spawn_window(cmd or {})
+-- 	window:gui_window():toggle_fullscreen()
+-- end)
+--
 return config

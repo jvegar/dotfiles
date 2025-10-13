@@ -20,5 +20,6 @@ Session.vim
 .config/lazygit/
 .config/lazyvim/
 .config/yay/
+.config/aerospace/
 .crush/
 archive-*/

@@ -5,6 +5,10 @@ return {
 		-- your configuration comes here
 		-- or leave it empty to use the default settings
 		-- refer to the configuration section below
+		win = {
+			-- Configure floating window border
+			border = "rounded", -- Options: "none", "single", "double", "rounded", "solid", "shadow"
+		},
 	},
 	keys = {
 		{
