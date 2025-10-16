@@ -1,5 +1,6 @@
 return {
 	"seblyng/roslyn.nvim",
+	ft = { "cs" }, -- Explicitly restrict to C# files only
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
 	opts = {

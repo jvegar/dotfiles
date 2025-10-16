@@ -10,6 +10,7 @@ return {
 				"shellcheck",
 				"lua-language-server",
 				"roslyn",
+				"jdtls",
 			},
 			ui = {
 				border = "rounded",
@@ -19,6 +20,18 @@ return {
 				"github:mason-org/mason-registry",
 				"github:Crashdummyy/mason-registry",
 			},
+		},
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {
+			automatic_enable = {
+				exclude = { "jdtls", "roslyn" },
+			},
+		},
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
 		},
 	},
 	{
