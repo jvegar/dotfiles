@@ -79,14 +79,14 @@ vim.lsp.config("bashls", {
 	},
 })
 
-vim.lsp.config("jdtls", {
-	filetypes = { "java" },
-	settings = {
-		java = {
-			-- Custom eclipse.jdt.ls options go here
-		},
-	},
-})
+-- vim.lsp.config("jdtls", {
+-- 	filetypes = { "java" },
+-- 	settings = {
+-- 		java = {
+-- 			-- Custom eclipse.jdt.ls options go here
+-- 		},
+-- 	},
+-- })
 
 -- Enable the LSP servers (excluding jdtls since it's handled in ftplugin)
 vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls" })
