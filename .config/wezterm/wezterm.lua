@@ -1,11 +1,10 @@
 local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
-local mux = wezterm.mux
+-- local mux = wezterm.mux
 local act = wezterm.action
 
 -- WSL-specific performance optimizations
-config.front_end = "WebGpu" -- Use WebGPU for better performance on Windows
 config.prefer_egl = false -- Disable EGL for WSL compatibility
 config.webgpu_power_preference = "HighPerformance" -- Use high performance GPU
 
@@ -31,7 +30,6 @@ config.harfbuzz_features = { "kern", "liga", "clig" } -- Enable only essential f
 config.freetype_load_flags = "NO_HINTING" -- Faster font rendering
 
 -- Appearance
-config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
 	left = 0,
@@ -42,6 +40,8 @@ config.window_padding = {
 
 -- OS specific configuration
 if wezterm.target_triple == "x86_64-apple-darwin" then
+	config.front_end = "OpenGL"
+	config.window_decorations = "MACOS_FORCE_DISABLE_SHADOW | RESIZE"
 	config.font_size = 19
 	config.window_background_opacity = 0.9
 	config.macos_window_background_blur = 10
@@ -51,6 +51,8 @@ if wezterm.target_triple == "x86_64-apple-darwin" then
 		{ key = "r", mods = "CMD|SHIFT", action = wezterm.action.ReloadConfiguration },
 	}
 else
+	config.front_end = "WebGpu" -- Use WebGPU for better performance on Windows
+	config.window_decorations = "RESIZE"
 	config.font_size = 12
 	config.window_background_opacity = 0.9
 	-- config.win32_system_backdrop = "Acrylic"
