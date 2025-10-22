@@ -18,6 +18,55 @@ else -- linux
 	config_dir = eclipse_jdtls_path .. "/config_linux"
 end
 
+-- Platform-specific Java runtime paths
+local java_runtimes = {}
+if is_mac then
+	java_runtimes = {
+		{
+			name = "JavaSE-17",
+			path = "/usr/local/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home",
+		},
+		{
+			name = "JavaSE-21",
+			path = "/usr/local/Cellar/openjdk@21/21.0.7/libexec/openjdk.jdk/Contents/Home",
+		},
+		{
+			name = "JavaSE-23",
+			path = "/usr/local/Cellar/openjdk/25/libexec/openjdk.jdk/Contents/Home",
+		},
+	}
+elseif is_linux then
+	java_runtimes = {
+		{
+			name = "JavaSE-17",
+			path = "/usr/lib/jvm/java-17-openjdk",
+		},
+		{
+			name = "JavaSE-21",
+			path = "/usr/lib/jvm/java-21-openjdk",
+		},
+		{
+			name = "JavaSE-23",
+			path = "/usr/lib/jvm/java-25-openjdk",
+		},
+	}
+elseif is_windows then
+	java_runtimes = {
+		{
+			name = "JavaSE-17",
+			path = "C:\\Program Files\\Java\\jdk-17",
+		},
+		{
+			name = "JavaSE-21",
+			path = "C:\\Program Files\\Java\\jdk-21",
+		},
+		{
+			name = "JavaSE-23",
+			path = "C:\\Program Files\\Java\\jdk-23",
+		},
+	}
+end
+
 -- Debug output to help troubleshoot platform detection
 -- vim.notify("Platform: mac=" .. tostring(is_mac) .. ", linux=" .. tostring(is_linux) .. ", windows=" .. tostring(is_windows))
 -- vim.notify("Using config directory: " .. config_dir)
@@ -71,6 +120,11 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 -- The on_attach function is used to set key maps after the language server
 -- attaches to the current buffer
 local on_attach = function(client, bufnr)
+	-- Set Java-specific indentation to 4 spaces
+	vim.bo[bufnr].tabstop = 4
+	vim.bo[bufnr].softtabstop = 4
+	vim.bo[bufnr].shiftwidth = 4
+	vim.bo[bufnr].expandtab = true
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.setup").add_commands()
 	require("dap.ext.vscode").load_launchjs()
@@ -180,10 +234,25 @@ local config = {
 	settings = {
 		java = {
 			format = {
-				enabled = false,
+				enabled = true,
 				-- settings = {
 				--   url = home .. "/.local/java/eclipse-java-google-style.xml",
 				-- },
+				-- Indentation settings
+				indent_style = "space",
+				indent_size = "4",
+				tab_width = "4",
+			},
+			-- Additional formatting settings
+			saveActions = {
+				organizeImports = true,
+			},
+			-- Code style settings
+			codeStyle = {
+				-- Use 4 spaces for indentation
+				tabSize = 4,
+				indentSize = 4,
+				insertSpaces = true,
 			},
 			signatureHelp = { enabled = true },
 			contentProvider = { preferred = "fernflower" }, -- Use fernflower to decompile library code
@@ -227,20 +296,7 @@ local config = {
 			-- And search for `interface RuntimeOption`
 			-- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
 			configuration = {
-				runtimes = {
-					{
-						name = "JavaSE-17",
-						path = "/usr/local/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home",
-					},
-					{
-						name = "JavaSE-21",
-						path = "/usr/local/Cellar/openjdk@21/21.0.7/libexec/openjdk.jdk/Contents/Home",
-					},
-					{
-						name = "JavaSE-23",
-						path = "/usr/local/Cellar/openjdk/25/libexec/openjdk.jdk/Contents/Home",
-					},
-				},
+				runtimes = java_runtimes,
 			},
 		},
 	},
