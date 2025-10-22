@@ -17,16 +17,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>lf", vim.lsp.buf.format, "Format")
 		map("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
 
-		-- Auto-format on save for Java files
-		if vim.bo[event.buf].filetype == "java" then
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				buffer = event.buf,
-				callback = function()
-					vim.lsp.buf.format({ async = false })
-				end,
-			})
-		end
-
 		local function client_supports_method(client, method, bufnr)
 			if vim.fn.has("nvim-0.11") == 1 then
 				return client:supports_method(method, bufnr)
@@ -81,7 +71,6 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 		local file_matches = obsidian_base and current_file:sub(1, #obsidian_base) == obsidian_base
 
 		if obsidian_base and file_matches then
-
 			vim.keymap.set("n", "gf", function()
 				local line = vim.api.nvim_get_current_line()
 				local col = vim.api.nvim_win_get_cursor(0)[2]
@@ -121,4 +110,3 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 		end
 	end,
 })
-

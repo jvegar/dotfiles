@@ -13,6 +13,7 @@ return {
 				bash = { "shfmt" },
 				zsh = { "beautysh" },
 				cs = { "csharpier", timeout_ms = 3000 },
+				java = { "google-java-format" },
 			},
 			formatters = {
 				beautysh = {

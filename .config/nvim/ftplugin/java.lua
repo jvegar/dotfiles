@@ -120,11 +120,6 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 -- The on_attach function is used to set key maps after the language server
 -- attaches to the current buffer
 local on_attach = function(client, bufnr)
-	-- Set Java-specific indentation to 4 spaces
-	vim.bo[bufnr].tabstop = 4
-	vim.bo[bufnr].softtabstop = 4
-	vim.bo[bufnr].shiftwidth = 4
-	vim.bo[bufnr].expandtab = true
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.setup").add_commands()
 	require("dap.ext.vscode").load_launchjs()
@@ -234,25 +229,14 @@ local config = {
 	settings = {
 		java = {
 			format = {
-				enabled = true,
+				enabled = false,
 				-- settings = {
 				--   url = home .. "/.local/java/eclipse-java-google-style.xml",
 				-- },
-				-- Indentation settings
-				indent_style = "space",
-				indent_size = "4",
-				tab_width = "4",
 			},
 			-- Additional formatting settings
 			saveActions = {
 				organizeImports = true,
-			},
-			-- Code style settings
-			codeStyle = {
-				-- Use 4 spaces for indentation
-				tabSize = 4,
-				indentSize = 4,
-				insertSpaces = true,
 			},
 			signatureHelp = { enabled = true },
 			contentProvider = { preferred = "fernflower" }, -- Use fernflower to decompile library code
