@@ -2,22 +2,12 @@ return {
 	{
 		"mason-org/mason.nvim",
 		opts = {
-			ensure_installed = {
-				"prettierd",
-				"stylua",
-				"csharp-language-server",
-				"shfmt",
-				"shellcheck",
-				"lua-language-server",
-				"roslyn",
-				"jdtls",
-			},
 			ui = {
 				border = "rounded",
 				icons = {
 					package_installed = "✓",
 					package_pending = "➜",
-					package_uninstalled = "✗",
+					package_ninstalled = "✗",
 				},
 			},
 			-- Custom registries for roslyn
@@ -30,6 +20,18 @@ return {
 	{
 		"mason-org/mason-lspconfig.nvim",
 		opts = {
+			ensure_installed = {
+				"bashls",
+				"jsonls",
+				"lua_ls",
+				"jdtls",
+				"yamlls",
+				"ts_ls",
+				"docker_language_server",
+				"lemminx",
+				"dockerls",
+				"texlab",
+			},
 			automatic_enable = {
 				exclude = { "jdtls", "roslyn" },
 			},
@@ -44,6 +46,7 @@ return {
 		dependencies = {
 			"mason-org/mason.nvim",
 			"mason-org/mason-lspconfig.nvim",
+			"neovim/nvim-lspconfig",
 		},
 	},
 }

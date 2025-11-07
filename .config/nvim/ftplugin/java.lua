@@ -1,6 +1,6 @@
 local home = os.getenv("HOME")
 local eclipse_jdtls_path = vim.fn.expand("$MASON/packages/jdtls")
-local equinox_launcher_path = vim.fn.glob(eclipse_jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar", 1)
+-- local equinox_launcher_path = vim.fn.glob(eclipse_jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar", 1)
 local lombok = eclipse_jdtls_path .. "/lombok.jar"
 
 -- Platform detection for cross-platform compatibility
@@ -207,7 +207,7 @@ local config = {
 		"java.base/java.lang=ALL-UNNAMED",
 		"-javaagent:" .. lombok,
 		"-jar",
-		equinox_launcher_path,
+		-- equinox_launcher_path,
 		"-configuration",
 		config_dir,
 		"-data",

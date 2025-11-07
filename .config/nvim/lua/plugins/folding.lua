@@ -52,35 +52,13 @@ return {
 				if filetype == "cs" then
 					return { "lsp", "treesitter" }
 				end
+				-- Use treesitter for YAML files for better folding
+				if filetype == "yaml" or filetype == "yml" then
+					return { "treesitter" }
+				end
 				return { "treesitter", "indent" }
 			end,
 			fold_virt_text_handler = handler,
 		})
 	end,
 }
--- lazy.nvim
--- return {
--- 	"chrisgrieser/nvim-origami",
--- 	event = "VeryLazy",
--- 	opts = {
--- 		foldtext = {
--- 			lineCount = {
--- 				template = " %d",
--- 			},
--- 		},
--- 	},
--- 	init = function()
--- 		vim.opt.foldlevel = 99
--- 		vim.opt.foldlevelstart = 99
---
--- 		vim.opt.fillchars = {
--- 			foldopen = "",
--- 			foldclose = "",
--- 			foldsep = " ",
--- 		}
---
--- 		vim.opt.foldcolumn = "1"
---
--- 		vim.keymap.set("n", "<CR>", "za", { noremap = true, silent = true })
--- 	end,
--- }

@@ -14,6 +14,10 @@ return {
 				zsh = { "beautysh" },
 				cs = { "csharpier", timeout_ms = 3000 },
 				java = { "google-java-format" },
+				yaml = { "prettierd" },
+				yml = { "prettierd" },
+				xml = { "xmlformatter" },
+				latex = { "latexindent" },
 			},
 			formatters = {
 				beautysh = {

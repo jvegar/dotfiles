@@ -79,17 +79,55 @@ vim.lsp.config("bashls", {
 	},
 })
 
--- vim.lsp.config("jdtls", {
--- 	filetypes = { "java" },
--- 	settings = {
--- 		java = {
--- 			-- Custom eclipse.jdt.ls options go here
--- 		},
--- 	},
--- })
+vim.lsp.config("yamlls", {
+	settings = {
+		yaml = {
+			schemas = {
+				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.{yml,yaml}",
+				kubernetes = "/*.k8s.yaml",
+			},
+			format = {
+				enable = true,
+			},
+			validate = true,
+			completion = true,
+		},
+	},
+})
+
+vim.lsp.config("texlab", {
+	settings = {
+		texlab = {
+			build = {
+				executable = "latexmk",
+				args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+				onSave = true,
+				forwardSearchAfter = false,
+			},
+			forwardSearch = {
+				-- Configure your PDF viewer here
+				-- For Zathura:
+				executable = "zathura",
+				args = { "--synctex-forward", "%l:1:%f", "%p" },
+				-- For Skim (macOS):
+				-- executable = "displayline",
+				-- args = { "%l", "%p", "%f" },
+			},
+			chktex = {
+				onOpenAndSave = true,
+				onEdit = false,
+			},
+			diagnosticsDelay = 300,
+			latexFormatter = "latexindent",
+			latexindent = {
+				modifyLineBreaks = false,
+			},
+		},
+	},
+})
 
 -- Enable the LSP servers (excluding jdtls since it's handled in ftplugin)
-vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls" })
+vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls", "yamlls", "texlab" })
 
 vim.diagnostic.config({
 	virtual_lines = true,
