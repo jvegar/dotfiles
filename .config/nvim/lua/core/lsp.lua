@@ -58,14 +58,11 @@ vim.lsp.config("ts_ls", {
 		"typescript.tsx",
 	},
 	root_markers = {
-		".git",
 		"package.json",
 		"tsconfig.json",
 		"jsconfig.json",
+		".git",
 	},
-	workspace_required = true,
-	single_file_support = true,
-	log_level = vim.lsp.protocol.MessageType.Warning,
 })
 
 vim.lsp.config("bashls", {
@@ -126,8 +123,13 @@ vim.lsp.config("texlab", {
 	},
 })
 
+vim.lsp.config("postgres_lsp", {
+	cmd = { "postgres-language-server", "lsp-proxy" },
+	filetypes = { "sql" },
+	root_markers = { "postgres-language-server.jsonc", ".git" },
+})
 -- Enable the LSP servers (excluding jdtls since it's handled in ftplugin)
-vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls", "yamlls", "texlab" })
+vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls", "yamlls", "texlab", "postgres_lsp" })
 
 vim.diagnostic.config({
 	virtual_lines = true,

@@ -11,7 +11,7 @@ return {
 				typescript = { "prettierd" },
 				sh = { "shfmt" },
 				bash = { "shfmt" },
-				zsh = { "beautysh" },
+				zsh = { "shfmt" },
 				cs = { "csharpier", timeout_ms = 3000 },
 				java = { "google-java-format" },
 				yaml = { "prettierd" },

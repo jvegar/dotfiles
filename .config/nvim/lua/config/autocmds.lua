@@ -110,3 +110,8 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 		end
 	end,
 })
+
+-- Add a command to clean up unlisted tools
+vim.api.nvim_create_user_command("MasonCleanup", function()
+	require("mason-tool-installer").clean()
+end, {})

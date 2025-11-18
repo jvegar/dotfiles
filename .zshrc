@@ -95,6 +95,27 @@ alias tmn="tmux new-session"
 alias tmns="tmux new -s"
 alias tms="tmux new-session -s"
 
+# Docker aliases
+alias d='docker'
+alias dc='docker compose'
+alias dcl='docker compose logs -f'
+alias dcb='docker compose build'
+alias dcd='docker compose down'
+alias dcu='docker compose up -d'
+alias dcul='docker compose up -d && docker compose logs -f'
+alias dex='docker exec -it'
+alias di='docker images'
+alias dl='docker logs -f'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias drmf='docker rm -f'
+alias dst='docker stats'
+alias dstp='docker system prune -af'
+alias dvol='docker volume ls'
+alias dvolp='docker volume prune -f'
+
 # OS-specific aliases
 case "$OSTYPE" in
   darwin*)
