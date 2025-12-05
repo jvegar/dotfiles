@@ -9,8 +9,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- https://neovim.io/doc/user/news-0.11.html#_defaults
 
 		map("gl", vim.diagnostic.open_float, "Open Diagnostic Float")
-		map("K", vim.lsp.buf.hover, "Hover Documentation")
-		map("gs", vim.lsp.buf.signature_help, "Signature Help")
+		map("K", function()
+			vim.lsp.buf.hover({
+				border = "single",
+				-- border = "rounded",  -- Alternative: rounded corners
+				-- border = "double",    -- Alternative: double border
+				-- border = "solid",     -- Alternative: solid border
+			})
+		end, "Hover Documentation")
+		map("gs", function()
+			vim.lsp.buf.signature_help({
+				border = "single",
+			})
+		end, "Signature Help")
 		map("gD", vim.lsp.buf.declaration, "Goto Declaration")
 		map("<leader>la", vim.lsp.buf.code_action, "Code Action")
 		map("<leader>lr", vim.lsp.buf.rename, "Rename all references")
@@ -77,14 +88,12 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 
 				-- Find wiki link under cursor: [[note]]
 				local wiki_link = nil
-				local link_start, link_end = nil, nil
 
 				-- Search for all wiki links in the line
 				for start_pos, link, end_pos in line:gmatch("()%[%[([^%]]+)%]%]()") do
 					-- Check if cursor is within this link
 					if col >= start_pos - 2 and col <= end_pos + 2 then -- Include brackets in range
 						wiki_link = link
-						link_start, link_end = start_pos - 2, end_pos + 2
 						break
 					end
 				end
@@ -115,3 +124,11 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 vim.api.nvim_create_user_command("MasonCleanup", function()
 	require("mason-tool-installer").clean()
 end, {})
+
+-- Set filetype for .env and .secrets files to sh
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { ".env.*", "*.secrets", "*.secrets.*" },
+	callback = function()
+		vim.bo.filetype = "sh"
+	end,
+})

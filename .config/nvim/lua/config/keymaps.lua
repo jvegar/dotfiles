@@ -24,7 +24,14 @@ vim.keymap.set("n", "<leader>p", ":lua OpenTmuxPopup()<CR>", { noremap = true, s
 -- Keymap for go-to-definition
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
 -- Keymap for go-to-implementation
-vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, { noremap = true, silent = true, desc = "Go to implementation" })
+vim.keymap.set(
+	"n",
+	"<leader>gi",
+	vim.lsp.buf.implementation,
+	{ noremap = true, silent = true, desc = "Go to implementation" }
+)
+-- Keymap for go-to-references
+vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { noremap = true, silent = true, desc = "Go to references" })
 
 -- Obsidian keymaps
 vim.keymap.set(

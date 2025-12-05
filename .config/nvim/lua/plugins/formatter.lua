@@ -9,6 +9,7 @@ return {
 				json = { "prettierd" },
 				javascript = { "prettierd" },
 				typescript = { "prettierd" },
+				typescriptreact = { "prettier" },
 				sh = { "shfmt" },
 				bash = { "shfmt" },
 				zsh = { "shfmt" },
@@ -20,8 +21,8 @@ return {
 				latex = { "latexindent" },
 			},
 			formatters = {
-				beautysh = {
-					prepend_args = { "-i", "2" },
+				shfmt = {
+					args = { "-ln", "bash" },
 				},
 				csharpier = {
 					command = "csharpier",
@@ -47,5 +48,12 @@ return {
 		config = true,
 		-- use opts = {} for passing setup options
 		-- this is equivalent to setup({}) function
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		ft = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte", "vue", "gohtml" },
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
 	},
 }

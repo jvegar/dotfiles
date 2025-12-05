@@ -26,6 +26,7 @@ return {
 					"python",
 					"rust",
 					"typescript",
+					"tsx",
 					"vim",
 					"yaml",
 				},
