@@ -11,7 +11,7 @@ return {
 		vim.opt.foldcolumn = "1"
 		vim.opt.foldlevel = 99
 		vim.opt.foldlevelstart = 99
-		vim.opt.foldenable = false
+		vim.opt.foldenable = true
 		vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 		-- ============================================================================
@@ -124,6 +124,10 @@ return {
 					-- Better folding for configuration files
 					yaml = { "treesitter" },
 					yml = { "treesitter" },
+
+					-- LaTeX files: use LSP (texlab) for accurate folding
+					tex = { "lsp", "treesitter" },
+					plaintex = { "lsp", "treesitter" },
 				}
 
 				-- Return appropriate providers or default

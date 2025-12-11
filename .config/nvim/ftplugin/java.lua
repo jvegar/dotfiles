@@ -1,7 +1,22 @@
 local home = os.getenv("HOME")
-local eclipse_jdtls_path = vim.fn.expand("$MASON/packages/jdtls")
--- local equinox_launcher_path = vim.fn.glob(eclipse_jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar", 1)
+local mason_root = vim.env.MASON and vim.env.MASON or vim.fn.stdpath('data') .. '/mason'
+local eclipse_jdtls_path = mason_root .. '/packages/jdtls'
+local equinox_launcher_path = vim.fn.glob(eclipse_jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar", 1)
 local lombok = eclipse_jdtls_path .. "/lombok.jar"
+
+-- Safety check for equinox launcher
+if equinox_launcher_path == "" then
+  vim.notify("Equinox launcher not found", vim.log.levels.ERROR)
+else
+  vim.notify("Equinox launcher: " .. equinox_launcher_path, vim.log.levels.INFO)
+end
+
+-- Debug: check JDTLS installation
+if vim.fn.isdirectory(eclipse_jdtls_path) == 0 then
+  vim.notify("JDTLS directory not found: " .. eclipse_jdtls_path, vim.log.levels.ERROR)
+else
+  vim.notify("JDTLS path: " .. eclipse_jdtls_path, vim.log.levels.INFO)
+end
 
 -- Platform detection for cross-platform compatibility
 local is_mac = vim.fn.has("mac") == 1
@@ -11,7 +26,11 @@ local is_windows = vim.fn.has("win32") == 1
 -- Choose appropriate config directory based on platform
 local config_dir
 if is_mac then
-	config_dir = eclipse_jdtls_path .. "/config_mac"
+	if vim.fn.has('arm64') == 1 then
+		config_dir = eclipse_jdtls_path .. "/config_mac_arm"
+	else
+		config_dir = eclipse_jdtls_path .. "/config_mac"
+	end
 elseif is_windows then
 	config_dir = eclipse_jdtls_path .. "/config_win"
 else -- linux
@@ -24,15 +43,16 @@ if is_mac then
 	java_runtimes = {
 		{
 			name = "JavaSE-17",
-			path = "/usr/local/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home",
+			-- Use Homebrew symlink for version stability
+			path = "/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
 		},
 		{
 			name = "JavaSE-21",
-			path = "/usr/local/Cellar/openjdk@21/21.0.7/libexec/openjdk.jdk/Contents/Home",
+			path = "/usr/local/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
 		},
 		{
-			name = "JavaSE-23",
-			path = "/usr/local/Cellar/openjdk/25/libexec/openjdk.jdk/Contents/Home",
+			name = "JavaSE-25",
+			path = "/usr/local/opt/openjdk/libexec/openjdk.jdk/Contents/Home",
 		},
 	}
 elseif is_linux then
@@ -68,14 +88,22 @@ elseif is_windows then
 end
 
 -- Debug output to help troubleshoot platform detection
--- vim.notify("Platform: mac=" .. tostring(is_mac) .. ", linux=" .. tostring(is_linux) .. ", windows=" .. tostring(is_windows))
--- vim.notify("Using config directory: " .. config_dir)
+vim.notify("Platform: mac=" .. tostring(is_mac) .. ", linux=" .. tostring(is_linux) .. ", windows=" .. tostring(is_windows))
+vim.notify("Using config directory: " .. config_dir)
 
-local java_debug_path = vim.fn.expand("$MASON/packages/java-debug-adapter")
-local java_test_path = vim.fn.expand("$MASON/packages/java-test")
-local root_dir = vim.fs.dirname(
-	vim.fs.find({ "gradlew", ".git", "mvnw", "build.gradle", "pom.xml", ".classpath" }, { upward = true })[1]
-)
+local java_debug_path = mason_root .. '/packages/java-debug-adapter'
+local java_test_path = mason_root .. '/packages/java-test'
+
+-- Debug: check if debug/test packages are installed
+if vim.fn.isdirectory(java_debug_path) == 0 then
+  vim.notify("Java debug adapter not found: " .. java_debug_path, vim.log.levels.WARN)
+end
+if vim.fn.isdirectory(java_test_path) == 0 then
+  vim.notify("Java test package not found: " .. java_test_path, vim.log.levels.WARN)
+end
+
+local project_markers = vim.fs.find({ "gradlew", ".git", "mvnw", "build.gradle", "pom.xml", ".classpath" }, { upward = true })
+local root_dir = project_markers[1] and vim.fs.dirname(project_markers[1]) or vim.fn.getcwd()
 
 -- Inspired from github.com/IlyasYOY/dotfiles
 local function matchInDir(file, pattern, plain)
@@ -124,72 +152,91 @@ local on_attach = function(client, bufnr)
 	require("jdtls.setup").add_commands()
 	require("dap.ext.vscode").load_launchjs()
 	require("jdtls.dap").setup_dap_main_class_configs()
-	local wk = require("which-key")
-	wk.add({
-		{ "<leader>j", group = "[j]dtls" }, -- group
-	})
-	vim.keymap.set("n", "<leader>jd", "<cmd>JdtUpdateDebugConfig<CR>", { desc = "[j]dtls update [d]ebug config" })
-	vim.keymap.set("n", "<leader>jc", "<cmd>JdtCompile full<CR>", { desc = "[j]dtls [c]ompile full" })
-	vim.keymap.set("n", "<leader>jl", "<cmd>JdtShowLogs<CR>", { desc = "[j]dtls show [l]ogs" })
-	vim.keymap.set("n", "<leader>jr", "<cmd>JdtRestart<CR>", { desc = "[j]dtls [r]estart" })
-	vim.keymap.set("n", "<leader>js", "<cmd>JdtSetRuntime<CR>", { desc = "[j]dtls [s]et runtime" })
-	vim.keymap.set("n", "<leader>ju", "<cmd>JdtUpdateConfig<CR>", { desc = "[j]dtls [u]pdate config" })
+	-- local wk = require("which-key")
+	-- wk.add({
+	-- 	{ "<leader>j", group = "[j]dtls" }, -- group
+	-- })
+	vim.keymap.set("n", "<leader>jd", "<cmd>JdtUpdateDebugConfig<CR>", { buffer = bufnr, desc = "[j]dtls update [d]ebug config" })
+	vim.keymap.set("n", "<leader>jc", "<cmd>JdtCompile full<CR>", { buffer = bufnr, desc = "[j]dtls [c]ompile full" })
+	vim.keymap.set("n", "<leader>jl", "<cmd>JdtShowLogs<CR>", { buffer = bufnr, desc = "[j]dtls show [l]ogs" })
+	vim.keymap.set("n", "<leader>jr", "<cmd>JdtRestart<CR>", { buffer = bufnr, desc = "[j]dtls [r]estart" })
+	vim.keymap.set("n", "<leader>js", "<cmd>JdtSetRuntime<CR>", { buffer = bufnr, desc = "[j]dtls [s]et runtime" })
+	vim.keymap.set("n", "<leader>ju", "<cmd>JdtUpdateConfig<CR>", { buffer = bufnr, desc = "[j]dtls [u]pdate config" })
 	vim.keymap.set(
 		"n",
 		"<leader>ji",
 		"<cmd>lua require'jdtls'.organize_imports()<CR>",
-		{ desc = "[j]dtls organize [i]mports" }
+		{ buffer = bufnr, desc = "[j]dtls organize [i]mports" }
 	)
-	wk.add({
-		{ "<leader>jx", group = "[j]dtls e[x]tract" }, -- group
-	})
+	-- wk.add({
+	-- 	{ "<leader>jx", group = "[j]dtls e[x]tract" }, -- group
+	-- })
 	vim.keymap.set(
 		"n",
 		"<leader>jxv",
 		"<Cmd>lua require('jdtls').extract_variable()<CR>",
-		{ desc = "[j]dtls e[x]tract [v]ariable" }
+		{ buffer = bufnr, desc = "[j]dtls e[x]tract [v]ariable" }
 	)
 	vim.keymap.set(
 		"v",
 		"<leader>jxv",
 		"<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
-		{ desc = "[j]dtls e[x]tract [v]ariable" }
+		{ buffer = bufnr, desc = "[j]dtls e[x]tract [v]ariable" }
 	)
 	vim.keymap.set(
 		"n",
 		"<leader>jxc",
 		"<Cmd>lua require('jdtls').extract_constant()<CR>",
-		{ desc = "[j]dtls e[x]tract [c]onstant" }
+		{ buffer = bufnr, desc = "[j]dtls e[x]tract [c]onstant" }
 	)
 	vim.keymap.set(
 		"v",
 		"<leader>jxc",
 		"<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>",
-		{ desc = "[j]dtls e[x]tract [c]onstant" }
+		{ buffer = bufnr, desc = "[j]dtls e[x]tract [c]onstant" }
 	)
 	vim.keymap.set(
 		"v",
 		"<leader>jxm",
 		"<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>",
-		{ desc = "[j]dtls e[x]tract [m]ethod" }
+		{ buffer = bufnr, desc = "[j]dtls e[x]tract [m]ethod" }
 	)
-	wk.add({
-		{ "<leader>jt", group = "[j]dtls [t]est" }, -- group
-	})
+	-- wk.add({
+	-- 	{ "<leader>jt", group = "[j]dtls [t]est" }, -- group
+	-- })
 	-- nvim-dap integration
-	vim.keymap.set("n", "<leader>jtc", "<Cmd>lua require'jdtls'.test_class()<CR>", { desc = "[j]dtls [t]est [c]lass" })
+	vim.keymap.set("n", "<leader>jtc", "<Cmd>lua require'jdtls'.test_class()<CR>", { buffer = bufnr, desc = "[j]dtls [t]est [c]lass" })
 	vim.keymap.set(
 		"n",
 		"<leader>jtm",
 		"<Cmd>lua require'jdtls'.test_nearest_method()<CR>",
-		{ desc = "[j]dtls [t]est nearest [m]ethod" }
+		{ buffer = bufnr, desc = "[j]dtls [t]est nearest [m]ethod" }
 	)
 end
 
-local bundles = {
-	vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", 1),
-}
-vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar", 1), "\n"))
+local bundles = {}
+local debug_jar = vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", 1)
+if debug_jar ~= "" then
+  table.insert(bundles, debug_jar)
+end
+
+local test_jars = vim.fn.glob(java_test_path .. "/extension/server/*.jar", 1)
+if test_jars ~= "" then
+  -- Filter out empty strings from split result
+  local test_jar_list = vim.split(test_jars, "\n")
+  for _, jar in ipairs(test_jar_list) do
+    if jar ~= "" then
+      table.insert(bundles, jar)
+    end
+  end
+end
+
+-- Debug: log bundle count
+if #bundles == 0 then
+  vim.notify("No debug/test bundles found. Debug and test features may not work.", vim.log.levels.WARN)
+else
+  vim.notify("Loaded " .. #bundles .. " debug/test bundles", vim.log.levels.INFO)
+end
 
 local config = {
 	cmd = {
@@ -207,7 +254,7 @@ local config = {
 		"java.base/java.lang=ALL-UNNAMED",
 		"-javaagent:" .. lombok,
 		"-jar",
-		-- equinox_launcher_path,
+		equinox_launcher_path,
 		"-configuration",
 		config_dir,
 		"-data",
