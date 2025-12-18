@@ -1,21 +1,21 @@
 local home = os.getenv("HOME")
-local mason_root = vim.env.MASON and vim.env.MASON or vim.fn.stdpath('data') .. '/mason'
-local eclipse_jdtls_path = mason_root .. '/packages/jdtls'
-local equinox_launcher_path = vim.fn.glob(eclipse_jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar", 1)
+local mason_root = vim.env.MASON and vim.env.MASON or vim.fn.stdpath("data") .. "/mason"
+local eclipse_jdtls_path = mason_root .. "/packages/jdtls"
+local equinox_launcher_path = vim.fn.glob(eclipse_jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar", true)
 local lombok = eclipse_jdtls_path .. "/lombok.jar"
 
 -- Safety check for equinox launcher
 if equinox_launcher_path == "" then
-  vim.notify("Equinox launcher not found", vim.log.levels.ERROR)
+	vim.notify("Equinox launcher not found", vim.log.levels.ERROR)
 else
-  vim.notify("Equinox launcher: " .. equinox_launcher_path, vim.log.levels.INFO)
+	-- Debug output removed after validation
 end
 
 -- Debug: check JDTLS installation
 if vim.fn.isdirectory(eclipse_jdtls_path) == 0 then
-  vim.notify("JDTLS directory not found: " .. eclipse_jdtls_path, vim.log.levels.ERROR)
+	vim.notify("JDTLS directory not found: " .. eclipse_jdtls_path, vim.log.levels.ERROR)
 else
-  vim.notify("JDTLS path: " .. eclipse_jdtls_path, vim.log.levels.INFO)
+	-- Debug output removed after validation
 end
 
 -- Platform detection for cross-platform compatibility
@@ -26,7 +26,7 @@ local is_windows = vim.fn.has("win32") == 1
 -- Choose appropriate config directory based on platform
 local config_dir
 if is_mac then
-	if vim.fn.has('arm64') == 1 then
+	if vim.fn.has("arm64") == 1 then
 		config_dir = eclipse_jdtls_path .. "/config_mac_arm"
 	else
 		config_dir = eclipse_jdtls_path .. "/config_mac"
@@ -87,51 +87,50 @@ elseif is_windows then
 	}
 end
 
--- Debug output to help troubleshoot platform detection
-vim.notify("Platform: mac=" .. tostring(is_mac) .. ", linux=" .. tostring(is_linux) .. ", windows=" .. tostring(is_windows))
-vim.notify("Using config directory: " .. config_dir)
-
-local java_debug_path = mason_root .. '/packages/java-debug-adapter'
-local java_test_path = mason_root .. '/packages/java-test'
+local java_debug_path = mason_root .. "/packages/java-debug-adapter"
+local java_test_path = mason_root .. "/packages/java-test"
 
 -- Debug: check if debug/test packages are installed
 if vim.fn.isdirectory(java_debug_path) == 0 then
-  vim.notify("Java debug adapter not found: " .. java_debug_path, vim.log.levels.WARN)
+	vim.notify("Java debug adapter not found: " .. java_debug_path, vim.log.levels.WARN)
 end
 if vim.fn.isdirectory(java_test_path) == 0 then
-  vim.notify("Java test package not found: " .. java_test_path, vim.log.levels.WARN)
+	vim.notify("Java test package not found: " .. java_test_path, vim.log.levels.WARN)
 end
 
-local project_markers = vim.fs.find({ "gradlew", ".git", "mvnw", "build.gradle", "pom.xml", ".classpath" }, { upward = true })
+local project_markers = vim.fs.find(
+	{ "gradlew", ".git", "mvnw", "build.gradle", "pom.xml", ".classpath" },
+	{ upward = true }
+)
 local root_dir = project_markers[1] and vim.fs.dirname(project_markers[1]) or vim.fn.getcwd()
 
--- Inspired from github.com/IlyasYOY/dotfiles
-local function matchInDir(file, pattern, plain)
-	if plain == nil then
-		plain = false
-	end
-	if pattern == nil then
-		return false
-	end
-
-	local index = string.find(file, pattern, 1, plain)
-
-	return index == 1
-end
-
--- Inspired from github.com/IlyasYOY/dotfiles
-local function findInDir(dir, pattern, plain)
-	local targets = vim.fn.readdir(dir, function(file)
-		if matchInDir(file, pattern, plain) then
-			return 1
-		end
-	end)
-	local target = targets[1]
-	if not target then
-		error(string.format("No %s target file was found", pattern))
-	end
-	return dir .. target
-end
+-- -- Inspired from github.com/IlyasYOY/dotfiles
+-- local function matchInDir(file, pattern, plain)
+-- 	if plain == nil then
+-- 		plain = false
+-- 	end
+-- 	if pattern == nil then
+-- 		return false
+-- 	end
+--
+-- 	local index = string.find(file, pattern, 1, plain)
+--
+-- 	return index == 1
+-- end
+--
+-- -- Inspired from github.com/IlyasYOY/dotfiles
+-- local function findInDir(dir, pattern, plain)
+-- 	local targets = vim.fn.readdir(dir, function(file)
+-- 		if matchInDir(file, pattern, plain) then
+-- 			return 1
+-- 		end
+-- 	end)
+-- 	local target = targets[1]
+-- 	if not target then
+-- 		error(string.format("No %s target file was found", pattern))
+-- 	end
+-- 	return dir .. target
+-- end
 
 -- used by eclipse to determine what constitutes a workspace
 local workspace_folder = home
@@ -145,8 +144,12 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
--- The on_attach function is used to set key maps after the language server
--- attaches to the current buffer
+-- on_attach function: Sets up Java LSP with modern patterns including:
+-- 1. Java-specific DAP configuration
+-- 2. JDTLS commands and features
+-- 3. Buffer-local keymaps for Java development
+-- 4. Additional LSP keymaps complementing global configuration
+-- Uses client.server_capabilities to conditionally enable features
 local on_attach = function(client, bufnr)
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.setup").add_commands()
@@ -156,7 +159,12 @@ local on_attach = function(client, bufnr)
 	-- wk.add({
 	-- 	{ "<leader>j", group = "[j]dtls" }, -- group
 	-- })
-	vim.keymap.set("n", "<leader>jd", "<cmd>JdtUpdateDebugConfig<CR>", { buffer = bufnr, desc = "[j]dtls update [d]ebug config" })
+	vim.keymap.set(
+		"n",
+		"<leader>jd",
+		"<cmd>JdtUpdateDebugConfig<CR>",
+		{ buffer = bufnr, desc = "[j]dtls update [d]ebug config" }
+	)
 	vim.keymap.set("n", "<leader>jc", "<cmd>JdtCompile full<CR>", { buffer = bufnr, desc = "[j]dtls [c]ompile full" })
 	vim.keymap.set("n", "<leader>jl", "<cmd>JdtShowLogs<CR>", { buffer = bufnr, desc = "[j]dtls show [l]ogs" })
 	vim.keymap.set("n", "<leader>jr", "<cmd>JdtRestart<CR>", { buffer = bufnr, desc = "[j]dtls [r]estart" })
@@ -205,37 +213,85 @@ local on_attach = function(client, bufnr)
 	-- 	{ "<leader>jt", group = "[j]dtls [t]est" }, -- group
 	-- })
 	-- nvim-dap integration
-	vim.keymap.set("n", "<leader>jtc", "<Cmd>lua require'jdtls'.test_class()<CR>", { buffer = bufnr, desc = "[j]dtls [t]est [c]lass" })
+	vim.keymap.set(
+		"n",
+		"<leader>jtc",
+		"<Cmd>lua require'jdtls'.test_class()<CR>",
+		{ buffer = bufnr, desc = "[j]dtls [t]est [c]lass" }
+	)
 	vim.keymap.set(
 		"n",
 		"<leader>jtm",
 		"<Cmd>lua require'jdtls'.test_nearest_method()<CR>",
 		{ buffer = bufnr, desc = "[j]dtls [t]est nearest [m]ethod" }
 	)
+
+	-- Additional LSP keymaps (complement global keymaps in config/keymaps.lua)
+	-- Hover documentation
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show documentation" })
+
+	-- Signature help (useful for method calls)
+	vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "[s]ignature [h]elp" })
+
+	-- Code actions (quickfix, refactor suggestions)
+	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "[c]ode [a]ctions" })
+
+	-- Rename symbol
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "[r]e[n]ame symbol" })
+
+	-- Type definition (if supported)
+	if client.supports_method("textDocument/typeDefinition") then
+		vim.keymap.set("n", "<leader>gt", vim.lsp.buf.type_definition, { buffer = bufnr, desc = "[g]o to [t]ype definition" })
+	end
+
+	-- Document symbols (outline)
+	vim.keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, { buffer = bufnr, desc = "[d]ocument [s]ymbols" })
+
+	-- Workspace symbols (search)
+	vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, { buffer = bufnr, desc = "[w]orkspace [s]ymbols" })
+
+	-- Formatting (if enabled in server capabilities)
+	if client.supports_method("textDocument/formatting") then
+		vim.keymap.set("n", "<leader>f", function()
+			vim.lsp.buf.format({ async = false, timeout_ms = 5000 })
+		end, { buffer = bufnr, desc = "[f]ormat buffer" })
+	end
+
+	-- Inlay hints (if supported)
+	if client.supports_method("textDocument/inlayHint") then
+		vim.keymap.set("n", "<leader>lh", function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end, { buffer = bufnr, desc = "[l]sp toggle inlay [h]ints" })
+	end
+
+	-- Note: Global keymaps from config/keymaps.lua already provide:
+	-- <leader>gd - go to definition
+	-- <leader>gi - go to implementation
+	-- <leader>gr - go to references
 end
 
 local bundles = {}
 local debug_jar = vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", 1)
 if debug_jar ~= "" then
-  table.insert(bundles, debug_jar)
+	table.insert(bundles, debug_jar)
 end
 
 local test_jars = vim.fn.glob(java_test_path .. "/extension/server/*.jar", 1)
 if test_jars ~= "" then
-  -- Filter out empty strings from split result
-  local test_jar_list = vim.split(test_jars, "\n")
-  for _, jar in ipairs(test_jar_list) do
-    if jar ~= "" then
-      table.insert(bundles, jar)
-    end
-  end
+	-- Filter out empty strings from split result
+	local test_jar_list = vim.split(test_jars, "\n")
+	for _, jar in ipairs(test_jar_list) do
+		if jar ~= "" then
+			table.insert(bundles, jar)
+		end
+	end
 end
 
 -- Debug: log bundle count
 if #bundles == 0 then
-  vim.notify("No debug/test bundles found. Debug and test features may not work.", vim.log.levels.WARN)
+	vim.notify("No debug/test bundles found. Debug and test features may not work.", vim.log.levels.WARN)
 else
-  vim.notify("Loaded " .. #bundles .. " debug/test bundles", vim.log.levels.INFO)
+	-- Debug output removed after validation
 end
 
 local config = {

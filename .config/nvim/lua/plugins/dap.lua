@@ -6,7 +6,8 @@ return {
 		"nvim-neotest/nvim-nio",
 	},
 	config = function()
-		local dap, dapui = require("dap"), require("dapui")
+		local dap, dapui, M = require("dap"), require("dapui"), require("custom-functions")
+
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open({ reset = true })
 		end
@@ -15,15 +16,13 @@ return {
 		end
 		dap.listeners.before.event_terminated.dapui_config = function()
 			dapui.open({ reset = true })
-			require("custom-functions")
-			if file_exists(vim.g.LAST_EXECUTED_FILE) and vim.g.DELETE_LAST_EXECUTED_FILE then
+			if M.file_exists(vim.g.LAST_EXECUTED_FILE) and vim.g.DELETE_LAST_EXECUTED_FILE then
 				vim.cmd("silent!!{ rm -f " .. vim.g.LAST_EXECUTED_FILE .. "; } >/dev/null 2>&1")
 			end
 		end
 		dap.listeners.before.event_exited.dapui_config = function()
 			dapui.open({ reset = true })
-			require("custom-functions")
-			if file_exists(vim.g.LAST_EXECUTED_FILE) and vim.g.DELETE_LAST_EXECUTED_FILE then
+			if M.file_exists(vim.g.LAST_EXECUTED_FILE) and vim.g.DELETE_LAST_EXECUTED_FILE then
 				vim.cmd("silent!!{ rm -f " .. vim.g.LAST_EXECUTED_FILE .. "; } >/dev/null 2>&1")
 			end
 		end
@@ -39,13 +38,12 @@ return {
 				type = "codelldb",
 				request = "launch",
 				program = function()
-					require("custom-functions")
 					if vim.g.CPP_PROJECT then
-						if file_exists("main") then
+						if M.file_exists("main") then
 							vim.cmd("silent!!{ rm -f main; } >/dev/null 2>&1")
 						end
 						vim.cmd("silent!!{ clang++-19 -pedantic-errors -g -O0 *.cpp -o main; } >/dev/null 2>&1")
-						if file_exists("main") then
+						if M.file_exists("main") then
 							vim.g.LAST_EXECUTED_FILE = "main"
 							return vim.g.LAST_EXECUTED_FILE
 						else
@@ -54,7 +52,7 @@ return {
 					else
 						-- local file = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 						local file = vim.api.nvim_buf_get_name(0)
-						if file_exists(vim.fn.fnamemodify(file, ":r")) then
+						if M.file_exists(vim.fn.fnamemodify(file, ":r")) then
 							vim.cmd("silent!!{ rm -f " .. vim.fn.fnamemodify(file, ":r") .. "; } >/dev/null 2>&1")
 						end
 						vim.cmd(
@@ -64,7 +62,7 @@ return {
 								.. vim.fn.fnamemodify(file, ":r")
 								.. "; } >/dev/null 2>&1"
 						)
-						if file_exists(vim.fn.fnamemodify(file, ":r")) then
+						if M.file_exists(vim.fn.fnamemodify(file, ":r")) then
 							vim.g.LAST_EXECUTED_FILE = vim.fn.fnamemodify(file, ":r")
 							return vim.g.LAST_EXECUTED_FILE
 						else
