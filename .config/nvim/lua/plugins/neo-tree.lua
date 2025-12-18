@@ -13,14 +13,15 @@ return {
 					hide_dotfiles = false,
 					hide_gitignored = false,
 					hide_by_name = {
-            "node_modules",
-            ".DS_Store",
-            ".git",
-          },
+						"node_modules",
+						".DS_Store",
+						".git",
+					},
 					always_show = { ".gitignore" },
 				},
 				follow_current_file = { enabled = true }, -- Updated line
 				hijack_netrw_behavior = "open_current",
+				find_root = true,
 			},
 			window = {
 				position = "left",

@@ -132,3 +132,32 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 		vim.bo.filetype = "sh"
 	end,
 })
+
+-- Change to project root on VimEnter
+local function find_project_root()
+  local markers = { ".git", "Makefile", "package.json" }
+  local start_path = vim.fn.expand("%:p:h")
+  if start_path == "" then
+    start_path = vim.fn.getcwd()
+  end
+  for _, marker in ipairs(markers) do
+    local root = vim.fs.find(marker, {
+      upward = true,
+      stop = vim.env.HOME,
+      path = start_path,
+    })[1]
+    if root then
+      return vim.fs.dirname(root)
+    end
+  end
+  return nil
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local root = find_project_root()
+    if root then
+      vim.cmd("tcd " .. root)
+    end
+  end,
+})
