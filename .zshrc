@@ -121,6 +121,16 @@ alias tmn="tmux new-session"
 alias tmns="tmux new -s"
 alias tms="tmux new-session -s"
 
+# Tmuxifier aliases
+alias tf="tmuxifier"
+alias tfl="tmuxifier list"
+alias tfs="tmuxifier start"
+alias tfc="tmuxifier create"
+alias tfe="tmuxifier edit"
+alias tfd="tmuxifier delete"
+alias tfload="tmuxifier load-session"
+alias tfedit="tmuxifier edit-session"
+
 # Docker aliases
 alias d='docker'
 alias dc='docker compose'
