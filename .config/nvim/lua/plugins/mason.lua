@@ -66,6 +66,9 @@ return {
 					"stylua",
 					"taplo",
 					"xmlformatter",
+					-- Debugger tools
+					"java-debug-adapter",
+					"java-test",
 				},
 				auto_update = false,
 				run_on_start = true, -- Auto-install/check on startup
