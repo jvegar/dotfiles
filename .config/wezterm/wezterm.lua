@@ -51,7 +51,7 @@ if wezterm.target_triple == "x86_64-apple-darwin" then
 		{ key = "f", mods = "CMD|CTRL", action = wezterm.action.ToggleFullScreen },
 		{ key = "r", mods = "CMD|SHIFT", action = wezterm.action.ReloadConfiguration },
 	}
-else
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.front_end = "WebGpu" -- Use WebGPU for better performance on Windows
 	config.window_decorations = "RESIZE"
 	config.font_size = 12
@@ -91,6 +91,9 @@ else
 			end),
 		},
 	}
+	else
+		config.default_domain = "local"
+	end
 end
 
 config.debug_key_events = true

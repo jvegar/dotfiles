@@ -1,29 +1,4 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "opencode",
-  "provider": {
-    "moonshot": {
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "https://api.moonshot.ai/v1"
-      },
-      "models": {
-        "kimi-k2-0711-preview": {}
-      }
-    }
-  },
-  "mcp": {
-    "atlassian": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "mcp-remote",
-        "https://mcp.atlassian.com/v1/sse"
-      ],
-      "enabled": true
-    }
-  },
-  "autoshare": false,
-  "autoupdate": true
+  "autoupdate": false
 }

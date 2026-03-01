@@ -25,8 +25,8 @@ case "${OSTYPE:-$(uname -s)}" in
 	;;
 [Ll]inux-gnu*)
 	# Podman configuration
-	export CONTAINERS_LOGDRIVER=k8s-file
-	export DOCKER_HOST="unix:///mnt/wsl/podman-sockets/podman-machine-default/podman-user.sock"
+	# export CONTAINERS_LOGDRIVER=k8s-file
+	# export DOCKER_HOST="unix:///mnt/wsl/podman-sockets/podman-machine-default/podman-user.sock"
 	# Golang configuration
 	export GOROOT="/usr/local/go"
 	export PATH=$PATH:/usr/local/go/bin

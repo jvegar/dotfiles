@@ -167,9 +167,9 @@ case "$OSTYPE" in
     #######################################
 
     # Podman configuration
-    alias podman=podman-remote-static-linux_amd64
-    alias docker=podman
-    alias docker-compose=podman-compose
+    # alias podman=podman-remote-static-linux_amd64
+    # alias docker=podman
+    # alias docker-compose=podman-compose
 
     # VS Code for Linux WSL
     alias code="'/mnt/c/Program Files/Microsoft VS Code/bin/code'"

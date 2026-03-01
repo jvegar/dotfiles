@@ -1,0 +1,5 @@
+---@class avante.Config
+---@field instructions_file? string
+---@field provider? string
+---@field providers? table<string, any>
+---@field [string] any
