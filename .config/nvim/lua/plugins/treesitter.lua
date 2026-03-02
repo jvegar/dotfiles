@@ -3,8 +3,9 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		config = function()
-			local config = require("nvim-treesitter.configs")
+			local config = require("nvim-treesitter.config")
 			config.setup({
+				install_dir = vim.fn.stdpath("data") .. "/site",
 				ignore_install = {},
 				-- Enable automatic installation of language parsers
 				auto_install = true,

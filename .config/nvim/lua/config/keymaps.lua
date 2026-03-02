@@ -1,5 +1,5 @@
 function OpenTmuxPopup()
-	local cmd = "bash $HOME/.config/scripts/toggle_tmux_popup.sh"
+	local cmd = "bash $HOME/scripts/toggle_tmux_popup.sh"
 	vim.fn.system(cmd)
 end
 

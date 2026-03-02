@@ -19,8 +19,8 @@ opt.showcmd = false -- Disable command display in the last line
 opt.ruler = false -- Disable ruler
 opt.rulerformat = "%l,%v" -- Set ruler format
 opt.conceallevel = 2 -- Set conceallevel to 1
-opt.timeoutlen = 500
-opt.ttimeoutlen = 10
+opt.timeoutlen = 1000
+opt.ttimeoutlen = 0
 
 -- Indetation options
 opt.expandtab = true -- Convert tabs to spaces

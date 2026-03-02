@@ -39,6 +39,7 @@ config.window_padding = {
 }
 
 -- OS specific configuration
+-- MacOS
 if wezterm.target_triple == "x86_64-apple-darwin" then
 	config.front_end = "OpenGL"
 	config.window_decorations = "MACOS_FORCE_DISABLE_SHADOW | RESIZE"
@@ -46,52 +47,53 @@ if wezterm.target_triple == "x86_64-apple-darwin" then
 	config.window_background_opacity = 0.9
 	config.macos_window_background_blur = 10
 
-	-- Explicit fullscreen toggle for macOS
+	-- Explicit fullscreen toggle
 	config.keys = {
 		{ key = "f", mods = "CMD|CTRL", action = wezterm.action.ToggleFullScreen },
 		{ key = "r", mods = "CMD|SHIFT", action = wezterm.action.ReloadConfiguration },
 	}
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.front_end = "WebGpu" -- Use WebGPU for better performance on Windows
-	config.window_decorations = "RESIZE"
-	config.font_size = 12
-	config.window_background_opacity = 0.9
-	-- config.win32_system_backdrop = "Acrylic"
-	config.default_domain = "WSL:archlinux"
+	if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+		config.front_end = "WebGpu" -- Use WebGPU for better performance on Windows
+		config.window_decorations = "RESIZE"
+		config.font_size = 12
+		config.window_background_opacity = 0.9
+		-- config.win32_system_backdrop = "Acrylic"
+		config.default_domain = "WSL:archlinux"
 
-	-- WSL-specific optimizations
-	config.enable_kitty_keyboard = false -- Disable for compatibility
-	config.use_dead_keys = false -- Disable dead keys for performance
-	config.unicode_version = 14 -- Use newer Unicode version for better compatibility
-	config.allow_win32_input_mode = true -- Enable Windows input mode
-	config.keys = {
-		{ key = "v", mods = "CTRL", action = wezterm.action({ PasteFrom = "Clipboard" }) },
-		{ key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
-		{ key = "n", mods = "CTRL|SHIFT", action = wezterm.action.ToggleFullScreen },
-	}
-	local mouse_bindings = {}
-	config.mouse_bindings = mouse_bindings
-	mouse_bindings = {
-		{
-			event = { Down = { streak = 3, button = "Left" } },
-			action = wezterm.action.SelectTextAtMouseCursor("SemanticZone"),
-			mods = "NONE",
-		},
-		{
-			event = { Down = { streak = 1, button = "Right" } },
-			mods = "NONE",
-			action = wezterm.action_callback(function(window, pane)
-				local has_selection = window:get_selection_text_for_pane(pane) ~= ""
-				if has_selection then
-					window:perform_action(act.CopyTo("ClipBoardAndPrimarySelection"), pane)
-					window:perform_action(act.ClearSelection, pane)
-				else
-					window:perform_action(act({ PasteFrom = "ClipBoard" }), pane)
-				end
-			end),
-		},
-	}
+		-- WSL-specific optimizations
+		config.enable_kitty_keyboard = false -- Disable for compatibility
+		config.use_dead_keys = false -- Disable dead keys for performance
+		config.unicode_version = 14 -- Use newer Unicode version for better compatibility
+		config.allow_win32_input_mode = true -- Enable Windows input mode
+		config.keys = {
+			{ key = "v", mods = "CTRL", action = wezterm.action({ PasteFrom = "Clipboard" }) },
+			{ key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
+			{ key = "n", mods = "CTRL|SHIFT", action = wezterm.action.ToggleFullScreen },
+		}
+		local mouse_bindings = {}
+		config.mouse_bindings = mouse_bindings
+		mouse_bindings = {
+			{
+				event = { Down = { streak = 3, button = "Left" } },
+				action = wezterm.action.SelectTextAtMouseCursor("SemanticZone"),
+				mods = "NONE",
+			},
+			{
+				event = { Down = { streak = 1, button = "Right" } },
+				mods = "NONE",
+				action = wezterm.action_callback(function(window, pane)
+					local has_selection = window:get_selection_text_for_pane(pane) ~= ""
+					if has_selection then
+						window:perform_action(act.CopyTo("ClipBoardAndPrimarySelection"), pane)
+						window:perform_action(act.ClearSelection, pane)
+					else
+						window:perform_action(act({ PasteFrom = "ClipBoard" }), pane)
+					end
+				end),
+			},
+		}
 	else
+		config.front_end = "WebGpu"
 		config.default_domain = "local"
 	end
 end
