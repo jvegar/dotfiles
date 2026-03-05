@@ -123,7 +123,7 @@ return {
 
 					-- Better folding for configuration files
 					yaml = { "treesitter" },
-					yml = { "treesitter" },
+					yml = { "lsp", "treesitter" },
 
 					-- LaTeX files: use LSP (texlab) for accurate folding
 					tex = { "lsp", "treesitter" },

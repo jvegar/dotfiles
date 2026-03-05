@@ -4,11 +4,6 @@
 # This file is sourced for all zsh sessions, including login and non-login shells.
 # It is a good place to set environment variables and PATH modifications.
 
-# Load secrets from .secrets file if it exists
-if [ -f "$HOME/.secrets" ]; then
-	source "$HOME/.secrets"
-fi
-
 case "${OSTYPE:-$(uname -s)}" in
 [Dd]arwin*)
 	# Homebrew custom installs

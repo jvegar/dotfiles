@@ -245,6 +245,11 @@ if [[ -r ~/.zsh_colors.zsh ]]; then
   source ~/.zsh_colors.zsh 2>/dev/null || true
 fi
 
+# Load secrets from .secrets file if it exists
+if [ -f "$HOME/.secrets" ]; then
+	source "$HOME/.secrets"
+fi
+
 # Initialize fzf if available (improves fuzzy finding)
 if command -v fzf >/dev/null 2>&1; then
   # Source fzf key bindings and fuzzy completion
