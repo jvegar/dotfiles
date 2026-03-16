@@ -92,7 +92,16 @@ elseif wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	}
 -- Linux
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
-	config.font = wezterm.font("Jet Brains Mono", { weight = "Regular", italic = false })
+	config.bold_brightens_ansi_colors = true
+	config.font = wezterm.font_with_fallback({
+		{ family = "JetBrains Mono", weight = "Regular" },
+	})
+	config.font_rules = {
+		{
+			intensity = "Bold",
+			font = wezterm.font("JetBrains Mono", { weight = "ExtraBold" }),
+		},
+	}
 	config.font_size = 10.0
 	config.line_height = 1.0
 	config.front_end = "WebGpu"

@@ -3,7 +3,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		config = function()
-			local config = require("nvim-treesitter.config")
+			local config = require("nvim-treesitter")
 			config.setup({
 				install_dir = vim.fn.stdpath("data") .. "/site",
 				ignore_install = {},
@@ -25,6 +25,7 @@ return {
 					"latex",
 					"lua",
 					"markdown",
+					"markdown_inline",
 					"python",
 					"rust",
 					"typescript",

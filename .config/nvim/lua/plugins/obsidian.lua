@@ -23,7 +23,10 @@ return {
 		notes_subdir = "notes",
 		new_notes_location = "notes_subdir",
 
-		disable_frontmatter = true,
+		frontmatter = {
+			enabled = false,
+		},
+
 		templates = {
 			subdir = "templates",
 			date_format = "%Y-%m-%d",
@@ -78,21 +81,19 @@ return {
 
 		-- Attachments configuration
 		attachments = {
-			img_folder = "assets/images",
+			folder = "assets/images",
 			confirm_img_paste = true,
 		},
 
 		search = {
 			rg_args = { "--glob", "!.git/*", "--glob", "!assets/*" },
+			max_lines = 500,
 		},
 
-		-- Search optimization
-		search_max_lines = 500,
-
 		-- URL handling
-		follow_url_func = function(url)
-			vim.fn.jobstart({ "xdg-open", url })
-		end,
+		-- follow_url_func = function(url)
+		-- 	vim.fn.jobstart({ "xdg-open", url })
+		-- end,
 
 		-- Performance settings
 		disable_update = false,

@@ -62,6 +62,9 @@ vim.keymap.set("n", "zv", "zv", { noremap = true, silent = true })
 vim.keymap.set("n", "zx", "zx", { noremap = true, silent = true })
 vim.keymap.set("n", "zX", "zX", { noremap = true, silent = true })
 vim.keymap.set("n", "zm", "zm", { noremap = true, silent = true })
--- vim.keymap.set("n", "zM", "zM", { noremap = true, silent = true })
 vim.keymap.set("n", "zr", "zr", { noremap = true, silent = true })
--- vim.keymap.set("n", "zR", "zR", { noremap = true, silent = true })
+
+-- Show notification history
+vim.keymap.set("n", "<leader>nh", function()
+	Snacks.notifier.show_history()
+end, { desc = "Notification History" })
