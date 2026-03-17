@@ -274,4 +274,8 @@ zstyle ':completion:*' use-cache on                    # Enable completion cache
 zstyle ':completion:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
 zstyle ':completion:*' detailed'yes'
 
+# Only run keychain eval if agent isn't already set in this shell
+if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
+  eval $(keychain --eval --agents ssh --quiet id_ed25519)
+fi
 
