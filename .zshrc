@@ -13,6 +13,9 @@
 # Author: Generated with improvements
 # Version: 2.0
 
+# Fix PROMPT_EOL_MARK
+PROMPT_EOL_MARK=''
+
 # Exit early if not running interactively
 case "$-" in
   *i*) ;; # Interactive shell, continue loading
@@ -37,7 +40,7 @@ if [[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
   source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 else
   # If Zinit is not installed, install it
-  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})...%f"
   command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
   command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
     print -P "%F{33} %F{34}Installation successful.%f%b" || \
@@ -273,9 +276,3 @@ zstyle ':completion:*' preserve-prefix '//$(hostname)'
 zstyle ':completion:*' use-cache on                    # Enable completion cache
 zstyle ':completion:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
 zstyle ':completion:*' detailed'yes'
-
-# Only run keychain eval if agent isn't already set in this shell
-if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
-  eval $(keychain --eval --agents ssh --quiet id_ed25519)
-fi
-

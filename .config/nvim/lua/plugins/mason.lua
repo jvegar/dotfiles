@@ -56,6 +56,7 @@ return {
 					"dockerls",
 					"texlab",
 					"postgres-language-server",
+					"prisma-language-server",
 					-- Formatter tools
 					"prettier",
 					"prettierd",

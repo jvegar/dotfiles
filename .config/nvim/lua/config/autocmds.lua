@@ -27,6 +27,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>lr", vim.lsp.buf.rename, "Rename all references")
 		map("<leader>lf", vim.lsp.buf.format, "Format")
 		map("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
+		map("<leader>h", "<cmd>split | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Horizontal Split")
 
 		local function client_supports_method(client, method, bufnr)
 			if vim.fn.has("nvim-0.11") == 1 then
@@ -135,29 +136,29 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
 -- Change to project root on VimEnter
 local function find_project_root()
-  local markers = { ".git", "Makefile", "package.json" }
-  local start_path = vim.fn.expand("%:p:h")
-  if start_path == "" then
-    start_path = vim.fn.getcwd()
-  end
-  for _, marker in ipairs(markers) do
-    local root = vim.fs.find(marker, {
-      upward = true,
-      stop = vim.env.HOME,
-      path = start_path,
-    })[1]
-    if root then
-      return vim.fs.dirname(root)
-    end
-  end
-  return nil
+	local markers = { ".git", "Makefile", "package.json" }
+	local start_path = vim.fn.expand("%:p:h")
+	if start_path == "" then
+		start_path = vim.fn.getcwd()
+	end
+	for _, marker in ipairs(markers) do
+		local root = vim.fs.find(marker, {
+			upward = true,
+			stop = vim.env.HOME,
+			path = start_path,
+		})[1]
+		if root then
+			return vim.fs.dirname(root)
+		end
+	end
+	return nil
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local root = find_project_root()
-    if root then
-      vim.cmd("tcd " .. root)
-    end
-  end,
+	callback = function()
+		local root = find_project_root()
+		if root then
+			vim.cmd("tcd " .. root)
+		end
+	end,
 })

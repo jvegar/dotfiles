@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 #
-# Bitwarden CLI helper: list vault secrets with their types
+# Bitwarden CLI helper: list vault secrets with their types and IDs
 # Requires: Bitwarden CLI (bw), jq, and a valid Bitwarden session
 # The session is automatically initialized via _bw_init_session if available
 
@@ -63,13 +63,26 @@ bw_list_secrets() {
         return 1
     fi
 
+    # Check if column command is available for pretty formatting
+    local has_column=0
+    if command -v column >/dev/null 2>&1; then
+        has_column=1
+    fi
+
     # Fetch items, sort by name, and format with jq
-    bw list items 2>/dev/null | jq -r '
+    local pipeline_output
+    pipeline_output=$(bw list items 2>/dev/null | jq -r '
         sort_by(.name) |
         .[] |
-        "\(.name)\t\(.type)"' | while IFS=$'\t' read -r name type; do
-        printf "%-40s %s\n" "$name" "$(_bw_type_name "$type")"
-    done
+        "\(.name)\t\(.type)\t\(.id)"' | while IFS=$'\t' read -r name type id; do
+        printf "%s\t%s\t%s\n" "$name" "$(_bw_type_name "$type")" "$id"
+    done)
+
+    if (( has_column )); then
+        echo "$pipeline_output" | column -t -s $'\t'
+    else
+        echo "$pipeline_output"
+    fi
 }
 
 # Alias for convenience
@@ -81,4 +94,4 @@ if [[ "${ZSH_EVAL_CONTEXT:-}" == "toplevel" ]] && [[ ! -o interactive ]]; then
 fi
 
 # One-liner example (for reference):
-# BW_SESSION="$(cat ~/.bw_session 2>/dev/null)" bw list items 2>/dev/null | jq -r '.[] | "\(.name)\t\(.type)"' | column -t -s $'\t'
+# BW_SESSION="$(cat ~/.bw_session 2>/dev/null)" bw list items 2>/dev/null | jq -r '.[] | "\(.name)\t\(.type)\t\(.id)"' | column -t -s $'\t'
