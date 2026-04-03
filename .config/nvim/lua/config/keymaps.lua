@@ -20,7 +20,12 @@ end, { desc = "Copy relative path" })
 -- Keymap for yanking to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 -- Keymap for managing Tmux popups
-vim.keymap.set("n", "<leader>p", ":lua OpenTmuxPopup()<CR>", { noremap = true, silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>p",
+	":lua OpenTmuxPopup()<CR>",
+	{ noremap = true, silent = true, desc = "Open Tmux popup" }
+)
 -- Keymap for go-to-definition
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
 -- Keymap for go-to-implementation
@@ -32,6 +37,9 @@ vim.keymap.set(
 )
 -- Keymap for go-to-references
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { noremap = true, silent = true, desc = "Go to references" })
+
+-- Keymap for show hover documentation
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = true, desc = "LSP Hover" })
 
 -- Obsidian keymaps
 vim.keymap.set(

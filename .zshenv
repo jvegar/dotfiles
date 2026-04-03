@@ -23,7 +23,6 @@ case "${OSTYPE:-$(uname -s)}" in
 	# export CONTAINERS_LOGDRIVER=k8s-file
 	# export DOCKER_HOST="unix:///mnt/wsl/podman-sockets/podman-machine-default/podman-user.sock"
 	# Golang configuration
-	export GOROOT="/usr/local/go"
 	export PATH=$PATH:/usr/local/go/bin
 	# Texlive configuration
 	export PATH="/usr/local/texlive/2023/bin/x86_64-linux:$PATH"
