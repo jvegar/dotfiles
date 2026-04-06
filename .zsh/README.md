@@ -117,3 +117,13 @@ stow .     # Restow
 - If shell fails to start, use `zsh -f` to start without loading configs, then fix.
 - Check symlinks with `ls -la ~/.zsh`.
 - Verify file permissions on secrets file: `chmod 600 ~/.secrets`
+
+### Known Issues
+
+1. **`zsh -i -c` warnings**: When using `zsh -i -c 'command'`, you may see warnings about `setopt: can't change option: monitor`. This is because job control (monitor option) cannot be enabled in shells created with the `-c` flag. These warnings are harmless and do not affect normal interactive shell usage.
+
+2. **Gitstatus initialization**: Gitstatus may fail to initialize in some environments (WSL, certain Linux setups). This has been disabled by default (`POWERLEVEL10K_DISABLE_GITSTATUS=true`) to suppress errors. Git information in the prompt will use a slower fallback method. To re-enable gitstatus, remove this setting from `theme.zsh` and ensure your system meets gitstatus requirements.
+
+3. **Non-interactive testing**: The configuration exits early for non-interactive shells (performance optimization). Test scripts that source `.zshrc` directly may not see aliases or functions. Use `zsh -i -c 'command'` for testing (despite the monitor warning) or run tests within an interactive shell.
+
+4. **Performance profiling**: When `ZPROF=1` is set, startup time increases significantly due to profiling overhead. Use only for debugging, not for normal shell operation.
