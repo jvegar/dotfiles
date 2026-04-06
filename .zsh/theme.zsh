@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 # Powerlevel10k Theme Configuration
 
+# Reduce gitstatus logging to suppress initialization errors
+export GITSTATUS_LOG_LEVEL=ERROR
+
 # Configure Powerlevel10k (Nerd Fonts mode)
 POWERLEVEL10K_PROMPT_ON_NEWLINE=true
 POWERLEVEL10K_MODE='nerdfont-complete'

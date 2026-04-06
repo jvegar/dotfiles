@@ -27,6 +27,9 @@ case "$-" in
   *) return ;; # Non-interactive shell, exit early
 esac
 
+# Set up safe environment for loading
+emulate -L zsh
+
 # Exit early if not a shell that supports zsh features
 if [[ -z "$ZSH_VERSION" ]]; then
   echo "Error: This configuration is designed for Zsh" >&2
