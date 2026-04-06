@@ -3,6 +3,8 @@
 
 # Reduce gitstatus logging to suppress initialization errors
 export GITSTATUS_LOG_LEVEL=ERROR
+# Disable gitstatus if it fails to initialize (improves startup time)
+export POWERLEVEL10K_DISABLE_GITSTATUS=true
 
 # Configure Powerlevel10k (Nerd Fonts mode)
 POWERLEVEL10K_PROMPT_ON_NEWLINE=true
