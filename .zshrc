@@ -18,6 +18,11 @@
 # Enable profiling if ZPROF environment variable is set
 [[ -n "$ZPROF" ]] && zmodload zsh/zprof
 
+# Disable gitstatus to suppress initialization errors (set early for instant prompt)
+export POWERLEVEL10K_DISABLE_GITSTATUS=true
+export POWERLEVEL9K_DISABLE_GITSTATUS=true
+export GITSTATUS_LOG_LEVEL=ERROR
+
 # Fix PROMPT_EOL_MARK
 PROMPT_EOL_MARK=''
 
@@ -29,6 +34,9 @@ esac
 
 # Set up safe environment for loading
 emulate -L zsh
+
+# Attempt to set monitor option (for job control) to avoid errors from plugins
+setopt monitor 2>/dev/null || true
 
 # Exit early if not a shell that supports zsh features
 if [[ -z "$ZSH_VERSION" ]]; then
@@ -124,6 +132,11 @@ zstyle -t zsh_reactive auto >/dev/null 2>&1 && zstyle ':zsh_reactive:cmd' max-wi
 
 # Display profiling information if ZPROF is enabled
 [[ -n "$ZPROF" ]] && zprof
+
+# Initialize zoxide (must be at the end of configuration as recommended)
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
 
 # Clean exit
 return 0

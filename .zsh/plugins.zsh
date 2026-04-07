@@ -34,7 +34,7 @@ zinit wait"1" lucid for \
 
 # Load Fast node version manager (fnm) for Node.js management
 zinit wait"2" lucid for \
-  atload='init_tool_if_exists fnm "noglob eval \"$(fnm env --use-on-cd)\""' \
+  atload='if command -v fnm >/dev/null 2>&1; then noglob eval "$(fnm env --use-on-cd)"; fi' \
   zdharma-continuum/null
 
 # Load pyenv for Python version management (conditional)
@@ -58,14 +58,9 @@ zinit wait"2" lucid for \
   atload='source_if_exists "$HOME/.cargo/env"' \
   zdharma-continuum/null
 
-# zoxide configuration for smart cd (with existence check)
-zinit wait"2" lucid for \
-  atload='init_tool_if_exists zoxide "eval \"$(zoxide init zsh)\""' \
-  zdharma-continuum/null
-
 # tmuxifier configuration (with existence check)
 zinit wait"2" lucid for \
-  atload='init_tool_if_exists tmuxifier "eval \"$(tmuxifier init -)\""' \
+  atload='init_tool_if_exists tmuxifier "$(tmuxifier init -)"' \
   zdharma-continuum/null
 
 # Initialize fzf if available (improves fuzzy finding)
