@@ -44,24 +44,15 @@ load_secrets() {
   # Load the secrets file
   source "$secrets_file" 2>/dev/null || true
 
-  # Mask sensitive environment variables in process listing
-  # Note: This doesn't prevent access from within the shell, but helps with ps output
-  export AVANTE_DEEPSEEK_API_KEY="[REDACTED]"
-  export BW_CLIENTID="[REDACTED]"
-  export BW_CLIENTSECRET="[REDACTED]"
-  export BW_PASSWORD="[REDACTED]"
-  export DEEPSEEK_API_KEY="[REDACTED]"
-  export GH_TOKEN="[REDACTED]"
-  export ANTHROPIC_AUTH_TOKEN="[REDACTED]"
-
-  # Note: Actual values are still in environment, but this helps with casual inspection
+  # Note: Environment variables loaded above are now available for use
   # For true security, consider using a password manager or keychain integration
 
   return 0
 }
 
 # Function: mask_secret_vars
-# Description: Replace sensitive env vars with placeholder values for display
+# Description: WARNING: This function overwrites secret values with "[REDACTED]"
+# Use only if you want to deliberately hide values (will break functionality)
 mask_secret_vars() {
   local secret_vars=(
     AVANTE_DEEPSEEK_API_KEY
