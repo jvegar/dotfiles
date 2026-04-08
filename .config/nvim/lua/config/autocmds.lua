@@ -1,3 +1,5 @@
+-- LSP keymaps are set via LSP-attach autocmd for buffer-local context and custom styling.
+-- This approach ensures keymaps only exist when LSP is active and allows per-buffer customization.
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 	callback = function(event)
@@ -51,6 +53,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 			-- When cursor stops moving: Highlights all instances of the symbol under the cursor
 			-- When cursor moves: Clears the highlighting
+			-- NOTE: These autocmds run frequently and may impact performance with large files or multiple LSP servers.
+			-- Consider disabling if experiencing lag, or implement debouncing.
 			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 				buffer = event.buf,
 				group = highlight_augroup,

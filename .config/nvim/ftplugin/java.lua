@@ -227,8 +227,7 @@ local on_attach = function(client, bufnr)
 	)
 
 	-- Additional LSP keymaps (complement global keymaps in config/keymaps.lua)
-	-- Hover documentation
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show documentation" })
+	-- Hover documentation (provided by LSP-attach autocmd with custom border styling)
 
 	-- Signature help (useful for method calls)
 	vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "[s]ignature [h]elp" })

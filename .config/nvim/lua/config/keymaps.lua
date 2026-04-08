@@ -26,20 +26,18 @@ vim.keymap.set(
 	":lua OpenTmuxPopup()<CR>",
 	{ noremap = true, silent = true, desc = "Open Tmux popup" }
 )
--- Keymap for go-to-definition
+-- Global LSP keymaps (work when LSP is attached)
+-- Additional LSP keymaps are set via LSP-attach autocmd (see autocmds.lua) for buffer-local context
 vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to definition" })
--- Keymap for go-to-implementation
 vim.keymap.set(
 	"n",
 	"<leader>gi",
 	vim.lsp.buf.implementation,
 	{ noremap = true, silent = true, desc = "Go to implementation" }
 )
--- Keymap for go-to-references
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { noremap = true, silent = true, desc = "Go to references" })
 
--- Keymap for show hover documentation
-vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = true, desc = "LSP Hover" })
+-- Keymap for show hover documentation (moved to LSP-attach autocmd for buffer-local context and custom border styling)
 
 -- Obsidian keymaps
 vim.keymap.set(
@@ -50,12 +48,12 @@ vim.keymap.set(
 )
 
 -- Buffer navigation
-vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
-vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
+-- vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
+-- vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { noremap = true, silent = true, desc = "Delete buffer" })
 vim.keymap.set("n", "<leader>bl", ":ls<CR>", { noremap = true, silent = true, desc = "List buffers" })
 
--- Alternative: Use shift+h/l for faster buffer switching
+-- Alternative: Use shift+h/l for faster buffer switching (recommended for speed)
 vim.keymap.set("n", "<S-l>", ":bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
 vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
 
