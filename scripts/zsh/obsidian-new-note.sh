@@ -1,19 +1,23 @@
 #!/bin/zsh
 
-on() {
-  if [ -z "$OBSIDIAN_BASE" ]; then
-    echo "Error: OBSIDIAN_BASE environment variable is not set."
-    exit 1
-  fi
+obsidian_new_note() {
+	if [ -z "$OBSIDIAN_BASE" ]; then
+		echo "Error: OBSIDIAN_BASE environment variable is not set."
+		exit 1
+	fi
 
-  if [ -z "$1" ]; then
-    echo "Error: A file name must be set, e.g. on \"the wonderful thing about tiggers\"."
-    exit 1
-  fi
+	if [ -z "$1" ]; then
+		echo "Error: A file name must be set, e.g. on \"the wonderful thing about tiggers\"."
+		exit 1
+	fi
 
-  file_name=$(echo "$1" | tr ' ' '-')
-  formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
-  cd "$OBSIDIAN_BASE" || exit
-  touch "inbox/${formatted_file_name}"
-  nvim "inbox/${formatted_file_name}"
+	file_name=$(echo "$1" | tr ' ' '-')
+	formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
+	cd "$OBSIDIAN_BASE" || exit
+	touch "inbox/${formatted_file_name}"
+	nvim "inbox/${formatted_file_name}"
 }
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]] || [[ "${ZSH_EVAL_CONTEXT}" == "toplevel" ]]; then
+	obsidian_new_note
+fi
