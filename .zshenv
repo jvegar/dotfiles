@@ -19,15 +19,19 @@ case "${OSTYPE:-$(uname -s)}" in
 	fi
 	;;
 [Ll]inux-gnu*)
-	# Podman configuration
-	# export CONTAINERS_LOGDRIVER=k8s-file
-	# export DOCKER_HOST="unix:///mnt/wsl/podman-sockets/podman-machine-default/podman-user.sock"
+	if [[ -n "$WSL_DISTRO_NAME" ]]; then
+		# Podman configuration
+		export CONTAINERS_LOGDRIVER=k8s-file
+		export DOCKER_HOST="unix:///mnt/wsl/podman-sockets/podman-machine-default/podman-user.sock"
+		# Trae IDE configuration
+		export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/Trae/bin:$PATH"
+		# Cursor configuration
+		export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/cursor/resources/app/bin:$PATH"
+	fi
 	# Golang configuration
 	export PATH=$PATH:/usr/local/go/bin
 	# Texlive configuration
 	export PATH="/usr/local/texlive/2023/bin/x86_64-linux:$PATH"
-	# Trae IDE configuration
-	export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/Trae/bin:$PATH"
 	# Maven configuration
 	if [ -d '/opt/apache-maven-3.9.9' ]; then
 		M2_HOME='/opt/apache-maven-3.9.9'
@@ -37,8 +41,6 @@ case "${OSTYPE:-$(uname -s)}" in
 	# Dotnet tools configuration
 	export DOTNET_ROOT=/usr/share/dotnet
 	export PATH=$PATH:/usr/share/dotnet:$HOME/.dotnet/tools
-	# Cursor configuration
-	export PATH="/mnt/c/Users/jvega/AppData/Local/Programs/cursor/resources/app/bin:$PATH"
 	;;
 esac
 
