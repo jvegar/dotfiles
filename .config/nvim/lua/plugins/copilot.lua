@@ -33,7 +33,7 @@ return {
 		},
 		opts = {
 			-- AI model configuration
-			model = "gpt-4.1",
+			model = "gpt-5-mini",
 			temperature = 0.1,
 
 			-- Default context sharing

@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 # Linux specific configurations
 
+# Omarchy environment (PATH, OMARCHY_PATH, etc.)
+source ~/.local/share/omarchy/default/bash/envs 2>/dev/null
+
 # Podman configuration (commented out)
 # alias podman=podman-remote-static-linux_amd64
 # alias docker=podman
@@ -12,4 +15,3 @@
 # Linux-specific copy/paste
 # alias pbcopy='xclip -selection clipboard'
 # alias pbpaste='xclip -selection clipboard -o'
-
