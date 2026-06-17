@@ -6,7 +6,7 @@
 alias ls="eza --icons=always --color-scale"
 alias ll="ls -lh"
 alias md="mkdir"
-alias yai="$HOME/repos/projects/dotfiles/scripts/yai.sh"
+alias yai="$HOME/.zsh/scripts/yai.sh"
 
 # Tmux aliases
 alias tm="tmux"

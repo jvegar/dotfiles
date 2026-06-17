@@ -5,4 +5,4 @@
 zstyle ':completion:*' preserve-prefix '//$(hostname)'
 zstyle ':completion:*' use-cache on                    # Enable completion cache
 zstyle ':completion:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
-zstyle ':completion:*' detailed'yes'
+zstyle ':completion:*' detailed 'yes'

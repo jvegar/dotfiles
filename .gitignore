@@ -1,12 +1,12 @@
 tmux-client-*.log
 .zsh_history
 Session.vim
-.config/tmux/plugins
-!.config/tmux/plugins/tmuxifier/layouts/
-!.config/tmux/plugins/tmuxifier/layouts/**
+tmux/.config/tmux/plugins
+!tmux/.config/tmux/plugins/tmuxifier/layouts/
+!tmux/.config/tmux/plugins/tmuxifier/layouts/**
 .config/github-copilot/
 .config/go/
-.config/nvim/lazy-lock.json
+nvim/.config/nvim/lazy-lock.json
 .config/Bitwarden CLI/
 .config/configstore/
 .config/containers/

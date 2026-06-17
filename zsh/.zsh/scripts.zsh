@@ -2,7 +2,7 @@
 # Custom Scripts Loading Configuration
 # Implements lazy loading for performance optimization
 
-ZSH_SCRIPTS_DIR="${ZSH_SCRIPTS_DIR:-$HOME/scripts/zsh}"
+ZSH_SCRIPTS_DIR="${ZSH_SCRIPTS_DIR:-${ZSH_CONFIG_DIR:-$HOME/.zsh}/scripts}"
 
 # Function: lazy_load_script
 # Description: Create a wrapper function that sources a script on first use
@@ -13,11 +13,12 @@ lazy_load_script() {
   shift 2
   local aliases=("$@")
 
-  # Create wrapper function
+  # Create wrapper function (unfunction prevents infinite recursion)
   eval "${function_name}() {
+    unfunction ${function_name}
     # Source the script
     source \"${ZSH_SCRIPTS_DIR}/${script_name}\" 2>/dev/null || true
-    # Execute the function
+    # Execute the function (now the real one from the sourced script)
     ${function_name} \"\$@\"
   }"
 
@@ -35,8 +36,9 @@ load_script_delayed() {
   local delay="${2:-1}"
 
   if [[ -r "$script_path" ]]; then
+    # Use zinit to delay-source the script as a snippet
     zinit ice wait"${delay}" silent
-    zinit snippet "$script_path"
+    zinit load "$script_path"
   fi
 }
 
@@ -54,6 +56,9 @@ if [[ -d "$ZSH_SCRIPTS_DIR" ]]; then
   # load-fabric-patterns.sh - creates pattern functions, load on demand
   # This script creates functions dynamically, so we load it with a delay
   load_script_delayed "${ZSH_SCRIPTS_DIR}/load-fabric-patterns.sh" "2"
+
+  # tmux-killserver.sh - main function: tmux_killserver
+  lazy_load_script "tmux-killserver.sh" "tmux_killserver" "tks"
 
   # obsidian-git-backup.sh - main function: obsidian_git_backup
   lazy_load_script "obsidian-git-backup.sh" "obsidian_git_backup" "ogb"

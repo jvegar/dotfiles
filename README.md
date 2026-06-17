@@ -8,9 +8,9 @@ This repository contains my personal dotfiles and configuration files for variou
   - `nvim/` - Neovim configuration files
   - `tmux/` - Tmux configuration
   - `wezterm/` - WezTerm terminal emulator configuration
-- `scripts/` - Utility scripts for various tasks
 - `.zshrc` - Zsh shell configuration
 - `.zshenv` - Zsh environment variables
+- `.zsh/` - Modular zsh configuration (plugins, aliases, scripts, theme, etc.)
 
 ## Installation
 
@@ -82,7 +82,7 @@ The `.config/` directory contains configurations for various applications:
 
 ### Utility Scripts
 
-The `scripts/` directory contains various utility scripts for system management and automation.
+Utility scripts live inside `.zsh/scripts/` and are lazy-loaded on first use.
 
 ## Requirements
 

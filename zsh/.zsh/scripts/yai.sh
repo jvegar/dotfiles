@@ -2,7 +2,12 @@
 
 # Determine the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-LOADER_PATH="$SCRIPT_DIR/shloader.sh"
+# Try zsh config scripts dir first, then same-directory fallback
+if [[ -f "${ZSH_SCRIPTS_DIR:-$HOME/.zsh/scripts}/shloader.sh" ]]; then
+  LOADER_PATH="${ZSH_SCRIPTS_DIR:-$HOME/.zsh/scripts}/shloader.sh"
+else
+  LOADER_PATH="$SCRIPT_DIR/shloader.sh"
+fi
 
 # Use OBSIDIAN_BASE environment variable, or exit if not set.
 # Example: export OBSIDIAN_BASE="/path/to/your/vault"
