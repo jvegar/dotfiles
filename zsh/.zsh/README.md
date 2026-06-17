@@ -5,6 +5,7 @@ This directory contains modular ZSH configuration files optimized for performanc
 ## Structure
 
 - `.zshrc` - Main loader file (sources all modules)
+- `.zshenv` - Environment variables and PATH settings
 - `aliases.zsh` - Shell aliases (categorized)
 - `completion.zsh` - ZSH completion settings
 - `functions.zsh` - Helper functions and utilities
@@ -15,9 +16,25 @@ This directory contains modular ZSH configuration files optimized for performanc
 - `scripts.zsh` - Custom script loading (lazy loading)
 - `secrets.zsh` - Secure secrets loading
 - `theme.zsh` - Powerlevel10k theme configuration
+- `scripts/` - Utility scripts
+  - `bw-list-secrets.sh` - Bitwarden secrets listing
+  - `compare-zsh-performance.sh` - Compare Zsh startup performance
+  - `load-fabric-patterns.sh` - Load Fabric AI patterns
+  - `obsidian-git-backup.sh` - Obsidian vault git backup
+  - `obsidian-new-note.sh` - Create new Obsidian notes
+  - `obsidian-open-vault.sh` - Open Obsidian vault
+  - `rename.sh` - Batch file renaming
+  - `shloader.sh` - Terminal loading spinner (shloader)
+  - `test-zsh-config.sh` - Zsh config validation
+  - `tmux-killserver.sh` - Kill tmux server
+  - `tmuxifier_cp_session.sh` - Copy tmuxifier session layouts
+  - `toggle_tmux_popup.sh` - Toggle tmux popup windows
+  - `yai.sh` - YAI (Yet Another Intelligence) integration
+  - `zsh-benchmark.sh` - Zsh startup benchmark
 - `os/` - OS-specific configurations
   - `darwin.zsh` - macOS specific settings
-  - `linux.zsh` - Linux/WSL specific settings
+  - `linux.zsh` - Linux specific settings
+  - `wsl.zsh` - WSL (Windows Subsystem for Linux) settings
 
 ## Optimization Features
 
@@ -46,7 +63,7 @@ zprof | head -20
 Run the benchmark script to measure startup time:
 
 ```bash
-~/repos/projects/dotfiles/scripts/zsh-benchmark.sh
+~/.zsh/scripts/zsh-benchmark.sh
 ```
 
 ### Adding New Configurations
@@ -55,7 +72,7 @@ Run the benchmark script to measure startup time:
 2. **Functions**: Add to `functions.zsh`
 3. **OS-specific**: Add to `os/darwin.zsh` or `os/linux.zsh`
 4. **Plugins**: Add to `plugins.zsh` with appropriate wait time
-5. **Scripts**: Place in `~/scripts/zsh/` and update `scripts.zsh`
+5. **Scripts**: Place in `~/.zsh/scripts/` and update `scripts.zsh`
 
 ### Security
 
@@ -81,41 +98,35 @@ OS-specific configurations are loaded from the `os/` directory.
 
 ## Rollback
 
-If issues occur after the modular configuration update, you can revert to the previous state:
+If issues occur after the modular configuration update, you can revert:
 
-### Option 1: Restore from backups
-1. Restore the original `.zshrc`:
-   ```bash
-   cp ~/.zshrc.old ~/.zshrc
-   ```
-2. Remove the symlink and restore the original `.zsh` directory:
-   ```bash
-   rm ~/.zsh
-   mv ~/.zsh.old ~/.zsh
-   ```
-3. If you have a backup of `.zshenv`, restore it similarly.
-
-### Option 2: Re-run GNU Stow
-If using stow for dotfile management, you can restow the configurations:
+### Option 1: Restow with Stow
 ```bash
-cd ~/repos/projects/dotfiles
-stow -D .  # Unlink all
-stow .     # Restow
+cd ~/dotfiles
+stow -D zsh   # Unlink zsh
+stow zsh      # Relink
+```
+
+### Option 2: Restore from git
+```bash
+cd ~/dotfiles
+git checkout -- zsh/
+stow -R zsh
 ```
 
 ### Option 3: Manual reversion
-1. Remove the `.zsh` symlink: `rm ~/.zsh`
-2. Copy the modular configs from the dotfiles repository manually if needed.
-3. Edit `.zshrc` to revert to the previous non-modular version.
+1. Remove symlinks: `stow -D zsh`
+2. Copy the modular configs manually if needed
+3. Edit `.zshrc` to revert to a previous non-modular version
 
 ### Backup locations
-- `~/.zshrc.old` - Backup of original `.zshrc`
-- `~/.zsh.old` - Backup of original `.zsh` directory (if created)
-- The dotfiles repository contains timestamped backups of previous configurations.
+- `~/.zshrc.old` - Backup of original `.zshrc` (if created during setup)
+- `~/.zsh.old` - Backup of original `.zsh` directory (if created during setup)
+- The dotfiles git repository contains the full history of all changes
 
 ### Troubleshooting
-- If shell fails to start, use `zsh -f` to start without loading configs, then fix.
-- Check symlinks with `ls -la ~/.zsh`.
+- If shell fails to start, use `zsh -f` to start without loading configs, then fix
+- Check symlinks with `ls -la ~/.zsh ~/.zshrc ~/.zshenv`
 - Verify file permissions on secrets file: `chmod 600 ~/.secrets`
 
 ### Known Issues
