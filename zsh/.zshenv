@@ -100,5 +100,8 @@ export EZA_CONFIG_DIR="$HOME/.config/eza"
 # Mason bin configuration
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
+# SSH auth sock
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
