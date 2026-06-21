@@ -25,6 +25,10 @@ if initialize_session "blason"; then
 	select_pane 0
 	run_cmd "nvim"
 
+	new_window "git"
+	run_cmd "lazygit"
+
+	select_window "root"
 fi
 
 # Finalize session creation and switch/attach to it.
