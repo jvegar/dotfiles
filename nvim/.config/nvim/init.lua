@@ -4,7 +4,6 @@ local g = vim.g
 g.mapleader = " "
 g.maplocalleader = " "
 
-require("config.ui")
 require("core.lazy")
 require("core.lsp")
 require("config.autocmds")
