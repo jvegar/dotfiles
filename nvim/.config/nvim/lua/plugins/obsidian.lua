@@ -1,8 +1,8 @@
 return {
 	"obsidian-nvim/obsidian.nvim",
-	--enabled = false,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
+		"nvim-lua/plenary.nvim",
 	},
 	version = "*",
 	lazy = true,
@@ -36,14 +36,12 @@ return {
 		-- Optimized completion settings
 		completion = {
 			nvim_cmp = false,
-			blink = true, -- Enable blink.cmp for faster autocomplete
 			min_chars = 2,
 		},
 
 		-- Enable UI with optimized settings
 		ui = {
 			enable = true,
-			conceallevel = 2,
 			max_file_length = 10000,
 		},
 
@@ -58,8 +56,6 @@ return {
 				tag_note = "<C-x>",
 				insert_tag = "<C-l>",
 			},
-			sort_by = "modified",
-			sort_reversed = true,
 		},
 
 		-- Daily notes configuration
@@ -74,7 +70,7 @@ return {
 			if title ~= nil then
 				suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
 			else
-				suffix = os.time()
+				suffix = tostring(os.time())
 			end
 			return tostring(os.time()) .. "-" .. suffix
 		end,
@@ -86,24 +82,10 @@ return {
 		},
 
 		search = {
-			rg_args = { "--glob", "!.git/*", "--glob", "!assets/*" },
-			max_lines = 500,
+			sort_by = "modified",
+			sort_reversed = true,
+			max_lines = 1000,
 		},
-
-		-- URL handling
-		-- follow_url_func = function(url)
-		-- 	vim.fn.jobstart({ "xdg-open", url })
-		-- end,
-
-		-- Performance settings
-		disable_update = false,
-		footer = {
-			enabled = true,
-			--format = "({{words}} words)",
-		},
-		--notes = {
-		--	has_footer = false,
-		--},
 
 		-- Disable legacy commands
 		legacy_commands = false,
