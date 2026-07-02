@@ -1,12 +1,15 @@
 customCommands:
   - key: "<c-v>"
+    description: "AI-powered conventional commit"
     context: "global"
-    description: "Create new conventional commit"
     prompts:
       - type: "menu"
         key: "Type"
         title: "Type of change"
         options:
+          - name: "AI defined"
+            description: "Let AI analyze and determine the best commit type"
+            value: "ai-defined"
           - name: "build"
             description: "Changes that affect the build system or external dependencies"
             value: "build"
@@ -20,7 +23,7 @@ customCommands:
             description: "Other changes that don't modify src or test files"
             value: "chore"
           - name: "ci"
-            description: "Changes to our CI configuration files and scripts"
+            description: "Changes to CI configuration files and scripts"
             value: "ci"
           - name: "docs"
             description: "Documentation only changes"
@@ -40,25 +43,53 @@ customCommands:
           - name: "test"
             description: "Adding missing tests or correcting existing tests"
             value: "test"
-      - type: "input"
-        title: "Scope"
-        key: "Scope"
-        initialValue: ""
-      - type: "menu"
-        key: "Breaking"
-        title: "Breaking change"
-        options:
-          - name: "No"
-            value: ""
-          - name: "Yes"
-            value: "!"
-      - type: "input"
-        title: "message"
-        key: "Message"
-        initialValue: ""
-      - type: "confirm"
-        key: "Confirm"
-        title: "Commit"
-        body: "Are you sure you want to commit?"
-    command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
-    loadingText: "Creating conventional commit..."
+    command: |
+      bash -c '
+      diff=$(git diff --cached)
+      if [ -z "$diff" ]; then
+        echo "No staged changes" >&2
+        exit 1
+      fi
+      SELECTED_TYPE="{{.Form.Type}}"
+      prompt="You are an expert at writing Git commits following the Conventional Commits format.
+
+      The user selected type: $SELECTED_TYPE
+      (If the user selected \"ai-defined\", analyze the diff and choose the most appropriate type yourself.)
+
+      Available types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert.
+
+      Output a SINGLE commit message with this structure:
+
+      <type>(<scope>): <description>
+
+      [optional blank line followed by body explaining what and why]
+
+      Guidelines:
+      - Use the selected type (or pick one if ai-defined)
+      - Add scope in parentheses if applicable
+      - Use ! after type/scope for breaking changes
+      - Lowercase the subject, no period at end
+      - Imperative mood (\"add\" not \"added\")
+      - Subject under 50 chars
+
+      Previous commits for context:
+      $(git log --oneline -10)
+
+      Changes to analyze:
+      $(git diff --cached --stat)
+      $(git diff --cached)
+      "
+      echo "$prompt" > /tmp/lazygit-ai-prompt
+      msg=$(aichat < /tmp/lazygit-ai-prompt 2>/dev/null)
+      if [ -z "$msg" ]; then
+        echo "AI generation failed" >&2
+        exit 1
+      fi
+      echo "$msg" > /tmp/ai-commit-msg
+      printf "\n\n--- AI generated message ---\n%s\n------------------------------\n" "$msg"
+      exec git commit -e -F /tmp/ai-commit-msg
+      CODE=$?
+      exit $CODE
+      '
+    loadingText: "Generating commit message..."
+    output: terminal
