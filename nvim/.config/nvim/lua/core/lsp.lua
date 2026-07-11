@@ -128,8 +128,21 @@ vim.lsp.config("postgres_lsp", {
 	filetypes = { "sql" },
 	root_markers = { "postgres-language-server.jsonc", ".git" },
 })
+
+vim.lsp.config("lemminx", {
+	settings = {
+		xml = {
+			catalogs = { vim.fn.expand("~/.config/nvim/xml-catalog.xml") },
+			format = {
+				enabled = true,
+				splitAttributes = true,
+			},
+		},
+	},
+})
+
 -- Enable the LSP servers (excluding jdtls since it's handled in ftplugin)
-vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls", "yamlls", "texlab", "postgres_lsp" })
+vim.lsp.enable({ "jsonls", "lua_ls", "ts_ls", "bashls", "yamlls", "texlab", "postgres_lsp", "lemminx" })
 
 vim.diagnostic.config({
 	virtual_lines = true,
