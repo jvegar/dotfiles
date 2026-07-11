@@ -48,3 +48,11 @@ api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 	end,
 	desc = "Check for file changes on focus or buffer enter",
 })
+
+-- Hide blocky backgrounds in markdowns
+vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "none" })
+vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "none" })
+vim.api.nvim_set_hl(0, "RenderMarkdownH3Bg", { bg = "none" })
+vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { bg = "none" })
+vim.api.nvim_set_hl(0, "RenderMarkdownH5Bg", { bg = "none" })
+vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { bg = "none" })
