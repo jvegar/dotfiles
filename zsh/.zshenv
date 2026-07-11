@@ -53,30 +53,12 @@ export TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 # tmuxifier configuration
 export PATH="$HOME/.config/tmux/plugins/tmuxifier/bin:$PATH"
 
-# fnm configuration
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-	export PATH="$HOME/.local/share/fnm:$PATH"
-fi
-
 # golang configuration
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 
-# pyenv cofiguration
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-
 # gvm configuration
 export GVM_DIR="$HOME/.gvm"
-
-# bun configuration
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# bun version manager configuration
-export BUM_INSTALL="$HOME/.bum"
-export PATH="$BUM_INSTALL/bin:$PATH"
 
 # neovim configuration
 export PATH="$PATH:/opt/nvim/"
@@ -87,12 +69,8 @@ export EDITOR="nvim"
 # cargo configuration
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# pnpm configuration
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+# aube configuration
+export PATH="$(aube bin -g):$PATH"
 
 # eza configuration
 export EZA_CONFIG_DIR="$HOME/.config/eza"
@@ -103,5 +81,5 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 # SSH auth sock
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
+# Added by Antigravity CLI installer
+export PATH="/home/josevegar/.local/bin:$PATH"

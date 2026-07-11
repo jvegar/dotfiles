@@ -128,10 +128,5 @@ zstyle -t zsh_reactive auto >/dev/null 2>&1 && zstyle ':zsh_reactive:cmd' max-wi
 # Display profiling information if ZPROF is enabled
 [[ -n "$ZPROF" ]] && zprof
 
-# Initialize zoxide (must be at the end of configuration as recommended)
-if command -v zoxide >/dev/null 2>&1; then
-	eval "$(zoxide init zsh)"
-fi
-
 # Clean exit
 return 0
