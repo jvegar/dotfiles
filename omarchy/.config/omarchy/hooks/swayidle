@@ -1,0 +1,13 @@
+#!/bin/bash
+# swayidle idle daemon — runs on Hyprland startup
+
+# Kill any existing idle daemons
+pkill -x swayidle 2>/dev/null
+pkill -x hypridle 2>/dev/null
+
+swayidle -w \
+	timeout 120 'pidof hyprlock || omarchy-launch-screensaver' \
+	timeout 300 'omarchy-system-lock' \
+	resume 'omarchy-system-wake' \
+	timeout 900 'systemctl suspend'
+
