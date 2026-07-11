@@ -20,7 +20,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-TEMPLATE = Path.home() / "dotfiles/waybar/config.jsonc"
 OUTPUT = Path.home() / ".config/waybar/config.jsonc"
 WORKSPACE_RULES = Path.home() / ".config/hypr/workspaces.conf"
 HYPRLAND_CONF = Path.home() / ".config/hypr/hyprland.conf"
@@ -66,9 +65,9 @@ def distribute_workspaces(monitor_names: list[str]) -> dict[str, list[str]]:
 def write_waybar_config(workspaces: dict[str, list[str]]):
     """Update waybar config with dynamic persistent-workspaces."""
     try:
-        config = json.loads(TEMPLATE.read_text())
+        config = json.loads(OUTPUT.read_text())
     except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"Error reading template {TEMPLATE}: {e}", file=sys.stderr)
+        print(f"Error reading config {OUTPUT}: {e}", file=sys.stderr)
         sys.exit(1)
 
     ws_module = config.setdefault("hyprland/workspaces", {})
