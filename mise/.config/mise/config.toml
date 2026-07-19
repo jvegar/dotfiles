@@ -1,7 +1,9 @@
 [tools]
-aube = "1.26.0"
-node = "25.6.1"
+aube = "latest"
+node = "latest"
+usage = "3.5"
 
 [settings]
 npm.package_manager = "aube"
+idiomatic_version_file_enable_tools = ["node"]
 
