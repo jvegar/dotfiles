@@ -21,6 +21,7 @@ opt.rulerformat = "%l,%v" -- Set ruler format
 opt.conceallevel = 2 -- Set conceallevel to 1
 opt.timeoutlen = 500
 opt.ttimeoutlen = 0
+opt.background = "dark"
 
 -- Indetation options
 opt.expandtab = true -- Convert tabs to spaces

@@ -20,13 +20,15 @@ if initialize_session "blason"; then
 	split_h 20
 	select_pane 0
 	split_v 20
-	select_pane 2
+	select_pane 2 
 	split_v 20
+
 	select_pane 0
 	run_cmd "nvim"
 
 	new_window "git"
 	run_cmd "lazygit"
+  new_window "psql"
 
 	select_window "root"
 fi

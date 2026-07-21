@@ -22,3 +22,5 @@ nvim/.config/nvim/lazy-lock.json
 archive-*/
 claude/
 CLAUDE.md
+secrets.json
+.headroom/

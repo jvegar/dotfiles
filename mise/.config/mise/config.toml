@@ -2,8 +2,9 @@
 aube = "latest"
 node = "latest"
 usage = "3.5"
+"pipx:headroom-ai" = { version = "latest", extras = "all"}
 
 [settings]
 npm.package_manager = "aube"
 idiomatic_version_file_enable_tools = ["node"]
-
+pipx.uvx = true
