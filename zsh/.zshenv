@@ -55,7 +55,7 @@ export PATH="$HOME/.config/tmux/plugins/tmuxifier/bin:$PATH"
 
 # golang configuration
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
+export PATH=$GOPATH/bin:${GOROOT:+$GOROOT/bin:}$HOME/.local/bin:$PATH
 
 # gvm configuration
 export GVM_DIR="$HOME/.gvm"
@@ -69,10 +69,6 @@ export EDITOR="nvim"
 # cargo configuration
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# aube configuration
-export PATH="$(aube bin -g):$PATH"
-
-# eza configuration
 export EZA_CONFIG_DIR="$HOME/.config/eza"
 
 # Mason bin configuration

@@ -32,11 +32,6 @@ case "$-" in
 *) return ;; # Non-interactive shell, exit early
 esac
 
-# Exit early if not a shell that supports zsh features
-if [[ -z "$ZSH_VERSION" ]]; then
-	echo "Error: This configuration is designed for Zsh" >&2
-	return 1
-fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.zsh
 # Initialization code that may require console input (password prompts, [y/n]
@@ -81,52 +76,43 @@ elif [[ -f "${ZSH_CONFIG_DIR}/os/default.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/os/default.zsh"
 fi
 
-# Load aliases
+# Load remaining modules
 if [[ -f "${ZSH_CONFIG_DIR}/aliases.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/aliases.zsh"
 fi
-
-# Load completion settings
 if [[ -f "${ZSH_CONFIG_DIR}/completion.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/completion.zsh"
 fi
-
-# Load history settings
 if [[ -f "${ZSH_CONFIG_DIR}/history.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/history.zsh"
 fi
-
-# Load Zsh options
 if [[ -f "${ZSH_CONFIG_DIR}/options.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/options.zsh"
 fi
-
-# Load keybindings
 if [[ -f "${ZSH_CONFIG_DIR}/keybindings.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/keybindings.zsh"
 fi
-
 # Load secrets securely
 if [[ -f "${ZSH_CONFIG_DIR}/secrets.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/secrets.zsh"
 fi
-
 # Load custom scripts (lazy loading)
 if [[ -f "${ZSH_CONFIG_DIR}/scripts.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/scripts.zsh"
 fi
-
 # Load Powerlevel10k theme (must be after aliases and options)
 if [[ -f "${ZSH_CONFIG_DIR}/theme.zsh" ]]; then
 	source "${ZSH_CONFIG_DIR}/theme.zsh"
 fi
 
-# Performance optimization: reduce path check frequency
-# These can speed up shell responsiveness
-zstyle -t zsh_reactive auto >/dev/null 2>&1 && zstyle ':zsh_reactive:cmd' max-window 200
-
 # Display profiling information if ZPROF is enabled
 [[ -n "$ZPROF" ]] && zprof
+
+# Add aube to PATH (interactive-only subprocess, not .zshenv)
+if command -v aube >/dev/null 2>&1; then
+  local _aube_path
+  _aube_path="$(aube bin -g 2>/dev/null)" && PATH="$_aube_path:$PATH"
+fi
 
 # Clean exit
 return 0

@@ -3,9 +3,6 @@
 # Optimized for fast startup with async loading and lazy initialization
 
 # Core zsh functionality (history, completion, etc.)
-# OMZL: Oh My Zsh Libraries
-zinit snippet OMZL::completion.zsh
-zinit snippet OMZL::key-bindings.zsh
 
 # Essential plugins with async loading (turbo mode)
 # Note: Fast syntax highlighting first, then autosuggestions, then completions
@@ -48,14 +45,6 @@ zinit wait"2" lucid for \
 	atload='init_tool_if_exists tmuxifier "$(tmuxifier init -)"' \
 	zdharma-continuum/null
 
-# Initialize fzf if available (improves fuzzy finding)
-# Note: This is a backup initialization in case fzf plugin fails
-if command -v fzf >/dev/null 2>&1; then
-	# Source fzf key bindings and fuzzy completion
-	[[ $- == *i* ]] && source <(fzf --bash 2>/dev/null) 2>/dev/null || true
-	# Initialize fzf config if exists
-	source_if_exists "$HOME/.fzf.zsh"
-fi
 
 # zoxide init configuration
 zinit ice wait"0" lucid atload'
